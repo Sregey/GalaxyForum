@@ -1,0 +1,61 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>MainPage</title>
+    @Styles.Render("~/Content/bootstrap.min.css", "~/Content/site.css")
+</head>
+
+<body>
+    <!--<header>
+        <div>
+            <img src="img/logo.png" width="65" height="60" alt="logo">
+            <span class="sitename">Galaxy Forum</span>
+        </div>
+    </header>-->
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <img src="img/logo.png" width="65" height="60" alt="logo">
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <!--<li>@Html.ActionLink("Домашняя страница", "Index", "Home")</li>
+                    <li>@Html.ActionLink("О программе", "About", "Home")</li>
+                    <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>-->
+                    <li><a href="#">Ljv</a></li>
+                    <li><a href="#">Ljv</a></li>
+                    <li><a href="#">Ljv</a></li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid body-content">
+        <div class="row">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
+sdfghjkl
+            </div>
+            <div class="col-lg-2"></div>
+        </div>
+    </div>
+
+    <footer>
+        <span class="footer-center-content">Pashkovski Sergey &copy; @DateTime.Now.Year</span>
+    </footer>
+</body>
+</html>
