@@ -2,12 +2,15 @@
 {
     using System.Data.Entity;
 
-    public partial class EntityModel : DbContext
+    public class ForumDbContext : DbContext
     {
-        public EntityModel() : base("name=DbGalaxyForum")
-        { }
+        public ForumDbContext() : base("name=DbGalaxyForum")
+        {
+            Database.SetInitializer(new ForumDbInitializer());
+        }
 
-        //public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
+
         public virtual DbSet<User> Users { get; set; }
 
         /*protected override void OnModelCreating(DbModelBuilder modelBuilder)

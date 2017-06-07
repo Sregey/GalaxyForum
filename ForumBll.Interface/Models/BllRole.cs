@@ -1,4 +1,4 @@
-﻿namespace BLL.Interface.Entities
+﻿namespace ForumBll.Interface.Models
 {
     public class BllRole
     {

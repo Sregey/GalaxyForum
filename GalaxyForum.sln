@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumBll", "ForumBll\ForumB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumBll.Interface", "ForumBll.Interface\ForumBll.Interface.csproj", "{4456B4C1-3BBF-4C72-A6AE-ED543C6B4719}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumDependencyResolver", "ForumDependencyResolver\ForumDependencyResolver.csproj", "{EF8E9E33-342F-41C6-92E5-10A7B3DB9465}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{4456B4C1-3BBF-4C72-A6AE-ED543C6B4719}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4456B4C1-3BBF-4C72-A6AE-ED543C6B4719}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4456B4C1-3BBF-4C72-A6AE-ED543C6B4719}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF8E9E33-342F-41C6-92E5-10A7B3DB9465}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF8E9E33-342F-41C6-92E5-10A7B3DB9465}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF8E9E33-342F-41C6-92E5-10A7B3DB9465}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF8E9E33-342F-41C6-92E5-10A7B3DB9465}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

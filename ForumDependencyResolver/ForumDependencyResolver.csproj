@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EE727375-3145-49F0-A469-F5BAF0B7BE64}</ProjectGuid>
+    <ProjectGuid>{EF8E9E33-342F-41C6-92E5-10A7B3DB9465}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ForumOrm</RootNamespace>
-    <AssemblyName>ForumOrm</AssemblyName>
+    <RootNamespace>ForumDependencyResolver</RootNamespace>
+    <AssemblyName>ForumDependencyResolver</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -38,6 +38,14 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.3.2.3.0\lib\net45-full\Ninject.Web.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -49,15 +57,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ForumDbContext.cs" />
-    <Compile Include="ForumDbInitializer.cs" />
+    <Compile Include="ResolverConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Role.cs" />
-    <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ForumBll.Interface\ForumBll.Interface.csproj">
+      <Project>{4456b4c1-3bbf-4c72-a6ae-ed543c6b4719}</Project>
+      <Name>ForumBll.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ForumBll\ForumBll.csproj">
+      <Project>{1939b128-9435-4a2a-aa2d-fed2a0054450}</Project>
+      <Name>ForumBll</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ForumDal.Interface\ForumDal.Interface.csproj">
+      <Project>{e7ed5a83-8b1e-4cc8-9f54-9ad6cf1bb0e6}</Project>
+      <Name>ForumDal.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ForumDal\ForumDal.csproj">
+      <Project>{f7c9d4f4-5e93-4020-923d-c5fce8200e89}</Project>
+      <Name>ForumDal</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ForumOrm\ForumOrm.csproj">
+      <Project>{ee727375-3145-49f0-a469-f5baf0b7be64}</Project>
+      <Name>ForumOrm</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
