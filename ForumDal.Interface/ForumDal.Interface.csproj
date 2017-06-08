@@ -40,7 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\DalComment.cs" />
     <Compile Include="Models\DalRole.cs" />
+    <Compile Include="Models\DalSection.cs" />
+    <Compile Include="Models\DalStatus.cs" />
+    <Compile Include="Models\DalTopic.cs" />
     <Compile Include="Models\DalUser.cs" />
     <Compile Include="Models\IEntity.cs" />
     <Compile Include="Repositories\IRepository.cs" />

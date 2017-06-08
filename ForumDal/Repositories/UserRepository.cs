@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using ForumDal.Interface.Models;
 using ForumDal.Interface.Repositories;
+using ForumDal.Mappers;
 using ForumOrm;
 
 namespace ForumDal.Repositories
@@ -13,31 +14,20 @@ namespace ForumDal.Repositories
     {
         private readonly DbContext context;
 
-        public UserRepository(DbContext uow)
+        public UserRepository(DbContext context)
         {
-            this.context = uow;
+            this.context = context;
         }
 
         public IEnumerable<DalUser> GetAll()
         {
-            return context.Set<User>().Select(user => new DalUser()
-            {
-                Id = user.Id,
-                Name = user.Name,
-                RoleId = user.RoleId
-
-            });
+            return context.Set<User>().Select(u => u.ToDalUser());
         }
 
-        public DalUser GetById(int key)
+        public DalUser GetById(int id)
         {
-            var ormuser = context.Set<User>().FirstOrDefault(user => user.Id == key);
-            return new DalUser()
-            {
-                Id = ormuser.Id,
-                Name = ormuser.Name
-
-            };
+            User user = context.Set<User>().FirstOrDefault(u => (u.Id == id));
+            return user.ToDalUser();
         }
 
         public DalUser GetByPredicate(Expression<Func<DalUser, bool>> f)
@@ -46,31 +36,23 @@ namespace ForumDal.Repositories
             throw new NotImplementedException();
         }
 
-        public void Create(DalUser e)
+        public void Add(DalUser dalUser)
         {
-            var user = new User()
-            {
-                Name = e.Name,
-                RoleId = e.RoleId
-            };
-            context.Set<User>().Add(user);
+            context.Set<User>().Add(dalUser.ToOrmUser());
+            context.SaveChanges();
         }
 
-        public void Delete(DalUser e)
+        public void Delete(int id)
         {
-            var user = new User()
-            {
-                Id = e.Id,
-                Name = e.Name,
-                RoleId = e.RoleId
-            };
-            user = context.Set<User>().Single(u => u.Id == user.Id);
+            User user = context.Set<User>().Single(u => (u.Id == id));
             context.Set<User>().Remove(user);
+            context.SaveChanges();
         }
 
-        public void Update(DalUser entity)
+        public void Update(DalUser dalUser)
         {
-            throw new NotImplementedException();
+            context.Entry(dalUser.ToOrmUser()).State = EntityState.Modified;
+            context.SaveChanges();
         }
     }
 }

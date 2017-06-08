@@ -39,25 +39,25 @@ namespace ForumBll.Services
 
         #region Public Methods
 
-        public BllUser GetUserEntity(int id)
+        public BllUser GetUser(int id)
         {
             return userRepository.GetById(id).ToBllUser();
         }
 
         public void DeleteUser(BllUser user)
         {
-            userRepository.Delete(user.ToDalUser());
+            userRepository.Delete(user.Id);
             //uow.Commit();
         }
 
-        public IEnumerable<BllUser> GetAllUserEntities()
+        public IEnumerable<BllUser> GetAllUsers()
         {
             return userRepository.GetAll().Select(user => user.ToBllUser());
         }
 
-        public void CreateUser(BllUser user)
+        public void AddUser(BllUser user)
         {
-            userRepository.Create(user.ToDalUser());
+            userRepository.Add(user.ToDalUser());
             //uow.Commit();
         }
         #endregion

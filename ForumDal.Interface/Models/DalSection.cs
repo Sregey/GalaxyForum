@@ -1,6 +1,8 @@
-﻿namespace ForumDal.Interface.Models
+﻿using System;
+
+namespace ForumDal.Interface.Models
 {
-    public class DalRole : IEntity
+    public class DalSection : IEntity
     {
         public int Id { get; set; }
 

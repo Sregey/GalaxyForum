@@ -9,13 +9,13 @@ namespace ForumDal.Interface.Repositories
     {
         IEnumerable<TEntity> GetAll();
 
-        TEntity GetById(int key);
+        TEntity GetById(int id);
 
         TEntity GetByPredicate(Expression<Func<TEntity, bool>> f);
 
-        void Create(TEntity e);
+        void Add(TEntity entity);
 
-        void Delete(TEntity e);
+        void Delete(int id);
 
         void Update(TEntity entity);
     }

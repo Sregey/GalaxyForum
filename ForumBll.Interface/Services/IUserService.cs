@@ -5,11 +5,11 @@ namespace ForumBll.Interface.Services
 {
     public interface IUserService
     {
-        BllUser GetUserEntity(int id);
+        BllUser GetUser(int id);
 
-        IEnumerable<BllUser> GetAllUserEntities();
+        IEnumerable<BllUser> GetAllUsers();
 
-        void CreateUser(BllUser user);
+        void AddUser(BllUser user);
 
         void DeleteUser(BllUser user);
     }
