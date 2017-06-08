@@ -3,7 +3,9 @@ using System.Data.Entity;
 
 namespace ForumOrm
 {
-    public class ForumDbInitializer : DropCreateDatabaseAlways<ForumDbContext>// CreateDatabaseIfNotExists<ForumDbContext>
+    public class ForumDbInitializer : //DropCreateDatabaseIfModelChanges<ForumDbContext>
+        DropCreateDatabaseAlways<ForumDbContext>
+        //CreateDatabaseIfNotExists<ForumDbContext>
     {
         protected override void Seed(ForumDbContext context)
         {
@@ -13,26 +15,33 @@ namespace ForumOrm
 
             context.Users.Add(new User()
             {
-                Id = 1,
-                Name = "User 1",
+                Login = "User 1",
+                Email = "mail@Mail.ru",
+                RegisrationDate = DateTime.Now,
                 RoleId = 1
             });
             context.Users.Add(new User()
             {
                 Id = 2,
-                Name = "User 2",
+                Login = "User 2",
+                Email = "mail@Mail.ru",
+                RegisrationDate = DateTime.Now,
                 RoleId = 1
             });
             context.Users.Add(new User()
             {
                 Id = 3,
-                Name = "User 3",
+                Login = "User 3",
+                Email = "mail@Mail.ru",
+                RegisrationDate = DateTime.Now,
                 RoleId = 1
             });
             context.Users.Add(new User()
             {
                 Id = 4,
-                Name = "User 4",
+                Login = "User 4",
+                Email = "mail@Mail.ru",
+                RegisrationDate = DateTime.Now,
                 RoleId = 1
             });
 

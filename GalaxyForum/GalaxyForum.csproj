@@ -219,6 +219,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
+    <Compile Include="Migrations\201706081033260_EmailIsRequared.cs" />
+    <Compile Include="Migrations\201706081033260_EmailIsRequared.Designer.cs">
+      <DependentUpon>201706081033260_EmailIsRequared.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -313,6 +318,15 @@
       <Project>{ef8e9e33-342f-41c6-92e5-10a7b3db9465}</Project>
       <Name>ForumDependencyResolver</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ForumOrm\ForumOrm.csproj">
+      <Project>{ee727375-3145-49f0-a469-f5baf0b7be64}</Project>
+      <Name>ForumOrm</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201706081033260_EmailIsRequared.resx">
+      <DependentUpon>201706081033260_EmailIsRequared.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

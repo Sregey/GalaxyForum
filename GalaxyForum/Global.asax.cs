@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using System.Data.Entity;
+using ForumOrm;
 
 namespace GalaxyForum
 {
@@ -13,7 +14,7 @@ namespace GalaxyForum
     {
         protected void Application_Start()
         {
-            //Database.SetInitializer();
+            //Database.SetInitializer(new ForumDbInitializer());
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
