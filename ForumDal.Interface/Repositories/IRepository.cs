@@ -11,7 +11,7 @@ namespace ForumDal.Interface.Repositories
 
         TEntity GetById(int id);
 
-        TEntity GetByPredicate(Expression<Func<TEntity, bool>> f);
+        IEnumerable<TEntity> GetByPredicate(Expression<Func<TEntity, bool>> predicate);
 
         void Add(TEntity entity);
 

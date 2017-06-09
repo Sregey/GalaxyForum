@@ -25,6 +25,7 @@ namespace GalaxyForum.Controllers
         public ActionResult MainPage()
         {
             BllUser user = service.GetUser(1);
+            service.GetAllUsers();
             return View();
         }
 

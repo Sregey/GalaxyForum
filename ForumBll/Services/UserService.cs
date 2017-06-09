@@ -52,6 +52,7 @@ namespace ForumBll.Services
 
         public IEnumerable<BllUser> GetAllUsers()
         {
+            userRepository.GetByPredicate(dalU => dalU.Login == "User_1");
             return userRepository.GetAll().Select(user => user.ToBllUser());
         }
 

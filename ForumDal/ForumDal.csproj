@@ -52,6 +52,7 @@
     <Compile Include="Mappers\DalMapper.cs" />
     <Compile Include="Mappers\DalToOrmMapperVisitor.cs" />
     <Compile Include="Mappers\OrmToDalMapperVisitor.cs" />
+    <Compile Include="Repositories\ParameterTypeModifier.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

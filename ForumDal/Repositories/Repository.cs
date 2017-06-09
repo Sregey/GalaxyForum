@@ -7,6 +7,7 @@ using ForumDal.Interface.Models;
 using ForumDal.Interface.Repositories;
 using ForumDal.Mappers;
 using ForumOrm.Models;
+using System.Diagnostics;
 
 namespace ForumDal.Repositories
 {
@@ -45,15 +46,19 @@ namespace ForumDal.Repositories
             return (TDalEntity)entity.ToDalEntity();
         }
 
-        public TDalEntity GetByPredicate(Expression<Func<TDalEntity, bool>> f)
+        public IEnumerable<TDalEntity> GetByPredicate(Expression<Func<TDalEntity, bool>> predicate)
         {
-            throw new NotImplementedException();
+            ParameterExpression ormEntityParam = Expression.Parameter(typeof(TOrmEntity), predicate.Parameters[0].Name);
+
+            var parameterTypeModifier = new ParameterTypeModifier(typeof(TDalEntity), ormEntityParam);
+            Expression<Func<TOrmEntity, bool>> ormPredicate = 
+                (Expression<Func<TOrmEntity, bool>>)Expression.Lambda(parameterTypeModifier.Modify(predicate.Body), ormEntityParam);
+
+            return context.Set<TOrmEntity>().Where(ormPredicate).Select(e => (TDalEntity)e.ToDalEntity());
         }
 
         public void Update(TDalEntity entity)
         {
-            DalEntity e = entity;
-            e.ToOrmEntity();
             context.Entry((TOrmEntity)entity.ToOrmEntity()).State = EntityState.Modified;
             context.SaveChanges();
         }
