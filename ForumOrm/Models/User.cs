@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ForumOrm
+namespace ForumOrm.Models
 { 
-    public class User
+    public class User : Entity
     {
         public User()
         {
             Topics = new List<Topic>();
         }
 
-        public int Id { get; set; }
+        //public int Id { get; set; }
 
         public string Login { get; set; }
 

@@ -46,7 +46,8 @@
     <Compile Include="Models\DalStatus.cs" />
     <Compile Include="Models\DalTopic.cs" />
     <Compile Include="Models\DalUser.cs" />
-    <Compile Include="Models\IEntity.cs" />
+    <Compile Include="Models\DalEntity.cs" />
+    <Compile Include="Models\IDalEntityVisitor.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

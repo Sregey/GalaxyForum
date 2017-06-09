@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace ForumOrm
+namespace ForumOrm.Models
 {
-    public class Topic
+    public class Topic : Entity
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
 
         public string Title { get; set; }
 

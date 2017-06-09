@@ -7,6 +7,7 @@ using ForumDal.Repositories;
 using Ninject;
 using Ninject.Web.Common;
 using ForumOrm;
+using ForumOrm.Models;
 
 namespace ForumDependencyResolver
 {
@@ -36,7 +37,7 @@ namespace ForumDependencyResolver
             }
 
             kernel.Bind<IUserService>().To<UserService>();
-            kernel.Bind<IRepository<DalUser>>().To<UserRepository>();
+            kernel.Bind<IRepository<DalUser>>().To<Repository<DalUser, User>>();
             //kernel.Bind<IUserRepository>().To<UserRepository>();
         }
     }

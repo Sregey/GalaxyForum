@@ -1,15 +1,15 @@
-﻿namespace ForumOrm
-{
-    using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-    public class Role
+namespace ForumOrm.Models
+{
+    public class Role : Entity
     {
         public Role()
         {
             Users = new HashSet<User>();
         }
 
-        public int Id { get; set; }
+        //public int Id { get; set; }
 
         public string Name { get; set; }
 

@@ -2,10 +2,8 @@
 
 namespace ForumDal.Interface.Models
 {
-    public class DalTopic : IEntity
+    public class DalTopic : DalEntity
     {
-        public int Id { get; set; }
-
         public string Title { get; set; }
 
         public string Text { get; set; }

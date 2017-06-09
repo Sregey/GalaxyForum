@@ -1,7 +1,8 @@
-﻿namespace ForumOrm
-{
-    using System.Data.Entity;
+﻿using System.Data.Entity;
+using ForumOrm.Models;
 
+namespace ForumOrm
+{
     public class ForumDbContext : DbContext
     {
         public ForumDbContext() : base("name=DbGalaxyForum")

@@ -2,10 +2,8 @@
 
 namespace ForumDal.Interface.Models
 {
-    public class DalComment : IEntity
+    public class DalComment : DalEntity
     {
-        public int Id { get; set; }
-
         public string Text { get; set; }
 
         public DateTime Date { get; set; }

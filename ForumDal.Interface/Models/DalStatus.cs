@@ -2,10 +2,8 @@
 
 namespace ForumDal.Interface.Models
 {
-    public class DalStatus : IEntity
+    public class DalStatus : DalEntity
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
     }
 }

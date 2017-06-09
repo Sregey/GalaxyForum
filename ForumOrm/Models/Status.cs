@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 
-namespace ForumOrm
+namespace ForumOrm.Models
 {
-    public class Status
+    public class Status : Entity
     {
         public Status()
         {
             Topics = new List<Topic>();
         }
 
-        public int Id { get; set; }
+        //public int Id { get; set; }
 
         public string Name { get; set; }
 

@@ -2,10 +2,8 @@
 
 namespace ForumDal.Interface.Models
 {
-    public class DalUser : IEntity
+    public class DalUser : DalEntity
     {
-        public int Id { get; set; }
-
         public string Login { get; set; }
 
         public string Email { get; set; }

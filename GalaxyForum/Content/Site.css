@@ -66,7 +66,35 @@ footer {
 }
 
 .row div {
-    /*height: 100px;*/
+    /*height: 100px;
     background: #0094ff;
-    border: 1px solid black;
+    border: 1px solid black;*/
 }
+
+/*-------table.list---------*/
+table.list {
+    border: 1px solid #666666;
+    border-spacing: 0;
+    empty-cells: show;
+}
+
+table.list td, table.list th {
+    padding: 5px;
+    border-left: 1px solid #666666;
+    border-right: 1px solid #666666;
+}
+
+table.list th {
+    text-align: center;
+    background: black;
+    color: white;
+}
+
+table.list tbody tr:nth-child(odd) {
+    background-color: white;
+}
+
+table.list tbody tr:nth-child(even) {
+    background-color: #D2D2D2;
+}
+/*-------table.list---------*/

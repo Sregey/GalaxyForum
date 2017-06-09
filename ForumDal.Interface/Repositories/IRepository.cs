@@ -5,7 +5,7 @@ using ForumDal.Interface.Models;
 
 namespace ForumDal.Interface.Repositories
 {
-    public interface IRepository<TEntity> where TEntity : IEntity
+    public interface IRepository<TEntity> where TEntity : DalEntity
     {
         IEnumerable<TEntity> GetAll();
 
