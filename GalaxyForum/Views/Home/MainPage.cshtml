@@ -1,90 +1,32 @@
-﻿
-@{
-    Layout = null;
+﻿@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>MainPage</title>
-    @Styles.Render("~/Content/bootstrap.min.css", "~/Content/site.css")
-</head>
+<div class="jumbotron">
+    <h1>ASP.NET</h1>
+    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
 
-<body>
-    <!--<header>
-        <div>
-            <img src="img/logo.png" width="65" height="60" alt="logo">
-            <span class="sitename">Galaxy Forum</span>
-        </div>
-    </header>-->
-
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <img src="img/logo.png" width="65" height="60" alt="logo">
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <!--<li>@Html.ActionLink("Домашняя страница", "Index", "Home")</li>
-                    <li>@Html.ActionLink("О программе", "About", "Home")</li>
-                    <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>-->
-                    <li><a href="#">Ljv</a></li>
-                    <li><a href="#">Ljv</a></li>
-                    <li><a href="#">Ljv</a></li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
-        </div>
+<div class="row">
+    <div class="col-md-4">
+        <h2>Getting started</h2>
+        <p>
+            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+            enables a clean separation of concerns and gives you full control over markup
+            for enjoyable, agile development.
+        </p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
     </div>
-
-    <div class="container-fluid body-content">
-        <div class="row">
-            <div class="col-lg-2"></div>
-            <div class="col-lg-8">
-                <table class="list">
-                    <thead>
-                        <tr>
-                            <th>col1</th>
-                            <th>col2</th>
-                            <th>col3</th>
-                            <th>col4</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>qwerty</td>
-                            <td>sdfgh</td>
-                            <td>sdfghj</td>
-                            <td>xfghjk</td>
-                        </tr>
-                        <tr>
-                            <td>qwerty</td>
-                            <td>sdfgh</td>
-                            <td>sdfghj</td>
-                            <td>xfghjk</td>
-                        </tr>
-                        <tr>
-                            <td>qwerty</td>
-                            <td>sdfgh</td>
-                            <td>sdfghj</td>
-                            <td>xfghjk</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-lg-2"></div>
-        </div>
+    <div class="col-md-4">
+        <h2>Get more libraries</h2>
+        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
     </div>
-
-    <footer>
-        <span class="footer-center-content">Pashkovski Sergey &copy; @DateTime.Now.Year</span>
-    </footer>
-</body>
-</html>
+    <div class="col-md-4">
+        <h2>Web Hosting</h2>
+        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    </div>
+</div>

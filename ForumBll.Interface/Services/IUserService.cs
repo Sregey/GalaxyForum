@@ -11,6 +11,6 @@ namespace ForumBll.Interface.Services
 
         void AddUser(BllUser user);
 
-        void DeleteUser(BllUser user);
+        void DeleteUser(int id);
     }
 }

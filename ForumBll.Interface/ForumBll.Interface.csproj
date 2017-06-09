@@ -47,6 +47,7 @@
     <Compile Include="Models\BllUser.cs" />
     <Compile Include="Models\BllTopic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ISectionService.cs" />
     <Compile Include="Services\IUserService.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

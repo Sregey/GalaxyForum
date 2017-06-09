@@ -37,7 +37,9 @@ namespace ForumDal.Repositories
 
         public IEnumerable<TDalEntity> GetAll()
         {
-            return context.Set<TOrmEntity>().Select(e => (TDalEntity)e.ToDalEntity());
+            IEnumerable<TOrmEntity> entities = context.Set<TOrmEntity>();
+            return entities.Select(e => (TDalEntity)e.ToDalEntity());
+            //return context.Set<TOrmEntity>().Select(e => (TDalEntity)e.ToDalEntity());
         }
 
         public TDalEntity GetById(int id)
@@ -54,7 +56,9 @@ namespace ForumDal.Repositories
             Expression<Func<TOrmEntity, bool>> ormPredicate = 
                 (Expression<Func<TOrmEntity, bool>>)Expression.Lambda(parameterTypeModifier.Modify(predicate.Body), ormEntityParam);
 
-            return context.Set<TOrmEntity>().Where(ormPredicate).Select(e => (TDalEntity)e.ToDalEntity());
+            IEnumerable<TOrmEntity> entities = context.Set<TOrmEntity>().Where(ormPredicate);
+            return entities.Select(e => (TDalEntity)e.ToDalEntity());
+            //return context.Set<TOrmEntity>().Where(ormPredicate).Select(e => (TDalEntity)e.ToDalEntity());
         }
 
         public void Update(TDalEntity entity)

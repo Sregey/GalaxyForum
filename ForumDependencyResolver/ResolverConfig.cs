@@ -36,8 +36,15 @@ namespace ForumDependencyResolver
                 kernel.Bind<DbContext>().To<ForumDbContext>().InSingletonScope();
             }
 
+            //Services
             kernel.Bind<IUserService>().To<UserService>();
+            kernel.Bind<ISectionService>().To<SectionService>();
+
+            //Repositories
             kernel.Bind<IRepository<DalUser>>().To<Repository<DalUser, User>>();
+            kernel.Bind<IRepository<DalSection>>().To<Repository<DalSection, Section>>();
+
+            //kernel.Bind<IRepository<DalUser>>().To<UserRepository>();
             //kernel.Bind<IUserRepository>().To<UserRepository>();
         }
     }

@@ -5,16 +5,19 @@ using System.Web;
 using System.Web.Mvc;
 using ForumBll.Interface.Services;
 using ForumBll.Interface.Models;
+using GalaxyForum.Infrastructure.Mappers;
 
 namespace GalaxyForum.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IUserService service;
+        private readonly IUserService userService;
+        private readonly ISectionService sectionService;
 
-        public HomeController(IUserService service)
+        public HomeController(IUserService userService, ISectionService sectionService)
         {
-            this.service = service;
+            this.userService = userService;
+            this.sectionService = sectionService;
         }
 
         public ActionResult Index()
@@ -22,13 +25,23 @@ namespace GalaxyForum.Controllers
             return View();
         }
 
+        public ActionResult Users()
+        {
+            IEnumerable<BllUser> users = userService.GetAllUsers();
+            //List<BllUser> list = users.ToList();
+            return View(users.Select(bllUser => bllUser.ToMvcUser()));
+        }
+
         public ActionResult MainPage()
         {
-            BllUser user = service.GetUser(1);
-            service.GetAllUsers();
             return View();
         }
 
+        public ActionResult Sections()
+        {
+            IEnumerable<BllSection> sections = sectionService.GetAllSections();
+            return View(sections.Select(bllSection => bllSection.ToMvcSection()));
+        }
 
         public ActionResult About()
         {

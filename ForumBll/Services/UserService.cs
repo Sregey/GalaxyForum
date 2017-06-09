@@ -18,24 +18,6 @@ namespace ForumBll.Services
             //this.uow = uow;
             this.userRepository = repository;
         }
-        //public UserEntity GetUserEntity(int id)
-        //{
-        //    return userRepository.GetById(id).ToBllUser();
-        //}        
-        //public IEnumerable<UserEntity> GetAllUserEntities()
-        //{
-        //    return userRepository.GetAll().Select(user => user.ToBllUser());
-        //}
-        //public void CreateUser(UserEntity user)
-        //{
-        //    userRepository.Create(user.ToDalUser());
-        //    uow.Commit();
-        //}
-        //public void DeleteUser(UserEntity user)
-        //{
-        //    userRepository.Delete(user.ToDalUser());
-        //    uow.Commit();
-        //}
 
         #region Public Methods
 
@@ -44,16 +26,20 @@ namespace ForumBll.Services
             return userRepository.GetById(id).ToBllUser();
         }
 
-        public void DeleteUser(BllUser user)
+        public void DeleteUser(int id)
         {
-            userRepository.Delete(user.Id);
+            userRepository.Delete(id);
             //uow.Commit();
         }
 
         public IEnumerable<BllUser> GetAllUsers()
         {
-            userRepository.GetByPredicate(dalU => dalU.Login == "User_1");
-            return userRepository.GetAll().Select(user => user.ToBllUser());
+            /*return userRepository
+                .GetByPredicate(dalU => dalU.Id % 2 == 0)
+                .Select(user => user.ToBllUser());*/
+            return userRepository
+                .GetAll()
+                .Select(user => user.ToBllUser());
         }
 
         public void AddUser(BllUser user)

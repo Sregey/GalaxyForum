@@ -66,8 +66,6 @@ namespace ForumDal.Mappers
 
         public void Visit(User user)
         {
-            var mapper = new OrmToDalMapperVisitor();
-            user.Role.Accept(mapper);
             DalEntity = new DalUser()
             {
                 Id = user.Id,

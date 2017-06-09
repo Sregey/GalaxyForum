@@ -19,5 +19,22 @@ namespace ForumDal.Mappers
             e.Accept(toOrmMapper);
             return (Entity)toOrmMapper.OrmEntity;
         }
+
+        public static DalUser toDal(this User user)
+        {
+            return new DalUser()
+            {
+                Id = user.Id,
+                Login = user.Login,
+                Email = user.Email,
+                Password = user.Password,
+                Name = user.Name,
+                LastName = user.LastName,
+                FatherName = user.FatherName,
+                Profession = user.Profession,
+                ExtraInfo = user.ExtraInfo,
+                Role = new DalRole { Id = user.Role.Id, Name = user.Role.Name }
+            };
+        }
     }
 }
