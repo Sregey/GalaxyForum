@@ -1,0 +1,33 @@
+﻿@model IEnumerable<ForumPlMvc.Models.MvcSection>
+
+@{
+    ViewBag.Title = "Sections";
+}
+
+<h2>Sections</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Name, "TopicsInSection", new { id = item.Id, page = 1 })                    
+                </td>
+                <!--<td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>-->
+            </tr>
+        }
+    </tbody>
+</table>
