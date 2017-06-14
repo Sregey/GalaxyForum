@@ -1,6 +1,7 @@
 ﻿using System;
 using ForumDal.Interface.Models;
 using ForumOrm.Models;
+using System.IO;
 
 namespace ForumDal.Mappers
 {
@@ -28,6 +29,19 @@ namespace ForumDal.Mappers
             {
                 Id = role.Id,
                 Name = role.Name
+            };
+        }
+
+        public void Visit(Image image)
+        {
+            var content = new MemoryStream(image.Content);
+            DalEntity = new DalImage()
+            {
+                Id = image.Id,
+                Name = image.Name,
+                Type = image.Type,
+                Size = image.Size,
+                Content = content,
             };
         }
 
@@ -75,6 +89,8 @@ namespace ForumDal.Mappers
                 Name = user.Name,
                 LastName = user.LastName,
                 FatherName = user.FatherName,
+                RegisrationDate = user.RegisrationDate,
+                Avatar = (DalImage)user.Avatar.ToDalEntity(),
                 Profession = user.Profession,
                 ExtraInfo = user.ExtraInfo,
                 Role = (DalRole)user.Role.ToDalEntity(),

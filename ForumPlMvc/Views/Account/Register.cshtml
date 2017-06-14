@@ -2,17 +2,16 @@
 
 @{
     ViewBag.Title = "Register";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Register</h2>
+<hr />
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.Login, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -52,4 +51,9 @@
             </div>
         </div>
     </div>
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
 }

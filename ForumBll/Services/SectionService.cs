@@ -18,6 +18,11 @@ namespace ForumBll.Services
             this.sectionRepository = repository;
         }
 
+        public int Count
+        {
+            get { return sectionRepository.Count; }
+        }
+
         public void AddSection(BllSection section)
         {
             throw new NotImplementedException();
@@ -31,7 +36,7 @@ namespace ForumBll.Services
         public IEnumerable<BllSection> GetAllSections()
         {
             return sectionRepository
-                .GetAll()
+                .GetSequence(0, sectionRepository.Count)
                 .Select(section => section.ToBllSection());
         }
     }

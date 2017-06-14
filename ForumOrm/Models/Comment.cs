@@ -4,8 +4,6 @@ namespace ForumOrm.Models
 {
     public class Comment : Entity
     {
-        //public int Id { get; set; }
-
         public string Text { get; set; }
 
         public DateTime Date { get; set; }
@@ -19,7 +17,6 @@ namespace ForumOrm.Models
         public bool IsAnswer { get; set; }
 
         //public bool IsActual { get; set; }
-        //innerComment
 
         public virtual Topic Topic { get; set; }
 

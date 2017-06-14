@@ -18,7 +18,9 @@ namespace ForumBll.Mappers
                 Name = dalUser.Name,
                 LastName = dalUser.LastName,
                 FatherName = dalUser.FatherName,
+                RegisrationDate = dalUser.RegisrationDate,
                 Profession = dalUser.Profession,
+                Avatar = dalUser.Avatar.ToBllImage(),
                 ExtraInfo = dalUser.ExtraInfo,
                 Role = dalUser.Role.ToBllRole()
             };
@@ -35,7 +37,9 @@ namespace ForumBll.Mappers
                 Name = bllUser.Name,
                 LastName = bllUser.LastName,
                 FatherName = bllUser.FatherName,
+                RegisrationDate = bllUser.RegisrationDate,
                 Profession = bllUser.Profession,
+                Avatar = bllUser.Avatar.ToDalImage(),
                 ExtraInfo = bllUser.ExtraInfo,
                 Role = bllUser.Role.ToDalRole()
             };
@@ -170,6 +174,34 @@ namespace ForumBll.Mappers
             {
                 Id = bllSection.Id,
                 Name = bllSection.Name
+            };
+        }
+
+        #endregion
+
+        #region Image Mapper
+
+        public static BllImage ToBllImage(this DalImage dalImage)
+        {
+            return new BllImage()
+            {
+                Id = dalImage.Id,
+                Name = dalImage.Name,
+                Type = dalImage.Type,
+                Size = dalImage.Size,
+                Content = dalImage.Content,
+            };
+        }
+
+        public static DalImage ToDalImage(this BllImage bllImage)
+        {
+            return new DalImage()
+            {
+                Id = bllImage.Id,
+                Name = bllImage.Name,
+                Type = bllImage.Type,
+                Size = bllImage.Size,
+                Content = bllImage.Content,
             };
         }
 

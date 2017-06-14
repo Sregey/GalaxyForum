@@ -1,6 +1,8 @@
 ﻿body {
     padding-top: 60px;
-    /*padding-bottom: 20px;*/
+    padding-bottom: 20px;
+    /* margin for footer */
+	margin-bottom: 50px !important;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -36,10 +38,6 @@ html {
 	position: relative;
 	min-height: 100%;
 }
-body {
-	/* Отступ снизу, по высоте футера */
-	margin-bottom: 50px !important;
-}
 footer {
 	position: absolute;
 	bottom: 0;
@@ -63,12 +61,6 @@ footer {
 .footer-center-content {
     display: inline-block;
     vertical-align: middle;
-}
-
-.row div {
-    /*height: 100px;
-    background: #0094ff;
-    border: 1px solid black;*/
 }
 
 /*-------table.list---------*/
@@ -98,3 +90,61 @@ table.list tbody tr:nth-child(even) {
     background-color: #D2D2D2;
 }
 /*-------table.list---------*/
+
+/*-------table.description---------*/
+table.description {
+    font-size: 16px;
+    border-top: 1px solid lightgray;
+    padding-bottom: 30px;
+}
+table.description caption{
+    text-align: left;
+    font-size: 22px;
+    padding-bottom: 10px;
+}
+table.description tr{
+    height: 27px;
+    vertical-align: top;
+}
+table.description td:first-child {
+    color: Highlight;
+    width: 200px;
+}
+/*-------table.description---------*/
+
+/*-------.account-menu---------*/
+.account-menu {
+    width: 100%;
+    line-height: 1.4;
+    font-size: 16px;
+    margin-top: 60px;
+}
+.account-menu div {
+    border-bottom: 1px solid gray;
+    width: 70%;
+    padding: 10px 20px 5px;
+    border-radius: 0 0 16px 0;
+}
+.account-menu div a {
+    text-decoration: none;
+}
+.account-menu div a:hover {
+    color: darkblue;
+}
+/*-------.account-menu---------*/
+
+.offset {
+    margin: 20px 0;
+}
+
+.topic-text {
+    border: 1px solid gray;
+    min-height: 100px;
+    padding: 5px;
+}
+
+.smale-text {
+    font-size: 12px;
+    padding: 5px;
+    color: gray;
+}

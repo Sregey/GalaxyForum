@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/bootstrap.min.css", "~/Content/site.css")
+    @Styles.Render("~/Content/css")
 </head>
 
 <body>
@@ -51,5 +51,9 @@
     <footer>
         <span class="footer-center-content">Pashkovski Sergey &copy; @DateTime.Now.Year</span>
     </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 </body>
 </html>

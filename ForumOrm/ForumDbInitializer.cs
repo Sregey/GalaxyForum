@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Data.Entity;
 using ForumOrm.Models;
+using System.IO;
 
 namespace ForumOrm
 {
-    public class ForumDbInitializer : //DropCreateDatabaseIfModelChanges<ForumDbContext>
+    public class ForumDbInitializer : DropCreateDatabaseIfModelChanges<ForumDbContext>
         //DropCreateDatabaseAlways<ForumDbContext>
-        CreateDatabaseIfNotExists<ForumDbContext>
+        //CreateDatabaseIfNotExists<ForumDbContext>
     {
         protected override void Seed(ForumDbContext context)
         {
+            InitializeImages(context);
             InitializeRoles(context);
             InitializeStatuses(context);
             InitializeSections(context);
@@ -101,7 +103,7 @@ namespace ForumOrm
             {
                 Id = 5,
                 Login = "Moderator_2",
-                Email = "mail@Mail.ru",
+                Email = "mail@mail.ru",
                 Password = "12345678",
                 Name = "Emma",
                 LastName = "Ford",
@@ -113,7 +115,7 @@ namespace ForumOrm
             {
                 Id = 6,
                 Login = "MainAdmin",
-                Email = "main.admin@Mail.ru",
+                Email = "main.admin@mail.ru",
                 Password = "12345678",
                 Name = "Jacob",
                 LastName = "Kirk",
@@ -133,7 +135,8 @@ namespace ForumOrm
                 Date = DateTime.Now,
                 SectionId = 3,
                 AuthorId = 1,
-                StatusId = 3
+                StatusId = 3,
+                IsAnswered = true
             });
             context.Topics.Add(new Topic()
             {
@@ -195,6 +198,50 @@ namespace ForumOrm
                 SenderId = 6,
                 StatusId = 1
             });
+        }
+
+        private void InitializeImages(ForumDbContext context)
+        {
+            const string rootDirictory = @"D:\Epam\Курсы MVC .NET\Лабы\GalaxyForum\ForumOrm\";
+
+            using (FileStream fs = File.OpenRead(rootDirictory + "Images//anonymous_user.png"))
+            {
+                var content = new byte[fs.Length];
+                fs.Read(content, 0, (int)fs.Length);
+                context.Images.Add(new Image()
+                {
+                    Id = 1,
+                    Type = "png",
+                    Content = content,
+                    Size = content.Length,
+                });
+            }
+
+            using (FileStream fs = File.OpenRead(rootDirictory + "Images//logo.jpg"))
+            {
+                var content = new byte[fs.Length];
+                fs.Read(content, 0, (int)fs.Length);
+                context.Images.Add(new Image()
+                {
+                    Id = 2,
+                    Type = "jpg",
+                    Content = content,
+                    Size = content.Length,
+                });
+            }
+
+            using (FileStream fs = File.OpenRead(rootDirictory + "Images//true.png"))
+            {
+                var content = new byte[fs.Length];
+                fs.Read(content, 0, (int)fs.Length);
+                context.Images.Add(new Image()
+                {
+                    Id = 3,
+                    Type = "png",
+                    Content = content,
+                    Size = content.Length,
+                });
+            }
         }
 
     }

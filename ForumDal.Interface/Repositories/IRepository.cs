@@ -7,11 +7,17 @@ namespace ForumDal.Interface.Repositories
 {
     public interface IRepository<TEntity> where TEntity : DalEntity
     {
-        IEnumerable<TEntity> GetAll();
+        int Count { get; }
 
-        TEntity GetById(int id);
+        IEnumerable<TEntity> GetSequence(int offset, int count);
+
+        TEntity FirstOrDefault(Expression<Func<TEntity, bool>> predicate);
+
+        IEnumerable<TEntity> GetByPredicate(Expression<Func<TEntity, bool>> predicate, int offset, int count);
 
         IEnumerable<TEntity> GetByPredicate(Expression<Func<TEntity, bool>> predicate);
+
+        bool IsExists(Expression<Func<TEntity, bool>> predicate);
 
         void Add(TEntity entity);
 

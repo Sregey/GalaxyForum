@@ -39,10 +39,15 @@ namespace ForumDependencyResolver
             //Services
             kernel.Bind<IUserService>().To<UserService>();
             kernel.Bind<ISectionService>().To<SectionService>();
+            kernel.Bind<ITopicService>().To<TopicService>();
+            kernel.Bind<IAccountService>().To<AccountService>();
+            kernel.Bind<IImageService>().To<ImageService>();
 
             //Repositories
-            kernel.Bind<IRepository<DalUser>>().To<Repository<DalUser, User>>();
+            kernel.Bind<IRepository<DalUser>>().To<UserRepository>();
             kernel.Bind<IRepository<DalSection>>().To<Repository<DalSection, Section>>();
+            kernel.Bind<IRepository<DalTopic>>().To<Repository<DalTopic, Topic>>();
+            kernel.Bind<IRepository<DalImage>>().To<Repository<DalImage, Image>>();
 
             //kernel.Bind<IRepository<DalUser>>().To<UserRepository>();
             //kernel.Bind<IUserRepository>().To<UserRepository>();

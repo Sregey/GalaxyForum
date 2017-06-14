@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace GalaxyForum.Models
 {
@@ -6,8 +7,12 @@ namespace GalaxyForum.Models
     {
         public int Id { get; set; }
 
+        [Required(ErrorMessage = "Title is required.")]
+        [MinLength(5, ErrorMessage = "Minimum length is 5 characters.")]
         public string Title { get; set; }
 
+        [Required(ErrorMessage = "Text is required.")]
+        [MinLength(5, ErrorMessage = "Minimum length is 5 characters.")]
         public string Text { get; set; }
 
         public DateTime Date { get; set; }

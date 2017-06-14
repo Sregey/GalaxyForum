@@ -37,7 +37,7 @@ namespace ForumPlMvc.Controllers
                     if (accountService.RegisterUser(newUser.ToBllUser()))
                     {
                         FormsAuthentication.SetAuthCookie(newUser.Login, true);
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("UserInfo", "User");
                     }
                 }
                 else
@@ -60,13 +60,19 @@ namespace ForumPlMvc.Controllers
                 BllUser user = accountService.Login(loginModel.Email, loginModel.Password);
                 if (user != null)
                 {
-                        FormsAuthentication.SetAuthCookie(user.Login, true);
-                        return RedirectToAction("Index", "Home");
+                    FormsAuthentication.SetAuthCookie(user.Login, true);
+                    return RedirectToAction("UserInfo", "User");
                 }
                 else
                     ModelState.AddModelError("", "You input yuor email or password wrong.");
             }
             return View(loginModel);
+        }
+
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Login");
         }
     }
 }

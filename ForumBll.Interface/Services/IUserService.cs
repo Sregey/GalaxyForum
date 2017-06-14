@@ -7,10 +7,14 @@ namespace ForumBll.Interface.Services
     {
         BllUser GetUser(int id);
 
+        BllUser GetUser(string login);
+
         IEnumerable<BllUser> GetAllUsers();
 
         void AddUser(BllUser user);
 
         void DeleteUser(int id);
+
+        void UpdateUser(BllUser user);
     }
 }

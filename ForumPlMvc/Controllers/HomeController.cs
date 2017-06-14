@@ -17,14 +17,17 @@ namespace ForumPlMvc.Controllers
         private readonly IUserService userService;
         private readonly ISectionService sectionService;
         private readonly ITopicService topicService;
+        private readonly IImageService imageService;
 
         public HomeController(IUserService userService,
             ISectionService sectionService,
-            ITopicService topicService)
+            ITopicService topicService,
+            IImageService imageService)
         {
             this.userService = userService;
             this.sectionService = sectionService;
             this.topicService = topicService;
+            this.imageService = imageService;
         }
 
         public ActionResult Index()
@@ -39,7 +42,20 @@ namespace ForumPlMvc.Controllers
         {
             IEnumerable<BllUser> users = userService.GetAllUsers();
             //List<BllUser> list = users.ToList();
-            return View(users.Select(bllUser => bllUser.ToMvcUser()));
+            return View(users.Select(bllUser => bllUser.ToUserInfoModel()));
+        }
+
+        public FileStreamResult GetImage(int? id)
+        {
+            if (id.HasValue)
+            {
+                BllImage image = imageService.GetImage(id.Value);
+                return new FileStreamResult(image.Content, "image//" + image.Content);
+            }
+            return null;
+
+            //DateTime t;
+            //t.Ho
         }
 
         public ActionResult MainPage()
@@ -59,6 +75,9 @@ namespace ForumPlMvc.Controllers
         {
             if (id.HasValue)
             {
+                //BllSection section;
+                //section.
+
                 int topicCount = topicService.GetTopicCountInSection(id.Value);
                 int pageCount = (int)Math.Ceiling(topicCount / (double)TOPICS_PER_PAGE);
                 if (!page.HasValue || (page.Value <= 0) || (page.Value > pageCount))
@@ -72,24 +91,18 @@ namespace ForumPlMvc.Controllers
                         id.Value,
                         (page.Value - 1) * TOPICS_PER_PAGE,
                         TOPICS_PER_PAGE)
-                    .Select(bllTopic => bllTopic.ToMvcTopic()));
+                    .Select(bllTopic => bllTopic.ToTopicListModel()));
             }
             return View("Error");
         }
 
-        public ActionResult CreateTopic()
+        public ActionResult Topic(int? id)
         {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult CreateTopic(MvcTopic topic)
-        {
-            if (ModelState.IsValid)
+            if (id.HasValue)
             {
-                return Redirect("Section\\" + 3);
+                return View(topicService.GetTopic(id.Value).ToTopicDitailsModel());
             }
-            return View();
+            return View("Error");
         }
 
         public ActionResult About()

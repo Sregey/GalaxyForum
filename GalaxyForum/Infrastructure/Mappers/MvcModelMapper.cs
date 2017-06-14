@@ -24,6 +24,16 @@ namespace GalaxyForum.Infrastructure.Mappers
             };
         }
 
+        public static BllUser ToBllUser(this RegisterModel mvcUser)
+        {
+            return new BllUser()
+            {
+                Login = mvcUser.Login,
+                Email = mvcUser.Email,
+                Password = mvcUser.Password
+            };
+        }
+
         public static MvcUser ToMvcUser(this BllUser bllUser)
         {
             return new MvcUser()

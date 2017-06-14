@@ -13,5 +13,7 @@
         void Visit(DalSection dalSection);
 
         void Visit(DalStatus dalStatus);
+
+        void Visit(DalImage dalImage);
     }
 }

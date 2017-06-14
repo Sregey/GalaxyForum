@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ForumOrm.Models
 {
     public class Topic : Entity
     {
-        //public int Id { get; set; }
+        public Topic()
+        {
+            Comments = new HashSet<Comment>();
+        }
 
         public string Title { get; set; }
 
@@ -27,5 +31,7 @@ namespace ForumOrm.Models
         public virtual User Author { get; set; }
 
         public virtual Status Status { get; set; }
+
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

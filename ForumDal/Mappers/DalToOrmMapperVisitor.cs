@@ -1,5 +1,6 @@
 ﻿using ForumDal.Interface.Models;
 using ForumOrm.Models;
+using System.IO;
 
 namespace ForumDal.Mappers
 {
@@ -48,6 +49,21 @@ namespace ForumDal.Mappers
             };
         }
 
+        public void Visit(DalImage dalImage)
+        {
+            var content = new byte[dalImage.Size];
+            dalImage.Content.Seek(0, SeekOrigin.Begin);
+            dalImage.Content.Read(content, 0, dalImage.Size);
+            OrmEntity = new Image()
+            {
+                Id = dalImage.Id,
+                Name = dalImage.Name,
+                Type = dalImage.Type,
+                Size = dalImage.Size,
+                Content = content,
+            };
+        }
+
         public void Visit(DalTopic dalTopic)
         {
             OrmEntity = new Topic
@@ -74,9 +90,12 @@ namespace ForumDal.Mappers
                 Name = dalUser.Name,
                 LastName = dalUser.LastName,
                 FatherName = dalUser.FatherName,
+                RegisrationDate = dalUser.RegisrationDate,
                 Profession = dalUser.Profession,
                 ExtraInfo = dalUser.ExtraInfo,
-                Role = (Role)dalUser.Role.ToOrmEntity(),
+                AvatarId = dalUser.Avatar.Id,
+                //Avatar = (Image)dalUser.Avatar.ToOrmEntity(),
+                RoleId = dalUser.Role.Id,
             };
         }
     }

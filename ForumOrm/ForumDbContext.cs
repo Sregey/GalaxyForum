@@ -23,7 +23,7 @@ namespace ForumOrm
 
         public virtual DbSet<Status> Statuses { get; set; }
 
-
+        public virtual DbSet<Image> Images { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -36,6 +36,11 @@ namespace ForumOrm
                 .Property(u => u.Email)
                 .IsRequired()
                 .HasMaxLength(50);
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.RegisrationDate)
+                .HasColumnType("datetime2")
+                .HasPrecision(0);
 
             modelBuilder.Entity<Role>()
                 .Property(u => u.Name)
@@ -68,6 +73,18 @@ namespace ForumOrm
 
             modelBuilder.Entity<Topic>()
                 .Property(u => u.Text)
+                .IsRequired();
+
+            modelBuilder.Entity<Image>()
+                .Property(i => i.Size)
+                .IsRequired();
+
+            modelBuilder.Entity<Image>()
+                .Property(i => i.Content)
+                .IsRequired();
+
+            modelBuilder.Entity<Image>()
+                .Property(i => i.Type)
                 .IsRequired();
 
             /*modelBuilder.Entity<Role>()

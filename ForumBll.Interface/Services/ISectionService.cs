@@ -5,6 +5,8 @@ namespace ForumBll.Interface.Services
 {
     public interface ISectionService
     {
+        int Count { get; }
+
         IEnumerable<BllSection> GetAllSections();
 
         void AddSection(BllSection section);

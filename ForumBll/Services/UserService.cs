@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ForumBll.Interface.Models;
 using ForumBll.Interface.Services;
@@ -19,11 +20,11 @@ namespace ForumBll.Services
             this.userRepository = repository;
         }
 
-        #region Public Methods
-
         public BllUser GetUser(int id)
         {
-            return userRepository.GetById(id).ToBllUser();
+            return userRepository
+                .FirstOrDefault(u => u.Id == id)
+                .ToBllUser();
         }
 
         public void DeleteUser(int id)
@@ -38,7 +39,7 @@ namespace ForumBll.Services
                 .GetByPredicate(dalU => dalU.Id % 2 == 0)
                 .Select(user => user.ToBllUser());*/
             return userRepository
-                .GetAll()
+                .GetSequence(0, userRepository.Count)
                 .Select(user => user.ToBllUser());
         }
 
@@ -47,6 +48,18 @@ namespace ForumBll.Services
             userRepository.Add(user.ToDalUser());
             //uow.Commit();
         }
-        #endregion
+
+        public BllUser GetUser(string login)
+        {
+            return userRepository
+                .FirstOrDefault(u => u.Login == login)
+                .ToBllUser();
+        }
+
+        public void UpdateUser(BllUser user)
+        {
+            userRepository.Update(user.ToDalUser());
+        }
+
     }
 }

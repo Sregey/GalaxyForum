@@ -1,8 +1,7 @@
-﻿@model IEnumerable<ForumPlMvc.Models.MvcTopic>
+﻿@model IEnumerable<ForumPlMvc.Models.TopicListModel>
 
 @{
     ViewBag.Title = "Section";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Section</h2>
@@ -13,35 +12,26 @@
             @Html.DisplayNameFor(model => model.Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Text)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Date)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.IsAnswered)
+            @Html.DisplayNameFor(model => model.SectionName)
         </th>
-        <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Text)
+            @Html.DisplayFor(modelItem => item.IsAnswered, "IsTrueImage")
+            @Html.ActionLink(item.Title, "Topic", "Home", new { id = item.Id}, null)
+            <br />
+            @Html.DisplayFor(modelItem => item.AuthorLogin, "SmaleText")
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Date)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.IsAnswered)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink(item.SectionName, "TopicsInSection", "Home", new { id = item.SectionId }, null)
         </td>
     </tr>
 }

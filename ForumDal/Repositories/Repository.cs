@@ -1,25 +1,29 @@
-﻿using System;
+﻿using ForumDal.Interface.Models;
+using ForumDal.Interface.Repositories;
+using ForumDal.Mappers;
+using ForumOrm.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using ForumDal.Interface.Models;
-using ForumDal.Interface.Repositories;
-using ForumDal.Mappers;
-using ForumOrm.Models;
-using System.Diagnostics;
 
 namespace ForumDal.Repositories
 {
-    public class Repository<TDalEntity, TOrmEntity> : IRepository<TDalEntity> 
+    public class Repository<TDalEntity, TOrmEntity> : IRepository<TDalEntity>, IDisposable
         where TOrmEntity : Entity
         where TDalEntity : DalEntity
     {
-        private readonly DbContext context;
+        protected readonly DbContext context;
 
         public Repository(DbContext context)
         {
             this.context = context;
+        }
+
+        public int Count
+        {
+            get { return context.Set<TOrmEntity>().Count(); }
         }
 
         public void Add(TDalEntity entity)
@@ -37,34 +41,74 @@ namespace ForumDal.Repositories
 
         public IEnumerable<TDalEntity> GetAll()
         {
-            IEnumerable<TOrmEntity> entities = context.Set<TOrmEntity>();
-            return entities.Select(e => (TDalEntity)e.ToDalEntity());
-            //return context.Set<TOrmEntity>().Select(e => (TDalEntity)e.ToDalEntity());
+            return context.Set<TOrmEntity>()
+                .AsEnumerable()
+                .Select(e => (TDalEntity)e.ToDalEntity());
         }
 
-        public TDalEntity GetById(int id)
+        public IEnumerable<TDalEntity> GetSequence(int offset, int count)
         {
-            TOrmEntity entity = context.Set<TOrmEntity>().FirstOrDefault(e => (e.Id == id));
-            return (TDalEntity)entity.ToDalEntity();
+            return context.Set<TOrmEntity>()
+                .OrderBy(e => e.Id)
+                .Skip(offset)
+                .Take(count)
+                .AsEnumerable()
+                .Select(e => (TDalEntity)e.ToDalEntity());
+        }
+
+        public TDalEntity FirstOrDefault(Expression<Func<TDalEntity, bool>> predicate)
+        {
+            return (TDalEntity)GetBy(predicate)
+                .FirstOrDefault()
+                .ToDalEntity();
+        }
+
+        public IEnumerable<TDalEntity> GetByPredicate(Expression<Func<TDalEntity, bool>> predicate, int offset, int count)
+        {
+            return GetBy(predicate)
+                .OrderBy(e => e.Id)
+                .Skip(offset)
+                .Take(count)
+                .AsEnumerable()
+                .Select(e => (TDalEntity)e.ToDalEntity());
+        }
+
+        public virtual void Update(TDalEntity entity)
+        {
+            TOrmEntity ormEntity = context.Set<TOrmEntity>().FirstOrDefault(e => e.Id == entity.Id);
+            //context.Set<TOrmEntity>().Attach(ormEntity);
+            //context.Entry(ormEntity).State = EntityState.Modified;
+            context.Entry(ormEntity).CurrentValues.SetValues((TOrmEntity)entity.ToOrmEntity());
+            context.SaveChanges();
         }
 
         public IEnumerable<TDalEntity> GetByPredicate(Expression<Func<TDalEntity, bool>> predicate)
         {
-            ParameterExpression ormEntityParam = Expression.Parameter(typeof(TOrmEntity), predicate.Parameters[0].Name);
-
-            var parameterTypeModifier = new ParameterTypeModifier(typeof(TDalEntity), ormEntityParam);
-            Expression<Func<TOrmEntity, bool>> ormPredicate = 
-                (Expression<Func<TOrmEntity, bool>>)Expression.Lambda(parameterTypeModifier.Modify(predicate.Body), ormEntityParam);
-
-            IEnumerable<TOrmEntity> entities = context.Set<TOrmEntity>().Where(ormPredicate);
-            return entities.Select(e => (TDalEntity)e.ToDalEntity());
-            //return context.Set<TOrmEntity>().Where(ormPredicate).Select(e => (TDalEntity)e.ToDalEntity());
+            return GetBy(predicate)
+                .AsEnumerable()
+                .Select(e => (TDalEntity)e.ToDalEntity());
         }
 
-        public void Update(TDalEntity entity)
+        public bool IsExists(Expression<Func<TDalEntity, bool>> predicate)
         {
-            context.Entry((TOrmEntity)entity.ToOrmEntity()).State = EntityState.Modified;
-            context.SaveChanges();
+            return GetBy(predicate).FirstOrDefault() != null;
+        }
+
+        private IQueryable<TOrmEntity> GetBy(Expression<Func<TDalEntity, bool>> predicate)
+        {
+            ParameterExpression ormEntityParam = Expression.Parameter(typeof(TOrmEntity), predicate.Parameters[0].Name);
+
+            var parameterTypeModifier = new DalToOrmExpressionModifier(ormEntityParam);
+            Expression<Func<TOrmEntity, bool>> ormPredicate =
+                (Expression<Func<TOrmEntity, bool>>)Expression.Lambda(parameterTypeModifier.Modify(predicate.Body), ormEntityParam);
+
+            return context.Set<TOrmEntity>()
+                .Where(ormPredicate);
+        }
+
+        public void Dispose()
+        {
+            context.Dispose();
         }
     }
 }

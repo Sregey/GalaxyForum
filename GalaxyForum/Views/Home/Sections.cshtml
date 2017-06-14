@@ -6,7 +6,7 @@
 
 <h2>Sections</h2>
 
-<table class="list">
+<table class="table">
     <thead>
         <tr>
             <th>
@@ -20,7 +20,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    @Html.ActionLink(item.Name, "TopicsInSection", new { id = item.Id, page = 1 })                    
                 </td>
                 <!--<td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |

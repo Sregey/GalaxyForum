@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace ForumBll.Interface.Models
 {
@@ -21,6 +22,8 @@ namespace ForumBll.Interface.Models
         public string Profession { get; set; }
 
         public string ExtraInfo { get; set; }
+
+        public BllImage Avatar { get; set; }
 
         public DateTime RegisrationDate { get; set; }
 

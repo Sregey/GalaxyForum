@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\DalComment.cs" />
+    <Compile Include="Models\DalImage.cs" />
     <Compile Include="Models\DalRole.cs" />
     <Compile Include="Models\DalSection.cs" />
     <Compile Include="Models\DalStatus.cs" />

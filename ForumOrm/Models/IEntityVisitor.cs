@@ -13,5 +13,7 @@
         void Visit(Section section);
 
         void Visit(Status status);
+
+        void Visit(Image image);
     }
 }

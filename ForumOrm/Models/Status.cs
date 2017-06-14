@@ -6,10 +6,8 @@ namespace ForumOrm.Models
     {
         public Status()
         {
-            Topics = new List<Topic>();
+            Topics = new HashSet<Topic>();
         }
-
-        //public int Id { get; set; }
 
         public string Name { get; set; }
 

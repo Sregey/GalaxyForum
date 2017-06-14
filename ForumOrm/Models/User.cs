@@ -8,9 +8,8 @@ namespace ForumOrm.Models
         public User()
         {
             Topics = new List<Topic>();
+            AvatarId = 1;  //default avatar image id
         }
-
-        //public int Id { get; set; }
 
         public string Login { get; set; }
 
@@ -32,7 +31,11 @@ namespace ForumOrm.Models
 
         public int RoleId { get; set; }
 
+        public int AvatarId { get; set; }
+
         public virtual Role Role { get; set; }
+
+        public virtual Image Avatar { get; set; }
 
         public virtual ICollection<Topic> Topics { get; set; }
     }

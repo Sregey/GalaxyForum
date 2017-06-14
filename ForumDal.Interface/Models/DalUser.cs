@@ -22,6 +22,8 @@ namespace ForumDal.Interface.Models
 
         public DateTime RegisrationDate { get; set; }
 
+        public DalImage Avatar { get; set; }
+
         public DalRole Role { get; set; }
     }
 }
