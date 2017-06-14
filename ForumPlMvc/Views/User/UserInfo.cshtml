@@ -1,0 +1,77 @@
+﻿@model ForumPlMvc.Models.UserInfoModel
+
+@{
+    ViewBag.Title = "User Info";
+}
+
+<h2>User Info</h2>
+<hr />
+
+<div class="row">
+    <div class="col-lg-4 col-md-4 col-sm-4 offset">
+        <img src="~/Home/GetImage/@Model.AvatarId" width="200" height="200" alt="avatar" />
+    </div>
+
+    <div class="col-lg-8 col-md-8 col-sm-8 offset">
+        <table class="description">
+            <caption>Main</caption>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.Login)</td>
+                <td>@Html.DisplayFor(model => model.Login)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.Email)</td>
+                <td>@Html.DisplayFor(model => model.Email)</td>
+            </tr>
+        </table>
+
+        @if ((Model.Name != null) ||
+                    (Model.LastName != null) ||
+                    (Model.FatherName != null) ||
+                    (Model.Profession != null))
+        {
+            <table class="description">
+                <caption>Personal info</caption>
+                @if (Model.Name != null)
+                {
+                    <tr>
+                        <td>@Html.DisplayNameFor(model => model.Name)</td>
+                        <td>@Html.DisplayFor(model => model.Name)</td>
+                    </tr>
+                }
+                @if (Model.LastName != null)
+                {
+                    <tr>
+                        <td>@Html.DisplayNameFor(model => model.LastName)</td>
+                        <td>@Html.DisplayFor(model => model.LastName)</td>
+                    </tr>
+                }
+                @if (Model.FatherName != null)
+                {
+                    <tr>
+                        <td>@Html.DisplayNameFor(model => model.FatherName)</td>
+                        <td>@Html.DisplayFor(model => model.FatherName)</td>
+                    </tr>
+                }
+                @if (Model.Profession != null)
+                {
+                    <tr>
+                        <td>@Html.DisplayNameFor(model => model.Profession)</td>
+                        <td>@Html.DisplayFor(model => model.Profession)</td>
+                    </tr>
+                }
+            </table>
+        }
+
+        @if (Model.ExtraInfo != null)
+        {
+            <table class="description">
+                <caption>Other</caption>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.ExtraInfo)</td>
+                    <td>@Html.DisplayFor(model => model.ExtraInfo)</td>
+                </tr>
+            </table>
+        }
+    </div>
+</div>
