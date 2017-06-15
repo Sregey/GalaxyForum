@@ -10,5 +10,7 @@ namespace ForumBll.Interface.Services
         bool RegisterUser(BllUser user);
 
         BllUser Login(string email, string password);
+
+        bool ChangePassword(string login, string oldPassword, string newPassword);
     }
 }

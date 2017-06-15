@@ -1,0 +1,19 @@
+﻿@model IEnumerable<ForumPlMvc.Models.TopicListModel>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsAnswered, "IsTrueImage")
+            @Html.ActionLink(item.Title, "Topic", "Home", new { id = item.Id }, null)
+            <br />
+            @Html.DisplayFor(modelItem => item.AuthorLogin, "SmaleText")
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.ActionLink(item.SectionName, "TopicsInSection", "Home", new { id = item.SectionId }, null)
+        </td>
+    </tr>
+}

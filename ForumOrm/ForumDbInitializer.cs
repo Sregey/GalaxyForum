@@ -2,6 +2,8 @@
 using System.Data.Entity;
 using ForumOrm.Models;
 using System.IO;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace ForumOrm
 {
@@ -48,12 +50,15 @@ namespace ForumOrm
 
         private void InitializeUsers(ForumDbContext context)
         {
+            byte[] defaultPassword = new SHA256Managed()
+                .ComputeHash(Encoding.Unicode.GetBytes("12345678"));
+
             context.Users.Add(new User()
             {
                 Id = 1,
                 Login = "User_1",
                 Email = "jhon@mail.ru",
-                Password = "12345678",
+                Password = defaultPassword,
                 Name = "Jhon",
                 LastName = "Black",
                 Profession = "Programmer",
@@ -66,7 +71,7 @@ namespace ForumOrm
                 Id = 2,
                 Login = "User_2",
                 Email = "tom@mail.ru",
-                Password = "12345678",
+                Password = defaultPassword,
                 Name = "Tom",
                 LastName = "Brown",
                 Profession = "Cook",
@@ -79,7 +84,7 @@ namespace ForumOrm
                 Id = 3,
                 Login = "User_3",
                 Email = "vasya@gmail.com",
-                Password = "12345678",
+                Password = defaultPassword,
                 Name = "Vasiliy",
                 LastName = "Pupkin",
                 FatherName = "Michilovich",
@@ -92,7 +97,7 @@ namespace ForumOrm
                 Id = 4,
                 Login = "Moderator_1",
                 Email = "andrew@mail.ru",
-                Password = "12345678",
+                Password = defaultPassword,
                 Name = "Andrew",
                 LastName = "Arnold",
                 Profession = "Moderator",
@@ -104,7 +109,7 @@ namespace ForumOrm
                 Id = 5,
                 Login = "Moderator_2",
                 Email = "mail@mail.ru",
-                Password = "12345678",
+                Password = defaultPassword,
                 Name = "Emma",
                 LastName = "Ford",
                 Profession = "Plumber",
@@ -116,7 +121,7 @@ namespace ForumOrm
                 Id = 6,
                 Login = "MainAdmin",
                 Email = "main.admin@mail.ru",
-                Password = "12345678",
+                Password = defaultPassword,
                 Name = "Jacob",
                 LastName = "Kirk",
                 Profession = "God",

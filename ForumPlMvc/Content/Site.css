@@ -173,7 +173,7 @@ table.comments .login {
     min-height: 100px;
 }
 
-textarea.comment {
+textarea.simple-size {
     min-width: 100px;
     max-width: 100%;
     min-height: 100px;

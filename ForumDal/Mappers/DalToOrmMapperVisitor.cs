@@ -19,9 +19,6 @@ namespace ForumDal.Mappers
                 TopicId = dalComment.Topic.Id,
                 SenderId = dalComment.Sender.Id,
                 StatusId = dalComment.Status.Id,
-                //Topic = (Topic)dalComment.Topic.ToOrmEntity(),
-                //Sender = (User)dalComment.Sender.ToOrmEntity(),
-                //Status = (Status)dalComment.Status.ToOrmEntity(),
             };
         }
 
@@ -76,9 +73,12 @@ namespace ForumDal.Mappers
                 Text = dalTopic.Text,
                 Date = dalTopic.Date,
                 IsAnswered = dalTopic.IsAnswered,
-                Section = (Section)dalTopic.Section.ToOrmEntity(),
-                Author = (User)dalTopic.Author.ToOrmEntity(),
-                Status = (Status)dalTopic.Status.ToOrmEntity(),
+                SectionId = dalTopic.Section.Id,
+                AuthorId = dalTopic.Author.Id,
+                StatusId = dalTopic.Status.Id,
+                //Section = (Section)dalTopic.Section.ToOrmEntity(),
+                //Author = (User)dalTopic.Author.ToOrmEntity(),
+                //Status = (Status)dalTopic.Status.ToOrmEntity(),
             };
         }
 
@@ -97,7 +97,6 @@ namespace ForumDal.Mappers
                 Profession = dalUser.Profession,
                 ExtraInfo = dalUser.ExtraInfo,
                 AvatarId = dalUser.Avatar.Id,
-                //Avatar = (Image)dalUser.Avatar.ToOrmEntity(),
                 RoleId = dalUser.Role.Id,
             };
         }

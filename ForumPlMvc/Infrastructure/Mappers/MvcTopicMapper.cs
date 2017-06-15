@@ -63,5 +63,15 @@ namespace ForumPlMvc.Infrastructure.Mappers
                 Comments = bllTopic.Comments.Select(c => c.ToCommentModel()),
             };
         }
+
+        public static BllTopic ToBllTopic(this CreateTopicModel topic)
+        {
+            return new BllTopic
+            {
+                Title = topic.Title,
+                Text = topic.Text,
+                Section = new BllSection() { Name = topic.Section},
+            };
+        }
     }
 }

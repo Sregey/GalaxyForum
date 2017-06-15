@@ -4,7 +4,12 @@
     ViewBag.Title = "Section";
 }
 
-<h2>Section</h2>
+<h2>Topics</h2>
+
+@if (Request.IsAuthenticated)
+{
+    @Html.ActionLink("Add Topic", "CreateTopic", "User", null, new { @class = "btn btn-default btn-sm offset" })
+}
 
 <table class="table">
     <tr>
@@ -19,23 +24,24 @@
         </th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsAnswered, "IsTrueImage")
-            @Html.ActionLink(item.Title, "Topic", "Home", new { id = item.Id}, null)
-            <br />
-            @Html.DisplayFor(modelItem => item.AuthorLogin, "SmaleText")
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.ActionLink(item.SectionName, "TopicsInSection", "Home", new { id = item.SectionId }, null)
-        </td>
-    </tr>
-}
-
+    <tbody id="ajax-result">
+        @Html.Partial("_Topics", Model)
+    </tbody>
 </table>
 
-@Html.Partial("_Pagination", "Section")
+<div id="loading">
+    <p>Loading...</p>
+</div>
+
+<noscript>
+    @Html.Partial("_Pagination")
+</noscript>
+
+<div id="ajax">
+    @Html.Partial("_AjaxPagination", "_Topics")
+</div>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/ajax")
+}

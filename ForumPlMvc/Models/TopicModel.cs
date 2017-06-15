@@ -12,7 +12,13 @@ namespace ForumPlMvc.Models
 
         [Required(ErrorMessage = "Text is required.")]
         [MinLength(5, ErrorMessage = "Minimum length is 5 characters.")]
+        [DataType(DataType.MultilineText)]
         public string Text { get; set; }
+
+        [Required(ErrorMessage = "Section is required.")]
+        public string Section { get; set; }
+
+        public IEnumerable<string> Sections { get; set; }
     }
 
     public class TopicListModel

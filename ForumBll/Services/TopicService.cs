@@ -12,16 +12,23 @@ namespace ForumBll.Services
     public class TopicService : ITopicService
     {
         private readonly IRepository<DalTopic> topicRepository;
+        private readonly IRepository<DalSection> sectionRepository;
 
-        public TopicService(IRepository<DalTopic> repository)
+        public TopicService(IRepository<DalTopic> topicRepository,
+            IRepository<DalSection> sectionRepository)
         {
-            this.topicRepository = repository;
+            this.topicRepository = topicRepository;
+            this.sectionRepository = sectionRepository;
         }
 
         public void AddTopic(BllTopic topic)
         {
             topic.Date = DateTime.Now;
-            throw new NotImplementedException();
+            topic.Section = sectionRepository
+                .FirstOrDefault(s => s.Name == topic.Section.Name)
+                .ToBllSection();
+            topic.Status = new BllStatus() { Id = (int)StatusEnum.Raw };
+            topicRepository.Add(topic.ToDalTopic());
         }
 
         public void DeleteTopic(int id)
@@ -46,6 +53,13 @@ namespace ForumBll.Services
             return topicRepository
                 .GetByPredicate(topic => topic.Section.Id == sectionId, 0, topicRepository.Count)
                 .Count();
+        }
+
+        public IEnumerable<BllSection> GetAllSections()
+        {
+            return sectionRepository
+                .GetSequence(0, sectionRepository.Count)
+                .Select(section => section.ToBllSection());
         }
     }
 }

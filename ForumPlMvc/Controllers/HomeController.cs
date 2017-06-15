@@ -73,8 +73,9 @@ namespace ForumPlMvc.Controllers
         {
             if (id.HasValue)
             {
-                BllSection section = sectionService.GetSection(id.Value);
+                ViewBag.AjaxId = id.Value;
 
+                BllSection section = sectionService.GetSection(id.Value);
                 return View("Topics", this.GetItemsOnPage(section.Topics, page, TOPICS_PER_PAGE)
                     .Select(bllTopic => bllTopic.ToTopicListModel()));
             }
@@ -86,6 +87,17 @@ namespace ForumPlMvc.Controllers
             if (id.HasValue)
             {
                 return View(GetTopic(id.Value, page).ToTopicDitailsModel());
+            }
+            return View("Error");
+        }
+
+        public ActionResult _Topics(int? id, int? page)
+        {
+            if (id.HasValue)
+            {
+                BllSection section = sectionService.GetSection(id.Value);
+                return PartialView(this.GetItemsOnPage(section.Topics, page, TOPICS_PER_PAGE)
+                    .Select(bllTopic => bllTopic.ToTopicListModel()));
             }
             return View("Error");
         }

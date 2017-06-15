@@ -7,6 +7,8 @@ namespace ForumBll.Interface.Services
     {
         BllTopic GetTopic(int id);
 
+        IEnumerable<BllSection> GetAllSections();
+
         IEnumerable<BllTopic> GetTopicsFromSection(int sectionId, int offset, int count);
 
         int GetTopicCountInSection(int sectionId);

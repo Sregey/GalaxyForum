@@ -18,12 +18,15 @@ namespace ForumPlMvc.Controllers
 
         private readonly IUserService userService;
         private readonly ICommentService commentService;
+        private readonly ITopicService topicService;
 
         public UserController(IUserService userService, 
-            ICommentService commentService)
+            ICommentService commentService,
+            ITopicService topicService)
         {
             this.userService = userService;
             this.commentService = commentService;
+            this.topicService = topicService;
         }
 
         //public ActionResult UserInfo()
@@ -34,7 +37,6 @@ namespace ForumPlMvc.Controllers
         public ActionResult Topics(int? page)
         {
             BllUser user = userService.GetUser(User.Identity.Name);
-
             return View("Topics", this.GetItemsOnPage(user.Topics, page, TOPICS_PER_PAGE)
                 .Select(bllTopic => bllTopic.ToTopicListModel()));
         }
@@ -56,6 +58,14 @@ namespace ForumPlMvc.Controllers
                 .ToUserSettingModel());
         }
 
+        public ActionResult _Topics(int? page)
+        {
+            BllUser user = userService.GetUser(User.Identity.Name);
+
+            return PartialView(this.GetItemsOnPage(user.Topics, page, TOPICS_PER_PAGE)
+                .Select(bllTopic => bllTopic.ToTopicListModel()));
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Setting(UserSettingModel newSetting)
@@ -73,18 +83,23 @@ namespace ForumPlMvc.Controllers
 
         public ActionResult CreateTopic()
         {
-            return View();
+            var topic = new CreateTopicModel();
+            topic.Sections = topicService.GetAllSections().Select(s => s.Name);
+            return View(topic);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateTopic(MvcTopic topic)
+        public ActionResult CreateTopic(CreateTopicModel topic)
         {
             if (ModelState.IsValid)
             {
-                return Redirect("Section\\" + 3);
+                BllTopic bllTopic = topic.ToBllTopic();
+                bllTopic.Author = userService.GetUser(User.Identity.Name);
+                topicService.AddTopic(bllTopic);
+                return RedirectToAction("Topics");
             }
-            return View();
+            return View(topic);
         }
 
         [HttpPost]
@@ -99,7 +114,7 @@ namespace ForumPlMvc.Controllers
 
                 return RedirectToAction("Topic", "Home", new { id = comment.TopicId });
             }
-            return View();
+            return View(comment);
         }
     }
 }

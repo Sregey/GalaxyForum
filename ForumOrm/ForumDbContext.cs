@@ -42,6 +42,12 @@ namespace ForumOrm
                 .HasColumnType("datetime2")
                 .HasPrecision(0);
 
+            modelBuilder.Entity<User>()
+                .Property(u => u.Password)
+                .IsRequired()
+                .HasColumnType("binary")
+                .HasMaxLength(32);
+
             modelBuilder.Entity<Role>()
                 .Property(u => u.Name)
                 .IsRequired()
@@ -74,6 +80,11 @@ namespace ForumOrm
             modelBuilder.Entity<Topic>()
                 .Property(u => u.Text)
                 .IsRequired();
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Topics)
+                .WithRequired(t => t.Author)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Image>()
                 .Property(i => i.Size)

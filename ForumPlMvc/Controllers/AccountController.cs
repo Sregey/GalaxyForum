@@ -74,5 +74,26 @@ namespace ForumPlMvc.Controllers
             FormsAuthentication.SignOut();
             return RedirectToAction("Login");
         }
+
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePassword(ChangePasswordModel pswModel)
+        {
+            if (ModelState.IsValid)
+            {
+                if (accountService.ChangePassword(User.Identity.Name, pswModel.OldPassword, pswModel.NewPassword))
+                {
+                    return RedirectToAction("UserInfo", "User");
+                }
+                else
+                    ModelState.AddModelError("", "You input incorrect old password.");
+            }
+            return View();
+        }
     }
 }

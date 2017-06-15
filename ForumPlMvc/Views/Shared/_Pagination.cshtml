@@ -1,6 +1,4 @@
-﻿@model String
-
-<div style="text-align:center;">
+﻿<div style="text-align:center;">
     <ul class="pagination">
         @if (ViewBag.Page == 1)
         {
@@ -11,7 +9,7 @@
         else
         {
             <li>
-                @Html.ActionLink("«", Model, new { page = ViewBag.Page - 1 })
+                @Html.ActionLink("«", null, new { page = ViewBag.Page - 1 })
             </li>
         }
 
@@ -26,7 +24,7 @@
             else
             {
                 <li>
-                    @Html.ActionLink(i.ToString(), Model, new { page = i })
+                    @Html.ActionLink(i.ToString(), null, new { page = i })
                 </li>
             }
         }
@@ -40,7 +38,7 @@
         else
         {
             <li>
-                @Html.ActionLink("»", Model, new { page = ViewBag.Page + 1 })
+                @Html.ActionLink("»", null, routeValues: new { page = ViewBag.Page + 1 })
             </li>
         }
     </ul>
