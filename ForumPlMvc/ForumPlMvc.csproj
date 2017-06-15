@@ -178,17 +178,20 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ControllerExtention.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\DateComparer.cs" />
     <Compile Include="Infrastructure\Mappers\MvcCommentMapper.cs" />
     <Compile Include="Infrastructure\Mappers\MvcModelMapper.cs" />
     <Compile Include="Infrastructure\Mappers\MvcTopicMapper.cs" />
     <Compile Include="Infrastructure\Mappers\MvcUserMapper.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
     <Compile Include="Models\AccountModel.cs" />
+    <Compile Include="Models\CommentModel.cs" />
     <Compile Include="Models\MvcComment.cs" />
     <Compile Include="Models\MvcRole.cs" />
     <Compile Include="Models\MvcSection.cs" />
@@ -222,11 +225,14 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\ajax-tools.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -251,7 +257,7 @@
     <Content Include="Views\User\CreateTopic.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Sections.cshtml" />
-    <Content Include="Views\Home\TopicsInSection.cshtml" />
+    <Content Include="Views\Shared\Topics.cshtml" />
     <Content Include="Views\Home\Users.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
@@ -265,6 +271,9 @@
     <Content Include="Views\Home\Topic.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SmaleText.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\IsTrueImage.cshtml" />
+    <Content Include="Views\User\_AddComment.cshtml" />
+    <Content Include="Views\Home\_Comments.cshtml" />
+    <Content Include="Views\Shared\_AjaxPagination.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

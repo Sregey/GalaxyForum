@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace ForumBll.Interface.Models
@@ -28,5 +29,7 @@ namespace ForumBll.Interface.Models
         public DateTime RegisrationDate { get; set; }
 
         public BllRole Role { get; set; }
+
+        public virtual IEnumerable<BllTopic> Topics { get; set; }
     }
 }

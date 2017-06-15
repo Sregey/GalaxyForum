@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ForumDal.Interface.Models
 {
@@ -17,5 +18,7 @@ namespace ForumDal.Interface.Models
         public DalUser Author { get; set; }
 
         public DalStatus Status { get; set; }
+
+        public IEnumerable<DalComment> Comments { get; set; }
     }
 }

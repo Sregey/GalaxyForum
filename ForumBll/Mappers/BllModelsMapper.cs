@@ -1,4 +1,5 @@
-﻿using ForumBll.Interface.Models;
+﻿using System.Linq;
+using ForumBll.Interface.Models;
 using ForumDal.Interface.Models;
 
 namespace ForumBll.Mappers
@@ -22,7 +23,8 @@ namespace ForumBll.Mappers
                 Profession = dalUser.Profession,
                 Avatar = dalUser.Avatar.ToBllImage(),
                 ExtraInfo = dalUser.ExtraInfo,
-                Role = dalUser.Role.ToBllRole()
+                Role = dalUser.Role.ToBllRole(),
+                Topics = dalUser.Topics.Select(t => t.ToBllTopic()),
             };
         }
 
@@ -60,7 +62,8 @@ namespace ForumBll.Mappers
                 IsAnswered = dalTopic.IsAnswered,
                 Section = dalTopic.Section.ToBllSection(),
                 Author = dalTopic.Author.ToBllUser(),
-                Status = dalTopic.Status.ToBllStatus()
+                Status = dalTopic.Status.ToBllStatus(),
+                Comments = dalTopic.Comments.Select(c => c.ToBllComment()),
             };
         }
 
@@ -105,7 +108,7 @@ namespace ForumBll.Mappers
                 Text = bllComment.Text,
                 Date = bllComment.Date,
                 IsAnswer = bllComment.IsAnswer,
-                Topic = bllComment.Topic.ToDalTopic(),
+                Topic = new DalTopic() { Id = bllComment.Topic.Id},
                 Sender = bllComment.Sender.ToDalUser(),
                 Status = bllComment.Status.ToDalStatus()
             };
@@ -164,7 +167,8 @@ namespace ForumBll.Mappers
             return new BllSection()
             {
                 Id = dalSection.Id,
-                Name = dalSection.Name
+                Name = dalSection.Name,
+                Topics = dalSection.Topics.Select(t => t.ToBllTopic()),
             };
         }
 

@@ -16,9 +16,12 @@ namespace ForumDal.Mappers
                 Text = dalComment.Text,
                 Date = dalComment.Date,
                 IsAnswer = dalComment.IsAnswer,
-                Topic = (Topic)dalComment.Topic.ToOrmEntity(),
-                Sender = (User)dalComment.Sender.ToOrmEntity(),
-                Status = (Status)dalComment.Status.ToOrmEntity(),
+                TopicId = dalComment.Topic.Id,
+                SenderId = dalComment.Sender.Id,
+                StatusId = dalComment.Status.Id,
+                //Topic = (Topic)dalComment.Topic.ToOrmEntity(),
+                //Sender = (User)dalComment.Sender.ToOrmEntity(),
+                //Status = (Status)dalComment.Status.ToOrmEntity(),
             };
         }
 

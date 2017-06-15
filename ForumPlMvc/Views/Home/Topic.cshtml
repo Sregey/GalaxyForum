@@ -1,0 +1,60 @@
+﻿@using ForumPlMvc.Models
+@model ForumPlMvc.Models.TopicDitailsModel
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+<h2>@Html.DisplayFor(model => model.Title)</h2>
+<hr />
+
+<div>
+    <div class="col-md-10">
+        <table class="comments">
+            <tr>
+                <td>
+                    <img class="camp_logo" src="~/Home/GetImage/@Model.Author.AvatarId" />
+                    <br />
+                    <br />
+                    @Html.ActionLink(Model.Author.Login, "UserInfo", "User", new { id = Model.Author.Id }, new { @class = "login" })
+                </td>
+                <td class="text">
+                    @Html.DisplayFor(model => model.Text)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Date)
+                </td>
+            </tr>
+        </table>
+
+        <br />
+        <br />
+
+        <table class="comments" id="ajax-result">
+            @Html.Partial("_Comments", @Model.Comments)
+        </table>
+
+        <div id="loading">
+            <p>Loading...</p>
+        </div>
+
+        <noscript>
+            @Html.Partial("_Pagination", "Topic")
+        </noscript>
+        
+        <div id="ajax">
+            @{ ViewBag.AjaxId = Model.Id; }
+            @Html.Partial("_AjaxPagination", "_Comments")
+        </div>
+
+        @Html.Partial("~/Views/User/_AddComment.cshtml", new AddCommentModel() { TopicId = Model.Id })
+
+    </div>
+
+</div>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/ajax")
+}
+

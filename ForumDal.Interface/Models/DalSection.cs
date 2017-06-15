@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ForumDal.Interface.Models
 {
@@ -6,6 +7,6 @@ namespace ForumDal.Interface.Models
     {
         public string Name { get; set; }
 
-        //public
+        public IEnumerable<DalTopic> Topics { get; set; }
     }
 }

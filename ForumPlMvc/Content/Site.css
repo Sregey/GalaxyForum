@@ -28,9 +28,7 @@
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
+input, select {
     max-width: 280px;
 }
 
@@ -133,18 +131,66 @@ table.description td:first-child {
 }
 /*-------.account-menu---------*/
 
+/*-------.comments---------*/
+table.comments {
+    border: 1px solid gray;
+    border-collapse: collapse;
+    background: white;
+    width: 100%;
+}
+table.comments tr {
+    border-bottom: 1px solid gray;
+}
+table.comments td {
+    vertical-align: top;
+    padding: 8px;
+}
+table.comments td.text {
+    word-break: break-all;
+    width: 1000px;
+    vertical-align: top;
+}
+table.comments img.camp_logo {
+    height: 50px;
+    width: 50px;
+}
+table.comments .login {
+    font-weight: bold;
+    color: black;
+}
+/*-------.comments---------*/
+
 .offset {
     margin: 20px 0;
 }
 
-.topic-text {
+.topic-text, .bordered {
     border: 1px solid gray;
-    min-height: 100px;
     padding: 5px;
+}
+
+.topic-text {
+    min-height: 100px;
+}
+
+textarea.comment {
+    min-width: 100px;
+    max-width: 100%;
+    min-height: 100px;
 }
 
 .smale-text {
     font-size: 12px;
     padding: 5px;
     color: gray;
+}
+
+#ajax {
+    display: none;
+}
+
+#loading {
+    display: none;
+    color: red;
+    font-weight: bold;
 }

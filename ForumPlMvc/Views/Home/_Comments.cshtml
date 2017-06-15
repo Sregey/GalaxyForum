@@ -1,0 +1,26 @@
+﻿@model IEnumerable<ForumPlMvc.Models.CommentModel>
+
+@foreach (var item in Model)
+            {
+    <tr>
+        <td>
+            <img class="camp_logo" src="~/Home/GetImage/@item.Sender.AvatarId" />
+        </td>
+        <td class="text">
+            @Html.ActionLink(item.Sender.Login, "UserInfo", "User", new { id = item.Sender.Id }, new { @class = "login" })
+            <br />
+            @if (item.IsAnswer)
+            {
+                <div class="bordered">
+                    @Html.DisplayFor(modelItem => item.IsAnswer, "IsTrueImage")
+                    @Html.Raw("Marked as good answer.")
+                </div>
+                            <br />
+            }
+            @Html.DisplayFor(modelItem => item.Text)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+    </tr>
+}

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Linq;
 using ForumDal.Interface.Models;
 using ForumOrm.Models;
 using System.IO;
@@ -59,7 +59,8 @@ namespace ForumDal.Mappers
             DalEntity = new DalSection()
             {
                 Id = section.Id,
-                Name = section.Name
+                Name = section.Name,
+                Topics = section.Topics.Select(t => (DalTopic)t.ToDalEntity()),
             };
         }
 
@@ -75,6 +76,7 @@ namespace ForumDal.Mappers
                 Author = (DalUser)topic.Author.ToDalEntity(),
                 Status = (DalStatus)topic.Status.ToDalEntity(),
                 IsAnswered = topic.IsAnswered,
+                Comments = topic.Comments.Select(c => (DalComment)c.ToDalEntity()),
             };
         }
 
@@ -94,6 +96,7 @@ namespace ForumDal.Mappers
                 Profession = user.Profession,
                 ExtraInfo = user.ExtraInfo,
                 Role = (DalRole)user.Role.ToDalEntity(),
+                Topics = user.Topics.Select(t => (DalTopic)t.ToDalEntity())
             };
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ForumBll.Interface.Models
 {
@@ -19,5 +20,7 @@ namespace ForumBll.Interface.Models
         public BllUser Author { get; set; }
 
         public BllStatus Status { get; set; }
+
+        public IEnumerable<BllComment> Comments { get; set; }
     }
 }

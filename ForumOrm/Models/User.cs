@@ -7,7 +7,7 @@ namespace ForumOrm.Models
     {
         public User()
         {
-            Topics = new List<Topic>();
+            Topics = new HashSet<Topic>();
             AvatarId = 1;  //default avatar image id
         }
 

@@ -39,5 +39,12 @@ namespace ForumBll.Services
                 .GetSequence(0, sectionRepository.Count)
                 .Select(section => section.ToBllSection());
         }
+
+        public BllSection GetSection(int id)
+        {
+            return sectionRepository
+                .FirstOrDefault(s => s.Id == id)
+                .ToBllSection();
+        }
     }
 }

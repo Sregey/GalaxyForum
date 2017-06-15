@@ -165,7 +165,7 @@ namespace ForumOrm
             {
                 Id = 2,
                 Text = "You should oil pan and scramd eggs on it.",
-                Date = DateTime.Now,
+                Date = DateTime.Now.AddMinutes(5),
                 TopicId = 1,
                 SenderId = 2,
                 StatusId = 3,
@@ -184,7 +184,7 @@ namespace ForumOrm
             {
                 Id = 4,
                 Text = "What is a brand of your car?",
-                Date = DateTime.Now,
+                Date = DateTime.Now.AddMinutes(5),
                 TopicId = 2,
                 SenderId = 1,
                 StatusId = 3
@@ -193,7 +193,7 @@ namespace ForumOrm
             {
                 Id = 5,
                 Text = "BMW",
-                Date = DateTime.Now,
+                Date = DateTime.Now.AddMinutes(10),
                 TopicId = 2,
                 SenderId = 6,
                 StatusId = 1

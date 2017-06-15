@@ -42,12 +42,14 @@ namespace ForumDependencyResolver
             kernel.Bind<ITopicService>().To<TopicService>();
             kernel.Bind<IAccountService>().To<AccountService>();
             kernel.Bind<IImageService>().To<ImageService>();
+            kernel.Bind<ICommentService>().To<CommentService>();
 
             //Repositories
             kernel.Bind<IRepository<DalUser>>().To<UserRepository>();
             kernel.Bind<IRepository<DalSection>>().To<Repository<DalSection, Section>>();
             kernel.Bind<IRepository<DalTopic>>().To<Repository<DalTopic, Topic>>();
             kernel.Bind<IRepository<DalImage>>().To<Repository<DalImage, Image>>();
+            kernel.Bind<IRepository<DalComment>>().To<Repository<DalComment, Comment>>();
 
             //kernel.Bind<IRepository<DalUser>>().To<UserRepository>();
             //kernel.Bind<IUserRepository>().To<UserRepository>();

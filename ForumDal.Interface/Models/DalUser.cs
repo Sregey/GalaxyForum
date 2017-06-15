@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ForumDal.Interface.Models
 {
@@ -25,5 +26,7 @@ namespace ForumDal.Interface.Models
         public DalImage Avatar { get; set; }
 
         public DalRole Role { get; set; }
+
+        public virtual IEnumerable<DalTopic> Topics { get; set; }
     }
 }

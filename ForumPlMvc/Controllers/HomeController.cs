@@ -5,14 +5,17 @@ using System.Web;
 using System.Web.Mvc;
 using ForumBll.Interface.Services;
 using ForumBll.Interface.Models;
+using ForumPlMvc.Infrastructure;
 using ForumPlMvc.Infrastructure.Mappers;
 using ForumPlMvc.Models;
+using System.Diagnostics;
 
 namespace ForumPlMvc.Controllers
 {
     public class HomeController : Controller
     {
         private const int TOPICS_PER_PAGE = 1;
+        private const int COMMENTS_PER_PAGE = 1;
 
         private readonly IUserService userService;
         private readonly ISectionService sectionService;
@@ -41,7 +44,6 @@ namespace ForumPlMvc.Controllers
         public ActionResult Users()
         {
             IEnumerable<BllUser> users = userService.GetAllUsers();
-            //List<BllUser> list = users.ToList();
             return View(users.Select(bllUser => bllUser.ToUserInfoModel()));
         }
 
@@ -53,9 +55,6 @@ namespace ForumPlMvc.Controllers
                 return new FileStreamResult(image.Content, "image//" + image.Content);
             }
             return null;
-
-            //DateTime t;
-            //t.Ho
         }
 
         public ActionResult MainPage()
@@ -63,7 +62,6 @@ namespace ForumPlMvc.Controllers
             return View();
         }
 
-        [Authorize]
         public ActionResult Sections()
         {
             return View(sectionService
@@ -75,32 +73,30 @@ namespace ForumPlMvc.Controllers
         {
             if (id.HasValue)
             {
-                //BllSection section;
-                //section.
+                BllSection section = sectionService.GetSection(id.Value);
 
-                int topicCount = topicService.GetTopicCountInSection(id.Value);
-                int pageCount = (int)Math.Ceiling(topicCount / (double)TOPICS_PER_PAGE);
-                if (!page.HasValue || (page.Value <= 0) || (page.Value > pageCount))
-                    page = 1;
-
-                ViewBag.Page = page.Value;
-                ViewBag.PageCount = pageCount;
-
-                return View(topicService
-                    .GetTopicsFromSection(
-                        id.Value,
-                        (page.Value - 1) * TOPICS_PER_PAGE,
-                        TOPICS_PER_PAGE)
+                return View("Topics", this.GetItemsOnPage(section.Topics, page, TOPICS_PER_PAGE)
                     .Select(bllTopic => bllTopic.ToTopicListModel()));
             }
             return View("Error");
         }
 
-        public ActionResult Topic(int? id)
+        public ActionResult Topic(int? id, int? page)
         {
             if (id.HasValue)
             {
-                return View(topicService.GetTopic(id.Value).ToTopicDitailsModel());
+                return View(GetTopic(id.Value, page).ToTopicDitailsModel());
+            }
+            return View("Error");
+        }
+
+        public ActionResult _Comments(int? id, int? page)
+        {
+            if (id.HasValue)
+            {
+                return PartialView(GetTopic(id.Value, page)
+                    .Comments
+                    .Select(c => c.ToCommentModel()));
             }
             return View("Error");
         }
@@ -117,6 +113,16 @@ namespace ForumPlMvc.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        private BllTopic GetTopic(int id, int? page)
+        {
+            BllTopic topic = topicService.GetTopic(id);
+
+            topic.Comments = this.GetItemsOnPage(
+                topic.Comments.OrderBy(c => c.Date, new DateComparer()), page, COMMENTS_PER_PAGE);
+
+            return topic;
         }
     }
 }
