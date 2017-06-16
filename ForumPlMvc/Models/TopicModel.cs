@@ -4,8 +4,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ForumPlMvc.Models
 {
-    public class CreateTopicModel
+    public class CreateEditTopicModel
     {
+        public int Id { get; set; }
+
+        public int AuthorId { get; set; }
+
         [Required(ErrorMessage = "Title is required.")]
         [MinLength(5, ErrorMessage = "Minimum length is 5 characters.")]
         public string Title { get; set; }
@@ -37,6 +41,8 @@ namespace ForumPlMvc.Models
         public string SectionName { get; set; }
 
         public int SectionId { get; set; }
+
+        public string Status { get; set; }
     }
 
     public class TopicDitailsModel

@@ -39,7 +39,7 @@ namespace ForumPlMvc.Infrastructure.Mappers
 
         //#endregion
     
-        #region Role Mapper
+        /*#region Role Mapper
 
         public static BllRole ToBllRole(this MvcRole mvcRole)
         {
@@ -92,18 +92,18 @@ namespace ForumPlMvc.Infrastructure.Mappers
                 Id = mvcSection.Id,
                 Name = mvcSection.Name
             };
-        }
+        }*/
 
-        public static MvcSection ToMvcSection(this BllSection bllSection)
+        public static SectionModel ToSectionModel(this BllSection bllSection)
         {
-            return new MvcSection()
+            return new SectionModel()
             {
                 Id = bllSection.Id,
                 Name = bllSection.Name
             };
         }
 
-        #endregion
+        //#endregion
 
         #region Image Mapper
 

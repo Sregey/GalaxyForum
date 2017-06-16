@@ -15,6 +15,7 @@ namespace ForumPlMvc.Infrastructure
             this.kernel = kernel;
             kernel.ConfigurateResolverWeb();
         }
+
         public object GetService(Type serviceType)
         {
             return kernel.TryGet(serviceType);

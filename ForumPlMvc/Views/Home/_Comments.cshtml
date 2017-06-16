@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ForumPlMvc.Models.CommentModel>
+﻿@using ForumPlMvc.Healpers
+@model IEnumerable<ForumPlMvc.Models.CommentModel>
 
 @foreach (var item in Model)
             {
@@ -15,9 +16,14 @@
                     @Html.DisplayFor(modelItem => item.IsAnswer, "IsTrueImage")
                     @Html.Raw("Marked as good answer.")
                 </div>
-                            <br />
+                <br />
             }
             @Html.DisplayFor(modelItem => item.Text)
+            @if ((ViewBag.IsMyTopic || this.IsAdminOrModerator()) && !item.IsAnswer)
+            {             
+                <br />
+                @Html.ActionLink("Mark as good", "MarkCommentAsGood", "User", new { id = item.Id }, new { @class = "btn btn-default btn-sm" })
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Date)

@@ -15,7 +15,7 @@ namespace ForumPlMvc.Controllers
     public class HomeController : Controller
     {
         private const int TOPICS_PER_PAGE = 1;
-        private const int COMMENTS_PER_PAGE = 1;
+        private const int COMMENTS_PER_PAGE = 2;
 
         private readonly IUserService userService;
         private readonly ISectionService sectionService;
@@ -43,8 +43,9 @@ namespace ForumPlMvc.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Users()
         {
-            IEnumerable<BllUser> users = userService.GetAllUsers();
-            return View(users.Select(bllUser => bllUser.ToUserInfoModel()));
+            //IEnumerable<BllUser> users = userService.GetAllUsers();
+            //return View(users.Select(bllUser => bllUser.ToUserInfoModel()));
+            return RedirectToAction("About");
         }
 
         public FileStreamResult GetImage(int? id)
@@ -57,16 +58,11 @@ namespace ForumPlMvc.Controllers
             return null;
         }
 
-        public ActionResult MainPage()
-        {
-            return View();
-        }
-
         public ActionResult Sections()
         {
             return View(sectionService
                 .GetAllSections()
-                .Select(bllSection => bllSection.ToMvcSection()));
+                .Select(bllSection => bllSection.ToSectionModel()));
         }
 
         public ActionResult TopicsInSection(int? id, int? page)
@@ -74,8 +70,10 @@ namespace ForumPlMvc.Controllers
             if (id.HasValue)
             {
                 ViewBag.AjaxId = id.Value;
+                ViewBag.IsShowStatus = false;
 
                 BllSection section = sectionService.GetSection(id.Value);
+                section.Topics = section.Topics.Where(t => t.Status.Id == (int)StatusEnum.Accepted);
                 return View("Topics", this.GetItemsOnPage(section.Topics, page, TOPICS_PER_PAGE)
                     .Select(bllTopic => bllTopic.ToTopicListModel()));
             }
@@ -86,7 +84,9 @@ namespace ForumPlMvc.Controllers
         {
             if (id.HasValue)
             {
-                return View(GetTopic(id.Value, page).ToTopicDitailsModel());
+                BllTopic topic = GetTopic(id.Value, page);
+                ViewBag.IsMyTopic = IsMyTopic(topic.Id);
+                return View(topic.ToTopicDitailsModel());
             }
             return View("Error");
         }
@@ -95,6 +95,7 @@ namespace ForumPlMvc.Controllers
         {
             if (id.HasValue)
             {
+                ViewBag.IsShowStatus = false;
                 BllSection section = sectionService.GetSection(id.Value);
                 return PartialView(this.GetItemsOnPage(section.Topics, page, TOPICS_PER_PAGE)
                     .Select(bllTopic => bllTopic.ToTopicListModel()));
@@ -106,8 +107,9 @@ namespace ForumPlMvc.Controllers
         {
             if (id.HasValue)
             {
-                return PartialView(GetTopic(id.Value, page)
-                    .Comments
+                BllTopic topic = GetTopic(id.Value, page);
+                ViewBag.IsMyTopic = IsMyTopic(topic.Id);
+                return PartialView(topic.Comments
                     .Select(c => c.ToCommentModel()));
             }
             return View("Error");
@@ -132,9 +134,30 @@ namespace ForumPlMvc.Controllers
             BllTopic topic = topicService.GetTopic(id);
 
             topic.Comments = this.GetItemsOnPage(
-                topic.Comments.OrderBy(c => c.Date, new DateComparer()), page, COMMENTS_PER_PAGE);
+                topic.Comments.OrderBy(c => c.Date), page, COMMENTS_PER_PAGE);
 
             return topic;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            userService.Dispose();
+            sectionService.Dispose();
+            topicService.Dispose();
+            imageService.Dispose();
+
+            base.Dispose(disposing);
+        }
+
+        private bool IsMyTopic(int topicId)
+        {
+            bool isMyTopic = false;
+            if (User.Identity.IsAuthenticated)
+            {
+                BllUser user = userService.GetUser(User.Identity.Name);
+                isMyTopic = user.Id == topicId;
+            }
+            return isMyTopic;
         }
     }
 }

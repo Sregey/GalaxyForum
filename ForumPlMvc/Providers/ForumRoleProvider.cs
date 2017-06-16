@@ -1,21 +1,34 @@
 ﻿using ForumBll.Interface.Models;
 using ForumBll.Interface.Services;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using System.Web.Security;
 
 namespace ForumPlMvc.Providers
 {
     public class ForumRoleProvider : RoleProvider
     {
-        private readonly IUserService userService;
+        private IUserService userService;
 
-        /*public ForumRoleProvider(IUserService userService)
+        public ForumRoleProvider()
+        {
+            userService = DependencyResolver.Current.GetService<IUserService>();
+        }
+
+        public ForumRoleProvider(IUserService userService)
         {
             this.userService = userService;
-        }*/
+        }
+
+        //[Inject]
+        //public void UserService(IUserService userService)
+        //{
+        //    this.userService = userService;
+        //}
 
         public override string ApplicationName
         {

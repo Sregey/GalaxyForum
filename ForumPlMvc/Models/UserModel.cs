@@ -30,6 +30,7 @@ namespace ForumPlMvc.Models
         public string ExtraInfo { get; set; }
 
         [ImageExtensions("jpg,jpeg,png", ErrorMessage = "Only jpg, jpeg, png extensions are available.")]
+        [FileSize(3 * 1024 * 1024, ErrorMessage = "Max size is 3 Mb.")]
         [DataType(DataType.Upload)]
         public HttpPostedFileBase Avatar { get; set; }
     }

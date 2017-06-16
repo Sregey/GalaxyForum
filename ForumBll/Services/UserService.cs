@@ -61,5 +61,9 @@ namespace ForumBll.Services
             userRepository.Update(user.ToDalUser());
         }
 
+        public void Dispose()
+        {
+            userRepository.Dispose();
+        }
     }
 }

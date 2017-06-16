@@ -81,6 +81,11 @@ namespace ForumOrm
                 .Property(u => u.Text)
                 .IsRequired();
 
+            modelBuilder.Entity<Topic>()
+                .Property(t => t.Date)
+                .HasColumnType("datetime2")
+                .HasPrecision(0);
+
             modelBuilder.Entity<User>()
                 .HasMany(u => u.Topics)
                 .WithRequired(t => t.Author)

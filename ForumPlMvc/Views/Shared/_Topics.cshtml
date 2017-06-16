@@ -15,5 +15,11 @@
         <td>
             @Html.ActionLink(item.SectionName, "TopicsInSection", "Home", new { id = item.SectionId }, null)
         </td>
+        @if (ViewBag.IsShowStatus)
+        {
+        <th>
+            @Html.DisplayFor(modelItem => item.Status)
+        </th>
+        }
     </tr>
 }

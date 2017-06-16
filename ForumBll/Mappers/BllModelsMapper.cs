@@ -77,8 +77,8 @@ namespace ForumBll.Mappers
                 Date = bllTopic.Date,
                 IsAnswered = bllTopic.IsAnswered,
                 Section = bllTopic.Section.ToDalSection(),
-                Author = bllTopic.Author.ToDalUser(),
-                Status = bllTopic.Status.ToDalStatus()
+                Author = new DalUser { Id = bllTopic.Author.Id},
+                Status = new DalStatus { Id = bllTopic.Status.Id},
             };
         }
 

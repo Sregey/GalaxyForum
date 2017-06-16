@@ -1,13 +1,14 @@
 ﻿@model String
 
 <div style="text-align:center;">
-    @{ var ajaxOption = new AjaxOptions
-        {
-            UpdateTargetId = "ajax-result",
-            LoadingElementId = "loading",
-            OnComplete = "onAjaxComplete"
-        };
-     }
+@if (ViewBag.PageCount != 0)
+{
+    var ajaxOption = new AjaxOptions
+    {
+        UpdateTargetId = "ajax-result",
+        LoadingElementId = "loading",
+        OnComplete = "onAjaxComplete"
+    };
     <ul class="pagination">
         @if (ViewBag.Page == 1)
         {
@@ -51,4 +52,5 @@
             </li>
         }
     </ul>
+}
 </div>

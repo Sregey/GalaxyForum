@@ -9,6 +9,7 @@ namespace ForumPlMvc.Infrastructure.Mappers
         {
             return new CommentModel
             {
+                Id = bllComment.Id,
                 Text = bllComment.Text,
                 Date = bllComment.Date,
                 IsAnswer = bllComment.IsAnswer,

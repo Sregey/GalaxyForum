@@ -1,4 +1,6 @@
 ﻿@using ForumPlMvc.Models
+@using ForumPlMvc.Healpers
+
 @model ForumPlMvc.Models.TopicDitailsModel
 
 @{
@@ -27,10 +29,12 @@
             </tr>
         </table>
 
-        <br />
-        <br />
+        @if (this.IsAdminOrModerator())
+        {
+            @Html.ActionLink("Edit Topic", "EditTopic", "Moderator", new { id = Model.Id }, new { @class = "btn btn-default btn-sm offset" })
+        }
 
-        <table class="comments" id="ajax-result">
+        <table class="comments offset" id="ajax-result">
             @Html.Partial("_Comments", @Model.Comments)
         </table>
 

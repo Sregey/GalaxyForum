@@ -1,5 +1,10 @@
-﻿<div class="account-menu">
+﻿@using ForumPlMvc.Healpers
+<div class="account-menu">
     <div>@Html.ActionLink("My Info", "UserInfo", "User")</div>
     <div>@Html.ActionLink("My Topics", "Topics", "User")</div>
+    @if (this.IsAdminOrModerator())
+    {
+        <div>@Html.ActionLink("All Topics", "Topics", "Moderator")</div>
+    }
     <div>@Html.ActionLink("Setting", "Setting", "User")</div>
 </div>

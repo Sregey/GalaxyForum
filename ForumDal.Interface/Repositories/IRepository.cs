@@ -5,7 +5,7 @@ using ForumDal.Interface.Models;
 
 namespace ForumDal.Interface.Repositories
 {
-    public interface IRepository<TEntity> where TEntity : DalEntity
+    public interface IRepository<TEntity> : IDisposable where TEntity : DalEntity
     {
         int Count { get; }
 

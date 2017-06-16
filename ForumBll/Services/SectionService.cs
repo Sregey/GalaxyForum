@@ -46,5 +46,10 @@ namespace ForumBll.Services
                 .FirstOrDefault(s => s.Id == id)
                 .ToBllSection();
         }
+
+        public void Dispose()
+        {
+            sectionRepository.Dispose();
+        }
     }
 }

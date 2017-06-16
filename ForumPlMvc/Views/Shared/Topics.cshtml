@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ForumPlMvc.Models.TopicListModel>
+﻿@using ForumPlMvc.Healpers
+@model IEnumerable<ForumPlMvc.Models.TopicListModel>
 
 @{
     ViewBag.Title = "Section";
@@ -9,6 +10,11 @@
 @if (Request.IsAuthenticated)
 {
     @Html.ActionLink("Add Topic", "CreateTopic", "User", null, new { @class = "btn btn-default btn-sm offset" })
+}
+
+@if (this.IsAdminOrModerator())
+{
+    @Html.ActionLink("Get Raw Topic", "GetRawTopic", "Moderator", null, new { @class = "btn btn-default btn-sm offset" })
 }
 
 <table class="table">
@@ -22,6 +28,12 @@
         <th>
             @Html.DisplayNameFor(model => model.SectionName)
         </th>
+        @if (ViewBag.IsShowStatus)
+        {
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        }
     </tr>
 
     <tbody id="ajax-result">

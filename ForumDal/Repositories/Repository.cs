@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace ForumDal.Repositories
 {
-    public class Repository<TDalEntity, TOrmEntity> : IRepository<TDalEntity>, IDisposable
+    public class Repository<TDalEntity, TOrmEntity> : IRepository<TDalEntity>
         where TOrmEntity : Entity
         where TDalEntity : DalEntity
     {
@@ -109,7 +109,7 @@ namespace ForumDal.Repositories
 
         public void Dispose()
         {
-            context.Dispose();
+            //context.Dispose();
         }
     }
 }

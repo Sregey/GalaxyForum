@@ -41,10 +41,10 @@ namespace ForumBll.Services
             return topicRepository.FirstOrDefault(t => t.Id == id).ToBllTopic();
         }
 
-        public IEnumerable<BllTopic> GetTopicsFromSection(int sectionId, int offset, int count)
+        public IEnumerable<BllTopic> GetTopics()
         {
             return topicRepository
-                .GetByPredicate(topic => topic.Section.Id == sectionId, offset, count)
+                .GetByPredicate(topic => true)
                 .Select(t => t.ToBllTopic());
         }
 
@@ -58,8 +58,30 @@ namespace ForumBll.Services
         public IEnumerable<BllSection> GetAllSections()
         {
             return sectionRepository
-                .GetSequence(0, sectionRepository.Count)
+                .GetByPredicate(s => true)
                 .Select(section => section.ToBllSection());
+        }
+
+        public void UpdateTopic(BllTopic topic)
+        {
+            DalTopic dalTopic = topicRepository.FirstOrDefault(t => t.Id == topic.Id);
+            dalTopic.Title = topic.Title;
+            dalTopic.Text = topic.Text;
+            dalTopic.Status.Id = topic.Status.Id;
+            dalTopic.Section = sectionRepository.FirstOrDefault(s => s.Name == topic.Section.Name);
+            topicRepository.Update(dalTopic);
+        }
+
+        public BllTopic GetRawTopic()
+        {
+            return topicRepository.FirstOrDefault(t => t.Status.Id == (int)StatusEnum.Raw)
+                .ToBllTopic();
+        }
+
+        public void Dispose()
+        {
+            topicRepository.Dispose();
+            sectionRepository.Dispose();
         }
     }
 }

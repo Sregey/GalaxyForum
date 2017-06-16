@@ -60,5 +60,10 @@ namespace ForumBll.Services
             byte[] data = Encoding.Unicode.GetBytes(str);
             return new SHA256Managed().ComputeHash(data);
         }
+
+        public void Dispose()
+        {
+            userRepository.Dispose();
+        }
     }
 }

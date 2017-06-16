@@ -8,6 +8,7 @@ using ForumBll.Interface.Services;
 using ForumBll.Interface.Models;
 using ForumPlMvc.Infrastructure.Mappers;
 using ForumPlMvc.Models;
+using ForumPlMvc.Infrastructure;
 
 namespace ForumPlMvc.Controllers
 {
@@ -29,14 +30,11 @@ namespace ForumPlMvc.Controllers
             this.topicService = topicService;
         }
 
-        //public ActionResult UserInfo()
-        //{
-        //    return View(userService.GetUser(User.Identity.Name).ToUserInfoModel());
-        //}
-
         public ActionResult Topics(int? page)
         {
+            ViewBag.IsShowStatus = true;
             BllUser user = userService.GetUser(User.Identity.Name);
+            user.Topics = user.Topics.OrderBy(t => t.Date, new DateComparer());
             return View("Topics", this.GetItemsOnPage(user.Topics, page, TOPICS_PER_PAGE)
                 .Select(bllTopic => bllTopic.ToTopicListModel()));
         }
@@ -61,7 +59,8 @@ namespace ForumPlMvc.Controllers
         public ActionResult _Topics(int? page)
         {
             BllUser user = userService.GetUser(User.Identity.Name);
-
+            ViewBag.IsShowStatus = true;
+            user.Topics = user.Topics.OrderBy(t => t.Date, new DateComparer());
             return PartialView(this.GetItemsOnPage(user.Topics, page, TOPICS_PER_PAGE)
                 .Select(bllTopic => bllTopic.ToTopicListModel()));
         }
@@ -83,14 +82,14 @@ namespace ForumPlMvc.Controllers
 
         public ActionResult CreateTopic()
         {
-            var topic = new CreateTopicModel();
+            var topic = new CreateEditTopicModel();
             topic.Sections = topicService.GetAllSections().Select(s => s.Name);
             return View(topic);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateTopic(CreateTopicModel topic)
+        public ActionResult CreateTopic(CreateEditTopicModel topic)
         {
             if (ModelState.IsValid)
             {
@@ -115,6 +114,29 @@ namespace ForumPlMvc.Controllers
                 return RedirectToAction("Topic", "Home", new { id = comment.TopicId });
             }
             return View(comment);
+        }
+
+        public ActionResult MarkCommentAsGood(int? id)
+        {
+            if (id.HasValue)
+            {
+                BllComment comment = commentService.GetComment(id.Value);
+                bool isCanMark = comment.Topic.Author.Id == userService.GetUser(User.Identity.Name).Id;
+                isCanMark |= User.IsInRole("Admin") || User.IsInRole("Moderator");
+                comment.IsAnswer = isCanMark;
+                commentService.UpdateComment(comment);
+                return RedirectToAction("Topic", "Home", new { Id = comment.Topic.Id });
+            }
+            return View("Error");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            userService.Dispose();
+            commentService.Dispose();
+            topicService.Dispose();
+
+            base.Dispose(disposing);
         }
     }
 }

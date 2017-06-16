@@ -47,6 +47,7 @@ namespace ForumPlMvc.Infrastructure.Mappers
                 IsAnswered = bllTopic.IsAnswered,
                 SectionName = bllTopic.Section.Name,
                 SectionId = bllTopic.Section.Id,
+                Status = bllTopic.Status.Name,
             };
         }
 
@@ -64,13 +65,27 @@ namespace ForumPlMvc.Infrastructure.Mappers
             };
         }
 
-        public static BllTopic ToBllTopic(this CreateTopicModel topic)
+        public static BllTopic ToBllTopic(this CreateEditTopicModel topic)
         {
             return new BllTopic
             {
+                Id = topic.Id,
+                Author = new BllUser { Id = topic.AuthorId },
                 Title = topic.Title,
                 Text = topic.Text,
                 Section = new BllSection() { Name = topic.Section},
+            };
+        }
+
+        public static CreateEditTopicModel ToCreateEditTopicModel(this BllTopic bllTopic)
+        {
+            return new CreateEditTopicModel
+            {
+                Id = bllTopic.Id,
+                AuthorId = bllTopic.Author.Id,
+                Title = bllTopic.Title,
+                Text = bllTopic.Text,
+                Section = bllTopic.Section.Name,
             };
         }
     }

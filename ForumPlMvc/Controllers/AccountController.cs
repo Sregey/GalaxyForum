@@ -95,5 +95,11 @@ namespace ForumPlMvc.Controllers
             }
             return View();
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            accountService.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }

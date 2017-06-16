@@ -24,5 +24,10 @@ namespace ForumBll.Services
                 .FirstOrDefault(i => i.Id == id)
                 .ToBllImage();
         }
+
+        public void Dispose()
+        {
+            imageRepository.Dispose();
+        }
     }
 }

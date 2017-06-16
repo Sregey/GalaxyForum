@@ -1,17 +1,20 @@
 ﻿using System.Collections.Generic;
 using ForumBll.Interface.Models;
+using System;
 
 namespace ForumBll.Interface.Services
 {
-    public interface ITopicService
+    public interface ITopicService : IDisposable
     {
         BllTopic GetTopic(int id);
 
+        BllTopic GetRawTopic();
+
         IEnumerable<BllSection> GetAllSections();
 
-        IEnumerable<BllTopic> GetTopicsFromSection(int sectionId, int offset, int count);
+        IEnumerable<BllTopic> GetTopics();
 
-        int GetTopicCountInSection(int sectionId);
+        void UpdateTopic(BllTopic topic);
 
         void AddTopic(BllTopic topic);
 

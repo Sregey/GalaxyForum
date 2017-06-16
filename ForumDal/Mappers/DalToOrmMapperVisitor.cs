@@ -76,9 +76,6 @@ namespace ForumDal.Mappers
                 SectionId = dalTopic.Section.Id,
                 AuthorId = dalTopic.Author.Id,
                 StatusId = dalTopic.Status.Id,
-                //Section = (Section)dalTopic.Section.ToOrmEntity(),
-                //Author = (User)dalTopic.Author.ToOrmEntity(),
-                //Status = (Status)dalTopic.Status.ToOrmEntity(),
             };
         }
 
