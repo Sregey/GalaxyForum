@@ -5,10 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using ForumBll.Interface.Services;
 using ForumBll.Interface.Models;
-using ForumPlMvc.Infrastructure;
 using ForumPlMvc.Infrastructure.Mappers;
-using ForumPlMvc.Models;
-using System.Diagnostics;
+using Ninject;
+using ForumDependencyResolver;
 
 namespace ForumPlMvc.Controllers
 {

@@ -5,6 +5,7 @@ using ForumDal.Interface.Repositories;
 using ForumDal.Interface.Models;
 using ForumDal.Repositories;
 using Ninject;
+using Ninject.Activation;
 using Ninject.Web.Common;
 using ForumOrm;
 using ForumOrm.Models;
@@ -23,21 +24,25 @@ namespace ForumDependencyResolver
             Configure(kernel, false);
         }
 
+        private static IUserService ServiceForProvider(IContext c)
+        {
+            return new UserService(new UserRepository(new ForumDbContext()));
+        }
+
         private static void Configure(IKernel kernel, bool isWeb)
         {
             if (isWeb)
             {
-                //kernel.Bind<IUnitOfWork>().To<UnitOfWork>().InRequestScope();
                 kernel.Bind<DbContext>().To<ForumDbContext>().InRequestScope();
             }
             else
             {
-                //kernel.Bind<IUnitOfWork>().To<UnitOfWork>().InSingletonScope();
                 kernel.Bind<DbContext>().To<ForumDbContext>().InSingletonScope();
             }
 
             //Services
-            kernel.Bind<IUserService>().To<UserService>();//.InRequestScope();
+            kernel.Bind<IUserService>().To<UserService>();
+            kernel.Bind<IUserService>().ToMethod(ServiceForProvider).WhenTargetHas<SpecialServiceAttribute>();
             kernel.Bind<ISectionService>().To<SectionService>();
             kernel.Bind<ITopicService>().To<TopicService>();
             kernel.Bind<IAccountService>().To<AccountService>();
@@ -45,16 +50,11 @@ namespace ForumDependencyResolver
             kernel.Bind<ICommentService>().To<CommentService>();
 
             //Repositories
-            kernel.Bind<IRepository<DalUser>>().To<UserRepository>();//.InRequestScope();
+            kernel.Bind<IRepository<DalUser>>().To<UserRepository>();
             kernel.Bind<IRepository<DalSection>>().To<Repository<DalSection, Section>>();
             kernel.Bind<IRepository<DalTopic>>().To<Repository<DalTopic, Topic>>();
             kernel.Bind<IRepository<DalImage>>().To<Repository<DalImage, Image>>();
             kernel.Bind<IRepository<DalComment>>().To<Repository<DalComment, Comment>>();
-
-            //kernel.Inject(Roles.Provider);
-
-            //kernel.Bind<IRepository<DalUser>>().To<UserRepository>();
-            //kernel.Bind<IUserRepository>().To<UserRepository>();
         }
     }
 }

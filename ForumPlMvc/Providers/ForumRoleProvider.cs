@@ -1,11 +1,8 @@
 ﻿using ForumBll.Interface.Models;
 using ForumBll.Interface.Services;
+using ForumDependencyResolver;
 using Ninject;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 using System.Web.Security;
 
 namespace ForumPlMvc.Providers
@@ -14,21 +11,42 @@ namespace ForumPlMvc.Providers
     {
         private IUserService userService;
 
-        public ForumRoleProvider()
-        {
-            userService = DependencyResolver.Current.GetService<IUserService>();
-        }
+        //public ForumRoleProvider()
+        //{
+        //    userService = new UserService(new UserRepository(new ForumOrm.ForumDbContext()));
+        //    userService = DependencyResolver.Current.GetService<IUserService>();
+        //}
 
-        public ForumRoleProvider(IUserService userService)
+        //public ForumRoleProvider(IUserService userService)
+        //{
+        //    this.userService = userService;
+        //}
+
+        [Inject]
+        public void UserService([SpecialService] IUserService userService)
         {
             this.userService = userService;
         }
 
-        //[Inject]
-        //public void UserService(IUserService userService)
-        //{
-        //    this.userService = userService;
-        //}
+        public override string[] GetRolesForUser(string username)
+        {
+            BllUser user = userService.GetUser(username);
+            if (user != null)
+                return new string[] { user.Role.Name };
+            else
+                return new string[] { };
+        }
+
+        public override bool IsUserInRole(string username, string roleName)
+        {
+            BllUser user = userService.GetUser(username);
+            if (user != null)
+                return user.Role.Name == roleName;
+            else
+                return false;
+        }
+
+        #region No Implemented
 
         public override string ApplicationName
         {
@@ -68,27 +86,9 @@ namespace ForumPlMvc.Providers
             throw new NotImplementedException();
         }
 
-        public override string[] GetRolesForUser(string username)
-        {
-            BllUser user = userService.GetUser(username);
-            if (user != null)
-                return new string[] { user.Role.Name };
-            else
-                return new string[] { };
-        }
-
         public override string[] GetUsersInRole(string roleName)
         {
             throw new NotImplementedException();
-        }
-
-        public override bool IsUserInRole(string username, string roleName)
-        {
-            BllUser user = userService.GetUser(username);
-            if (user != null)
-                return user.Role.Name == roleName;
-            else
-                return false;
         }
 
         public override void RemoveUsersFromRoles(string[] usernames, string[] roleNames)
@@ -100,5 +100,7 @@ namespace ForumPlMvc.Providers
         {
             throw new NotImplementedException();
         }
+
+        #endregion
     }
 }

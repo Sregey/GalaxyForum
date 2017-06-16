@@ -13,6 +13,7 @@ namespace ForumPlMvc.App_Start
     using Ninject.Web.Common;
 
     using ForumPlMvc.Infrastructure;
+    using System.Web.Security;
 
     public static class NinjectWebCommon
     {
