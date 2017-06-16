@@ -37,12 +37,15 @@ namespace ForumBll.Services
 
         public void UpdateComment(BllComment comment)
         {
-            if (comment.IsAnswer)
-            {
-                comment.Topic.IsAnswered = comment.IsAnswer;
-                topicRepository.Update(comment.Topic.ToDalTopic());
-            }
-            commentRepository.Update(comment.ToDalComment());
+            DalComment dalComment = commentRepository.FirstOrDefault(c => c.Id == comment.Id);
+            dalComment.IsAnswer = comment.IsAnswer;
+            dalComment.Text = comment.Text;
+            dalComment.Status.Id = comment.Status.Id;
+
+            dalComment.Topic.IsAnswered = dalComment.IsAnswer;
+            topicRepository.Update(dalComment.Topic);
+
+            commentRepository.Update(dalComment);
         }
 
         public void Dispose()

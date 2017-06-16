@@ -14,16 +14,22 @@ namespace ForumPlMvc.Models
 
         public bool IsAnswer { get; set; }
 
+        public int StatusId { get; set; }
+
         public ShortUserModel Sender { get; set; }
     }
 
-    public class AddCommentModel
+    public class AddEditCommentModel
     {
+        public int Id { get; set; }
+
         public int TopicId { get; set; }
 
         [Required(ErrorMessage = "Some text is required.")]
         [MinLength(5, ErrorMessage = "Minimum length is 5 characters.")]
         [DataType(DataType.MultilineText)]
         public string Text { get; set; }
+
+        public bool IsAnswer { get; set; }
     }
 }

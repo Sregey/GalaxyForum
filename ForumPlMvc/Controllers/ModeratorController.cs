@@ -7,6 +7,7 @@ using ForumPlMvc.Infrastructure.Mappers;
 using ForumPlMvc.Models;
 using ForumPlMvc.Models.Filters;
 using ForumPlMvc.Infrastructure;
+using ForumPlMvc.Filters;
 
 namespace ForumPlMvc.Controllers
 {
@@ -16,10 +17,13 @@ namespace ForumPlMvc.Controllers
         private const int TOPICS_PER_PAGE = 2;
 
         private readonly ITopicService topicService;
+        private readonly ICommentService commentService;
 
-        public ModeratorController(ITopicService topicService)
+        public ModeratorController(ITopicService topicService,
+            ICommentService commentService)
         {
             this.topicService = topicService;
+            this.commentService = commentService;
         }
 
         public ActionResult _Topics(int? page)
@@ -31,23 +35,20 @@ namespace ForumPlMvc.Controllers
                 .Select(bllTopic => bllTopic.ToTopicListModel()));
         }
 
-        public ActionResult EditTopic(int? id)
+        [IdValidator]
+        public ActionResult EditTopic(int id)
         {
-            if (id.HasValue)
-            {
-                BllTopic bllTopic = topicService.GetTopic(id.Value);
-                bllTopic.Status = new BllStatus { Id = (int)StatusEnum.Processed };
-                topicService.UpdateTopic(bllTopic);
-                CreateEditTopicModel topic = bllTopic.ToCreateEditTopicModel();
-                topic.Sections = topicService.GetAllSections().Select(s => s.Name);
-                return View(topic);
-            }
-            return View("Error");
+            BllTopic bllTopic = topicService.GetTopic(id);
+            bllTopic.Status = new BllStatus { Id = (int)StatusEnum.Processed };
+            topicService.UpdateTopic(bllTopic);
+            CreateEditTopicModel topic = bllTopic.ToCreateEditTopicModel();
+            topic.Sections = topicService.GetAllSections().Select(s => s.Name);
+            return View(topic);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [MultipleSubmit(Name = "Action", Argument = "Accept")]
+        [MultipleSubmit(Name = "EditTopic", Argument = "Accept")]
         public ActionResult AcceptTopic(CreateEditTopicModel topic)
         {
             return ChangeTopicState(topic, StatusEnum.Accepted);
@@ -55,7 +56,7 @@ namespace ForumPlMvc.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [MultipleSubmit(Name = "Action", Argument = "Reject")]
+        [MultipleSubmit(Name = "EditTopic", Argument = "Reject")]
         public ActionResult RejectTopic(CreateEditTopicModel topic)
         {
             return ChangeTopicState(topic, StatusEnum.Rejected);
@@ -75,6 +76,28 @@ namespace ForumPlMvc.Controllers
             return RedirectToAction("EditTopic", new { id = topicService.GetRawTopic().Id });
         }
 
+        [IdValidator]
+        public ActionResult EditComment(int id)
+        {
+            return View(commentService.GetComment(id).ToAddEditCommentModel());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [MultipleSubmit(Name = "EditComment", Argument = "Accept")]
+        public ActionResult AcceptComment(AddEditCommentModel comment)
+        {
+            return ChangeCommentState(comment, StatusEnum.Accepted);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [MultipleSubmit(Name = "EditComment", Argument = "Reject")]
+        public ActionResult RejectComment(AddEditCommentModel comment)
+        {
+            return ChangeCommentState(comment, StatusEnum.Rejected);
+        }
+
         protected override void Dispose(bool disposing)
         {
             topicService.Dispose();
@@ -91,6 +114,18 @@ namespace ForumPlMvc.Controllers
                 return RedirectToAction("Topic", "Home", new { id = topic.Id });
             }
             return View("EditTopic", topic);
+        }
+
+        private ActionResult ChangeCommentState(AddEditCommentModel comment, StatusEnum status)
+        {
+            if (ModelState.IsValid)
+            {
+                BllComment bllComment = comment.ToBllComment();
+                bllComment.Status = new BllStatus { Id = (int)status };
+                commentService.UpdateComment(bllComment);
+                return RedirectToAction("Topic", "Home", new { id = comment.TopicId });
+            }
+            return View("EditComment", comment);
         }
     }
 }

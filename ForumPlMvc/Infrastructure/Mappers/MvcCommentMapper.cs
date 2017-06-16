@@ -13,16 +13,30 @@ namespace ForumPlMvc.Infrastructure.Mappers
                 Text = bllComment.Text,
                 Date = bllComment.Date,
                 IsAnswer = bllComment.IsAnswer,
+                StatusId = bllComment.Status.Id,
                 Sender = bllComment.Sender.ToShortUserModel(),
             };
         }
 
-        public static BllComment ToBllComment(this AddCommentModel comment)
+        public static BllComment ToBllComment(this AddEditCommentModel comment)
         {
             return new BllComment
             {
+                Id = comment.Id,
                 Text = comment.Text,
+                IsAnswer = comment.IsAnswer,
                 Topic = new BllTopic() { Id = comment.TopicId},
+            };
+        }
+
+        public static AddEditCommentModel ToAddEditCommentModel(this BllComment bllComment)
+        {
+            return new AddEditCommentModel
+            {
+                Id = bllComment.Id,
+                Text = bllComment.Text,
+                TopicId = bllComment.Topic.Id,
+                IsAnswer = bllComment.IsAnswer,
             };
         }
     }

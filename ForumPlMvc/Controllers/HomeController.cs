@@ -6,8 +6,7 @@ using System.Web.Mvc;
 using ForumBll.Interface.Services;
 using ForumBll.Interface.Models;
 using ForumPlMvc.Infrastructure.Mappers;
-using Ninject;
-using ForumDependencyResolver;
+using ForumPlMvc.Filters;
 
 namespace ForumPlMvc.Controllers
 {
@@ -47,14 +46,11 @@ namespace ForumPlMvc.Controllers
             return RedirectToAction("About");
         }
 
-        public FileStreamResult GetImage(int? id)
+        [IdValidator]
+        public FileStreamResult GetImage(int id)
         {
-            if (id.HasValue)
-            {
-                BllImage image = imageService.GetImage(id.Value);
-                return new FileStreamResult(image.Content, "image//" + image.Content);
-            }
-            return null;
+            BllImage image = imageService.GetImage(id);
+            return new FileStreamResult(image.Content, "image//" + image.Content);
         }
 
         public ActionResult Sections()
@@ -64,54 +60,42 @@ namespace ForumPlMvc.Controllers
                 .Select(bllSection => bllSection.ToSectionModel()));
         }
 
-        public ActionResult TopicsInSection(int? id, int? page)
+        [IdValidator]
+        public ActionResult TopicsInSection(int id, int? page)
         {
-            if (id.HasValue)
-            {
-                ViewBag.AjaxId = id.Value;
-                ViewBag.IsShowStatus = false;
+            ViewBag.AjaxId = id;
+            ViewBag.IsShowStatus = false;
 
-                BllSection section = sectionService.GetSection(id.Value);
-                section.Topics = section.Topics.Where(t => t.Status.Id == (int)StatusEnum.Accepted);
-                return View("Topics", this.GetItemsOnPage(section.Topics, page, TOPICS_PER_PAGE)
-                    .Select(bllTopic => bllTopic.ToTopicListModel()));
-            }
-            return View("Error");
+            BllSection section = sectionService.GetSection(id);
+            section.Topics = section.Topics.Where(t => t.Status.Id == (int)StatusEnum.Accepted);
+            return View("Topics", this.GetItemsOnPage(section.Topics, page, TOPICS_PER_PAGE)
+                .Select(bllTopic => bllTopic.ToTopicListModel()));
         }
 
-        public ActionResult Topic(int? id, int? page)
+        [IdValidator]
+        public ActionResult Topic(int id, int? page)
         {
-            if (id.HasValue)
-            {
-                BllTopic topic = GetTopic(id.Value, page);
-                ViewBag.IsMyTopic = IsMyTopic(topic.Id);
-                return View(topic.ToTopicDitailsModel());
-            }
-            return View("Error");
+            BllTopic topic = GetTopic(id, page);
+            ViewBag.IsMyTopic = IsMyTopic(topic.Id);
+            return View(topic.ToTopicDitailsModel());
         }
 
-        public ActionResult _Topics(int? id, int? page)
+        [IdValidator]
+        public ActionResult _Topics(int id, int? page)
         {
-            if (id.HasValue)
-            {
-                ViewBag.IsShowStatus = false;
-                BllSection section = sectionService.GetSection(id.Value);
-                return PartialView(this.GetItemsOnPage(section.Topics, page, TOPICS_PER_PAGE)
-                    .Select(bllTopic => bllTopic.ToTopicListModel()));
-            }
-            return View("Error");
+            ViewBag.IsShowStatus = false;
+            BllSection section = sectionService.GetSection(id);
+            return PartialView(this.GetItemsOnPage(section.Topics, page, TOPICS_PER_PAGE)
+                .Select(bllTopic => bllTopic.ToTopicListModel()));
         }
 
-        public ActionResult _Comments(int? id, int? page)
+        [IdValidator]
+        public ActionResult _Comments(int id, int? page)
         {
-            if (id.HasValue)
-            {
-                BllTopic topic = GetTopic(id.Value, page);
-                ViewBag.IsMyTopic = IsMyTopic(topic.Id);
-                return PartialView(topic.Comments
-                    .Select(c => c.ToCommentModel()));
-            }
-            return View("Error");
+            BllTopic topic = GetTopic(id, page);
+            ViewBag.IsMyTopic = IsMyTopic(topic.Id);
+            return PartialView(topic.Comments
+                .Select(c => c.ToCommentModel()));
         }
 
         public ActionResult About()
@@ -128,14 +112,9 @@ namespace ForumPlMvc.Controllers
             return View();
         }
 
-        private BllTopic GetTopic(int id, int? page)
+        public ActionResult Error()
         {
-            BllTopic topic = topicService.GetTopic(id);
-
-            topic.Comments = this.GetItemsOnPage(
-                topic.Comments.OrderBy(c => c.Date), page, COMMENTS_PER_PAGE);
-
-            return topic;
+            return View();
         }
 
         protected override void Dispose(bool disposing)
@@ -146,6 +125,16 @@ namespace ForumPlMvc.Controllers
             imageService.Dispose();
 
             base.Dispose(disposing);
+        }
+
+        private BllTopic GetTopic(int id, int? page)
+        {
+            BllTopic topic = topicService.GetTopic(id);
+
+            topic.Comments = this.GetItemsOnPage(
+                topic.Comments.OrderBy(c => c.Date), page, COMMENTS_PER_PAGE);
+
+            return topic;
         }
 
         private bool IsMyTopic(int topicId)

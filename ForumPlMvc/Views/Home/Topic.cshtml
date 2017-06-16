@@ -51,7 +51,7 @@
             @Html.Partial("_AjaxPagination", "_Comments")
         </div>
 
-        @Html.Partial("~/Views/User/_AddComment.cshtml", new AddCommentModel() { TopicId = Model.Id })
+        @Html.Partial("~/Views/User/_AddComment.cshtml", new AddEditCommentModel() { TopicId = Model.Id })
 
     </div>
 

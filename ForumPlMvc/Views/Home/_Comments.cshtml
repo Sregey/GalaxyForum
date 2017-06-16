@@ -1,6 +1,7 @@
 ﻿@using ForumPlMvc.Healpers
 @model IEnumerable<ForumPlMvc.Models.CommentModel>
 
+@using ForumBll.Interface.Models
 @foreach (var item in Model)
             {
     <tr>
@@ -10,6 +11,7 @@
         <td class="text">
             @Html.ActionLink(item.Sender.Login, "UserInfo", "User", new { id = item.Sender.Id }, new { @class = "login" })
             <br />
+
             @if (item.IsAnswer)
             {
                 <div class="bordered">
@@ -18,12 +20,28 @@
                 </div>
                 <br />
             }
-            @Html.DisplayFor(modelItem => item.Text)
+
+            @if (item.StatusId == (int)StatusEnum.Rejected)
+            {
+                <span class="smale-text">
+                    Comment was rejected!
+                </span>
+            }
+            else
+            {
+                @Html.DisplayFor(modelItem => item.Text)
+            }
+
+            <div class="offset">
             @if ((ViewBag.IsMyTopic || this.IsAdminOrModerator()) && !item.IsAnswer)
             {             
-                <br />
                 @Html.ActionLink("Mark as good", "MarkCommentAsGood", "User", new { id = item.Id }, new { @class = "btn btn-default btn-sm" })
             }
+            @if (this.IsAdminOrModerator())
+            {
+                @Html.ActionLink("Edit", "EditComment", "Moderator", new { id = item.Id }, new { @class = "btn btn-default btn-sm" })
+            }
+            </div>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Date)

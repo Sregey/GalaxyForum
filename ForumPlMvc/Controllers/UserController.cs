@@ -9,6 +9,7 @@ using ForumBll.Interface.Models;
 using ForumPlMvc.Infrastructure.Mappers;
 using ForumPlMvc.Models;
 using ForumPlMvc.Infrastructure;
+using ForumPlMvc.Filters;
 
 namespace ForumPlMvc.Controllers
 {
@@ -103,7 +104,7 @@ namespace ForumPlMvc.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Comment(AddCommentModel comment)
+        public ActionResult Comment(AddEditCommentModel comment)
         {
             if (ModelState.IsValid)
             {
@@ -116,18 +117,15 @@ namespace ForumPlMvc.Controllers
             return View(comment);
         }
 
-        public ActionResult MarkCommentAsGood(int? id)
+        [IdValidator]
+        public ActionResult MarkCommentAsGood(int id)
         {
-            if (id.HasValue)
-            {
-                BllComment comment = commentService.GetComment(id.Value);
-                bool isCanMark = comment.Topic.Author.Id == userService.GetUser(User.Identity.Name).Id;
-                isCanMark |= User.IsInRole("Admin") || User.IsInRole("Moderator");
-                comment.IsAnswer = isCanMark;
-                commentService.UpdateComment(comment);
-                return RedirectToAction("Topic", "Home", new { Id = comment.Topic.Id });
-            }
-            return View("Error");
+            BllComment comment = commentService.GetComment(id);
+            bool isCanMark = comment.Topic.Author.Id == userService.GetUser(User.Identity.Name).Id;
+            isCanMark |= User.IsInRole("Admin") || User.IsInRole("Moderator");
+            comment.IsAnswer = isCanMark;
+            commentService.UpdateComment(comment);
+            return RedirectToAction("Topic", "Home", new { Id = comment.Topic.Id });
         }
 
         protected override void Dispose(bool disposing)
