@@ -21,33 +21,33 @@ namespace ForumDal.Repositories
             this.context = context;
         }
 
-        public int Count
+        public virtual int Count
         {
             get { return context.Set<TOrmEntity>().Count(); }
         }
 
-        public void Add(TDalEntity entity)
+        public virtual void Add(TDalEntity entity)
         {
             TOrmEntity orm = (TOrmEntity)entity.ToOrmEntity();
             context.Set<TOrmEntity>().Add((TOrmEntity)entity.ToOrmEntity());
             context.SaveChanges();
         }
 
-        public void Delete(int id)
+        public virtual void Delete(int id)
         {
             TOrmEntity ormEntity = context.Set<TOrmEntity>().Single(e => (e.Id == id));
             context.Set<TOrmEntity>().Remove(ormEntity);
             context.SaveChanges();
         }
 
-        public IEnumerable<TDalEntity> GetAll()
+        public virtual IEnumerable<TDalEntity> GetAll()
         {
             return context.Set<TOrmEntity>()
                 .AsEnumerable()
                 .Select(e => (TDalEntity)e.ToDalEntity());
         }
 
-        public IEnumerable<TDalEntity> GetSequence(int offset, int count)
+        public virtual IEnumerable<TDalEntity> GetSequence(int offset, int count)
         {
             return context.Set<TOrmEntity>()
                 .OrderBy(e => e.Id)
@@ -57,14 +57,14 @@ namespace ForumDal.Repositories
                 .Select(e => (TDalEntity)e.ToDalEntity());
         }
 
-        public TDalEntity FirstOrDefault(Expression<Func<TDalEntity, bool>> predicate)
+        public virtual TDalEntity FirstOrDefault(Expression<Func<TDalEntity, bool>> predicate)
         {
             return (TDalEntity)GetBy(predicate)
                 .FirstOrDefault()
                 .ToDalEntity();
         }
 
-        public IEnumerable<TDalEntity> GetByPredicate(Expression<Func<TDalEntity, bool>> predicate, int offset, int count)
+        public virtual IEnumerable<TDalEntity> GetByPredicate(Expression<Func<TDalEntity, bool>> predicate, int offset, int count)
         {
             return GetBy(predicate)
                 .OrderBy(e => e.Id)
@@ -83,19 +83,24 @@ namespace ForumDal.Repositories
             context.SaveChanges();
         }
 
-        public IEnumerable<TDalEntity> GetByPredicate(Expression<Func<TDalEntity, bool>> predicate)
+        public virtual IEnumerable<TDalEntity> GetByPredicate(Expression<Func<TDalEntity, bool>> predicate)
         {
             return GetBy(predicate)
                 .AsEnumerable()
                 .Select(e => (TDalEntity)e.ToDalEntity());
         }
 
-        public bool IsExists(Expression<Func<TDalEntity, bool>> predicate)
+        public virtual bool IsExists(Expression<Func<TDalEntity, bool>> predicate)
         {
             return GetBy(predicate).FirstOrDefault() != null;
         }
 
-        private IQueryable<TOrmEntity> GetBy(Expression<Func<TDalEntity, bool>> predicate)
+        public void Dispose()
+        {
+            context.Dispose();
+        }
+
+        protected IQueryable<TOrmEntity> GetBy(Expression<Func<TDalEntity, bool>> predicate)
         {
             ParameterExpression ormEntityParam = Expression.Parameter(typeof(TOrmEntity), predicate.Parameters[0].Name);
 
@@ -105,11 +110,6 @@ namespace ForumDal.Repositories
 
             return context.Set<TOrmEntity>()
                 .Where(ormPredicate);
-        }
-
-        public void Dispose()
-        {
-            //context.Dispose();
         }
     }
 }

@@ -10,6 +10,8 @@ namespace ForumBll.Interface.Services
 
         BllTopic GetRawTopic();
 
+        IEnumerable<BllTopic> SearchInSection(int sectionId, string subString);
+
         IEnumerable<BllSection> GetAllSections();
 
         IEnumerable<BllTopic> GetTopics();

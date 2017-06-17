@@ -65,9 +65,23 @@ namespace ForumPlMvc.Controllers
         {
             ViewBag.AjaxId = id;
             ViewBag.IsShowStatus = false;
+            ViewBag.SectionId = id;
 
             BllSection section = sectionService.GetSection(id);
             section.Topics = section.Topics.Where(t => t.Status.Id == (int)StatusEnum.Accepted);
+            return View("Topics", this.GetItemsOnPage(section.Topics, page, TOPICS_PER_PAGE)
+                .Select(bllTopic => bllTopic.ToTopicListModel()));
+        }
+
+        [IdValidator]
+        public ActionResult TopicsInSection(int id, int? page, string subString)
+        {
+            ViewBag.AjaxId = id;
+            ViewBag.IsShowStatus = false;
+
+            BllSection section = sectionService.GetSection(id);
+            section.Topics = section.Topics.Where(t => t.Status.Id == (int)StatusEnum.Accepted);
+            section.Topics = topicService.SearchInSection(id, "Car");
             return View("Topics", this.GetItemsOnPage(section.Topics, page, TOPICS_PER_PAGE)
                 .Select(bllTopic => bllTopic.ToTopicListModel()));
         }

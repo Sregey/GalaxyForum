@@ -10,6 +10,12 @@ namespace ForumBll.Interface.Services
 
         void UpdateComment(BllComment comment);
 
+        void DeleteComment(int id);
+
         BllComment GetComment(int id);
+
+        BllComment GetRawComment();
+
+        IEnumerable<BllComment> GetComments();
     }
 }

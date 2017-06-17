@@ -1,0 +1,57 @@
+﻿@using ForumPlMvc.Healpers
+@model IEnumerable<ForumPlMvc.Models.CommentModel>
+
+@using ForumBll.Interface.Models
+@foreach (var item in Model)
+            {
+    <tr>
+        <td>
+            <img class="camp_logo" src="~/Home/GetImage/@item.Sender.AvatarId" />
+        </td>
+        <td class="text">
+            @Html.ActionLink(item.Sender.Login, "UserInfo", "User", new { id = item.Sender.Id }, new { @class = "login" })
+            <br />
+
+            @if (item.IsAnswer)
+            {
+                <div class="bordered">
+                    @Html.DisplayFor(modelItem => item.IsAnswer, "IsTrueImage")
+                    @Html.Raw("Marked as good answer.")
+                </div>
+                <br />
+            }
+
+            @if (item.Status == "Rejected")
+            {
+                <span class="smale-text">
+                    Comment was rejected!
+                </span>
+            }
+            else
+            {
+                @Html.DisplayFor(modelItem => item.Text)
+            }
+
+            <div class="offset">
+            @if ((ViewBag.IsMyTopic || this.IsAdminOrModerator()) && !item.IsAnswer)
+            {             
+                @Html.ActionLink("Mark as good", "MarkCommentAsGood", "User", new { id = item.Id }, new { @class = "btn btn-default btn-sm" })
+            }
+            @if (this.IsAdminOrModerator())
+            {
+                @Html.ActionLink("Edit", "EditComment", "Moderator", new { id = item.Id }, new { @class = "btn btn-default btn-sm" })
+            }
+            </div>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+            <br />
+            @if (this.IsAdminOrModerator())
+            {
+                <span class="smale-text">
+                    @Html.DisplayFor(modelItem => item.Status)
+                </span>
+            }
+        </td>
+    </tr>
+}

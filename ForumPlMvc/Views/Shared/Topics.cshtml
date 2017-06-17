@@ -1,11 +1,17 @@
-﻿@using ForumPlMvc.Healpers
-@model IEnumerable<ForumPlMvc.Models.TopicListModel>
+﻿@using ForumPlMvc.Models
+@using ForumPlMvc.Healpers
+
+@model IEnumerable<TopicListModel>
 
 @{
     ViewBag.Title = "Section";
 }
 
 <h2>Topics</h2>
+
+@*<noscript>
+    @Html.Partial("_Search", new TopicSearchModel { SectionId = ViewBag.SectionId })
+</noscript>*@
 
 @if (Request.IsAuthenticated)
 {

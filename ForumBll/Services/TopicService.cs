@@ -11,10 +11,10 @@ namespace ForumBll.Services
 {
     public class TopicService : ITopicService
     {
-        private readonly IRepository<DalTopic> topicRepository;
+        private readonly ITopicRepository topicRepository;
         private readonly IRepository<DalSection> sectionRepository;
 
-        public TopicService(IRepository<DalTopic> topicRepository,
+        public TopicService(ITopicRepository topicRepository,
             IRepository<DalSection> sectionRepository)
         {
             this.topicRepository = topicRepository;
@@ -33,7 +33,7 @@ namespace ForumBll.Services
 
         public void DeleteTopic(int id)
         {
-            throw new NotImplementedException();
+            topicRepository.Delete(id);
         }
 
         public BllTopic GetTopic(int id)
@@ -76,6 +76,12 @@ namespace ForumBll.Services
         {
             return topicRepository.FirstOrDefault(t => t.Status.Id == (int)StatusEnum.Raw)
                 .ToBllTopic();
+        }
+
+        public IEnumerable<BllTopic> SearchInSection(int sectionId, string subString)
+        {
+            return topicRepository.Search(t => t.Section.Id == sectionId, subString)
+                .Select(t => t.ToBllTopic());
         }
 
         public void Dispose()

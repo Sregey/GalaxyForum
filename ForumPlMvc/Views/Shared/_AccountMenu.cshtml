@@ -5,6 +5,7 @@
     @if (this.IsAdminOrModerator())
     {
         <div>@Html.ActionLink("All Topics", "Topics", "Moderator")</div>
+        <div>@Html.ActionLink("All Comments", "Comments", "Moderator")</div>
     }
     <div>@Html.ActionLink("Setting", "Setting", "User")</div>
 </div>

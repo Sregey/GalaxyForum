@@ -14,7 +14,7 @@ namespace ForumPlMvc.Models
 
         public bool IsAnswer { get; set; }
 
-        public int StatusId { get; set; }
+        public string Status { get; set; }
 
         public ShortUserModel Sender { get; set; }
     }

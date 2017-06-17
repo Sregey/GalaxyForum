@@ -12,10 +12,10 @@ namespace ForumBll.Services
     public class CommentService : ICommentService
     {
         private readonly IRepository<DalComment> commentRepository;
-        private readonly IRepository<DalTopic> topicRepository;
+        private readonly ITopicRepository topicRepository;
 
         public CommentService(IRepository<DalComment> commentRepository,
-            IRepository<DalTopic> topicRepository)
+            ITopicRepository topicRepository)
         {
             this.commentRepository = commentRepository;
             this.topicRepository = topicRepository;
@@ -28,11 +28,22 @@ namespace ForumBll.Services
             commentRepository.Add(comment.ToDalComment());
         }
 
+        public void DeleteComment(int id)
+        {
+            commentRepository.Delete(id);
+        }
+
         public BllComment GetComment(int id)
         {
             return commentRepository
                 .FirstOrDefault(c => c.Id == id)
                 .ToBllComment();
+        }
+
+        public BllComment GetRawComment()
+        {
+            return commentRepository.FirstOrDefault(c => c.Status.Id == (int)StatusEnum.Raw)
+               .ToBllComment();
         }
 
         public void UpdateComment(BllComment comment)
@@ -46,6 +57,12 @@ namespace ForumBll.Services
             topicRepository.Update(dalComment.Topic);
 
             commentRepository.Update(dalComment);
+        }
+
+        public IEnumerable<BllComment> GetComments()
+        {
+            return commentRepository.GetByPredicate(c => true)
+                .Select(c => c.ToBllComment());
         }
 
         public void Dispose()

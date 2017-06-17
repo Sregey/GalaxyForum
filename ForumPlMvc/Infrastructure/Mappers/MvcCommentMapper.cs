@@ -13,7 +13,7 @@ namespace ForumPlMvc.Infrastructure.Mappers
                 Text = bllComment.Text,
                 Date = bllComment.Date,
                 IsAnswer = bllComment.IsAnswer,
-                StatusId = bllComment.Status.Id,
+                Status = bllComment.Status.Name,
                 Sender = bllComment.Sender.ToShortUserModel(),
             };
         }

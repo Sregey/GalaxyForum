@@ -195,6 +195,7 @@
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
     <Compile Include="Models\AccountModel.cs" />
     <Compile Include="Models\CommentModel.cs" />
+    <Compile Include="Models\SearchModel.cs" />
     <Compile Include="Models\SectionModel.cs" />
     <Compile Include="Models\TopicModel.cs" />
     <Compile Include="Models\UserModel.cs" />
@@ -270,12 +271,14 @@
     <Content Include="Views\Shared\DisplayTemplates\SmaleText.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\IsTrueImage.cshtml" />
     <Content Include="Views\User\_AddComment.cshtml" />
-    <Content Include="Views\Home\_Comments.cshtml" />
+    <Content Include="Views\Shared\_Comments.cshtml" />
     <Content Include="Views\Shared\_AjaxPagination.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Shared\_Topics.cshtml" />
     <Content Include="Views\Moderator\EditTopic.cshtml" />
     <Content Include="Views\Moderator\EditComment.cshtml" />
+    <Content Include="Views\Shared\_Search.cshtml" />
+    <Content Include="Views\Moderator\Comments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

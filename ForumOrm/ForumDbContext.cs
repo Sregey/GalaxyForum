@@ -86,6 +86,11 @@ namespace ForumOrm
                 .HasColumnType("datetime2")
                 .HasPrecision(0);
 
+            modelBuilder.Entity<Topic>()
+                .HasMany(t => t.Comments)
+                .WithRequired(c => c.Topic)
+                .WillCascadeOnDelete(true);
+
             modelBuilder.Entity<User>()
                 .HasMany(u => u.Topics)
                 .WithRequired(t => t.Author)

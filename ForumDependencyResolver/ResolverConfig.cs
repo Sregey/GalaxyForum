@@ -52,7 +52,8 @@ namespace ForumDependencyResolver
             //Repositories
             kernel.Bind<IRepository<DalUser>>().To<UserRepository>();
             kernel.Bind<IRepository<DalSection>>().To<Repository<DalSection, Section>>();
-            kernel.Bind<IRepository<DalTopic>>().To<Repository<DalTopic, Topic>>();
+            //kernel.Bind<IRepository<DalTopic>>().To<Repository<DalTopic, Topic>>();
+            kernel.Bind<ITopicRepository>().To<TopicRepository>();
             kernel.Bind<IRepository<DalImage>>().To<Repository<DalImage, Image>>();
             kernel.Bind<IRepository<DalComment>>().To<Repository<DalComment, Comment>>();
         }

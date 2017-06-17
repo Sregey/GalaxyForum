@@ -111,10 +111,8 @@ namespace ForumPlMvc.Controllers
                 BllComment bllComment = comment.ToBllComment();
                 bllComment.Sender = userService.GetUser(User.Identity.Name);
                 commentService.AddComment(bllComment);
-
-                return RedirectToAction("Topic", "Home", new { id = comment.TopicId });
             }
-            return View(comment);
+            return RedirectToAction("Topic", "Home", new { id = comment.TopicId });
         }
 
         [IdValidator]

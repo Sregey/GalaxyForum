@@ -15,6 +15,7 @@ namespace ForumPlMvc.Controllers
     public class ModeratorController : Controller
     {
         private const int TOPICS_PER_PAGE = 2;
+        private const int COMMENTS_PER_PAGE = 2;
 
         private readonly ITopicService topicService;
         private readonly ICommentService commentService;
@@ -62,6 +63,15 @@ namespace ForumPlMvc.Controllers
             return ChangeTopicState(topic, StatusEnum.Rejected);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [MultipleSubmit(Name = "EditTopic", Argument = "Delete")]
+        public ActionResult DeletTopic(CreateEditTopicModel topic)
+        {
+            topicService.DeleteTopic(topic.Id);
+            return RedirectToAction("Topics");
+        }
+
         public ActionResult Topics(int? page)
         {
             ViewBag.IsShowStatus = true;
@@ -74,6 +84,20 @@ namespace ForumPlMvc.Controllers
         public ActionResult GetRawTopic()
         {
             return RedirectToAction("EditTopic", new { id = topicService.GetRawTopic().Id });
+        }
+
+        public ActionResult GetRawComment()
+        {
+            return RedirectToAction("EditComment", new { id = commentService.GetRawComment().Id });
+        }
+
+        public ActionResult Comments(int? page)
+        {
+            ViewBag.IsMyTopic = false;
+            var comments = commentService.GetComments();
+            comments = comments.OrderBy(t => t.Date);
+            return View(this.GetItemsOnPage(comments, page, COMMENTS_PER_PAGE)
+                .Select(c => c.ToCommentModel()));
         }
 
         [IdValidator]
@@ -96,6 +120,24 @@ namespace ForumPlMvc.Controllers
         public ActionResult RejectComment(AddEditCommentModel comment)
         {
             return ChangeCommentState(comment, StatusEnum.Rejected);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [MultipleSubmit(Name = "EditComment", Argument = "Delete")]
+        public ActionResult DeleteComment(AddEditCommentModel comment)
+        {
+            commentService.DeleteComment(comment.Id);
+            return RedirectToAction("Topic", "Home", new { id = comment.TopicId });
+        }
+
+        public ActionResult _Comments(int? page)
+        {
+            ViewBag.IsMyTopic = false;
+            var comments = commentService.GetComments();
+            comments = comments.OrderBy(t => t.Date);
+            return PartialView(this.GetItemsOnPage(comments, page, TOPICS_PER_PAGE)
+                .Select(c => c.ToCommentModel()));
         }
 
         protected override void Dispose(bool disposing)
