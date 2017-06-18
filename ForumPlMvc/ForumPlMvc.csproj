@@ -207,6 +207,10 @@
     <Compile Include="Providers\ForumRoleProvider.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\DbGalaxyForum.mdf" />
+    <Content Include="App_Data\DbGalaxyForum_log.ldf">
+      <DependentUpon>DbGalaxyForum.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -282,9 +286,7 @@
     <Content Include="Views\Admin\EditUser.cshtml" />
     <Content Include="Views\Shared\Info.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />

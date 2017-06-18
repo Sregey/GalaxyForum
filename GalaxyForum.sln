@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumDependencyResolver", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumPlMvc", "ForumPlMvc\ForumPlMvc.csproj", "{4C02406B-0182-4C6C-99EB-17E79B24553C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumPlConsole", "ForumPlConsole\ForumPlConsole.csproj", "{4A3871BF-6CF6-488C-A3D5-5F0EDC05BB92}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{4C02406B-0182-4C6C-99EB-17E79B24553C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C02406B-0182-4C6C-99EB-17E79B24553C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C02406B-0182-4C6C-99EB-17E79B24553C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A3871BF-6CF6-488C-A3D5-5F0EDC05BB92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A3871BF-6CF6-488C-A3D5-5F0EDC05BB92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A3871BF-6CF6-488C-A3D5-5F0EDC05BB92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A3871BF-6CF6-488C-A3D5-5F0EDC05BB92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

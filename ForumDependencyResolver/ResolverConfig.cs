@@ -17,12 +17,16 @@ namespace ForumDependencyResolver
     {
         public static void ConfigurateResolverWeb(this IKernel kernel)
         {
-            Configure(kernel, true);
+            kernel.Bind<DbContext>().To<ForumDbContext>().InRequestScope();
+
+            Configure(kernel);
         }
 
         public static void ConfigurateResolverConsole(this IKernel kernel)
         {
-            Configure(kernel, false);
+            kernel.Bind<DbContext>().To<ForumDbContext>().InSingletonScope();
+
+            Configure(kernel);
         }
 
         private static IUserService ServiceForProvider(IContext c)
@@ -30,17 +34,8 @@ namespace ForumDependencyResolver
             return new UserService(new UserRepository(new ForumDbContext()), new NLoggerAdapter());
         }
 
-        private static void Configure(IKernel kernel, bool isWeb)
+        private static void Configure(IKernel kernel)
         {
-            if (isWeb)
-            {
-                kernel.Bind<DbContext>().To<ForumDbContext>().InRequestScope();
-            }
-            else
-            {
-                kernel.Bind<DbContext>().To<ForumDbContext>().InSingletonScope();
-            }
-
             //Services
             kernel.Bind<IUserService>().To<UserService>();
             kernel.Bind<IUserService>().ToMethod(ServiceForProvider).WhenTargetHas<SpecialServiceAttribute>();
