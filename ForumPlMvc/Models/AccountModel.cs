@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace ForumPlMvc.Models
 {
@@ -6,13 +7,14 @@ namespace ForumPlMvc.Models
     {
         [Required(ErrorMessage = "Login is required.")]
         [StringLength(20, MinimumLength = 5, ErrorMessage = "Login length must be between 5 to 20 characters.")]
+        [Remote("CheckLogin", "Account", ErrorMessage = "Login already exists.")]
         [RegularExpression(@"\w*",
             ErrorMessage = "Loging must consists of Latin letters, digits and underscores. ")]
         public string Login { get; set; }
 
         [Required(ErrorMessage = "Email is required.")]
-        [RegularExpression(@"(?i)\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b",
-            ErrorMessage = "Email isn't correct.")]
+        [Remote("CheckEmail", "Account", ErrorMessage = "Email already exists.")]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Password is required.")]
@@ -23,7 +25,8 @@ namespace ForumPlMvc.Models
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Сonfirm password is required.")]
-        [Compare("Password", ErrorMessage = "Сonfirm password isn't equal to password.")]
+        [System.ComponentModel.DataAnnotations.
+            Compare("Password", ErrorMessage = "Сonfirm password isn't equal to password.")]
         [Display(Name = "Confirm Password")]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
@@ -32,6 +35,7 @@ namespace ForumPlMvc.Models
     public class LoginModel
     {
         [Required(ErrorMessage = "Email is required.")]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Password is required.")]
@@ -55,7 +59,8 @@ namespace ForumPlMvc.Models
         public string NewPassword { get; set; }
 
         [Required(ErrorMessage = "Сonfirm new password is required.")]
-        [Compare("NewPassword", ErrorMessage = "Сonfirm new password isn't equal to new password.")]
+        [System.ComponentModel.DataAnnotations.
+            Compare("NewPassword", ErrorMessage = "Сonfirm new password isn't equal to new password.")]
         [Display(Name = "Confirm New Password")]
         [DataType(DataType.Password)]
         public string ConfirmNewPassword { get; set; }

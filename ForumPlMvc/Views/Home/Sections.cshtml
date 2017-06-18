@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ForumPlMvc.Models.SectionModel>
+﻿@model IEnumerable<SectionModel>
 
 @{
     ViewBag.Title = "Sections";
@@ -6,15 +6,25 @@
 
 <h2>Sections</h2>
 
+@if (this.IsAdmin())
+{
+    <div>
+        @Html.ActionLink("Add Section", "AddSection", "Admin", null, new { @class = "btn btn-default btn-sm offset" })
+    </div>
+}
+
 <div class="col-md-8">
     <table class="table">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <td>
-                <b>Actions</b>
-            </td>
+            @if (this.IsAdmin())
+            {
+                <th>
+                    Actions
+                </th>
+            }
         </tr>
         <tbody>
             @foreach (var item in Model)
@@ -23,10 +33,13 @@
                     <td>
                         @Html.ActionLink(item.Name, "TopicsInSection", new { id = item.Id, page = 1 })
                     </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                    </td>
+                    @if (this.IsAdmin())
+                    {
+                        <td>
+                            @Html.ActionLink("Edit", "EditSection", "Admin", new { id = item.Id }, null) |
+                            @Html.ActionLink("Delete", "DeleteSection", "Admin", new { id = item.Id }, null)
+                        </td>
+                    }
                 </tr>
             }
         </tbody>

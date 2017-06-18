@@ -1,9 +1,7 @@
-﻿@using ForumPlMvc.Healpers
-@model IEnumerable<ForumPlMvc.Models.CommentModel>
+﻿@model IEnumerable<CommentModel>
 
-@using ForumBll.Interface.Models
 @foreach (var item in Model)
-            {
+{
     <tr>
         <td>
             <img class="camp_logo" src="~/Home/GetImage/@item.Sender.AvatarId" />

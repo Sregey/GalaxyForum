@@ -24,9 +24,6 @@ namespace ForumBll.Services
         public void AddTopic(BllTopic topic)
         {
             topic.Date = DateTime.Now;
-            topic.Section = sectionRepository
-                .FirstOrDefault(s => s.Name == topic.Section.Name)
-                .ToBllSection();
             topic.Status = new BllStatus() { Id = (int)StatusEnum.Raw };
             topicRepository.Add(topic.ToDalTopic());
         }
@@ -68,7 +65,7 @@ namespace ForumBll.Services
             dalTopic.Title = topic.Title;
             dalTopic.Text = topic.Text;
             dalTopic.Status.Id = topic.Status.Id;
-            dalTopic.Section = sectionRepository.FirstOrDefault(s => s.Name == topic.Section.Name);
+            dalTopic.Section.Id = topic.Section.Id;
             topicRepository.Update(dalTopic);
         }
 

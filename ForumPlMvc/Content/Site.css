@@ -133,11 +133,11 @@ table.comments td.text {
     width: 1000px;
     vertical-align: top;
 }
-table.comments img.camp_logo {
+img.camp_logo {
     height: 50px;
     width: 50px;
 }
-table.comments .login {
+.login {
     font-weight: bold;
     color: black;
 }

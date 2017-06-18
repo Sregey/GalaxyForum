@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace ForumPlMvc.Models
 {
@@ -8,7 +9,7 @@ namespace ForumPlMvc.Models
     {
         public int Id { get; set; }
 
-        public int AuthorId { get; set; }
+        //public int AuthorId { get; set; }
 
         [Required(ErrorMessage = "Title is required.")]
         [MinLength(5, ErrorMessage = "Minimum length is 5 characters.")]
@@ -22,7 +23,7 @@ namespace ForumPlMvc.Models
         [Required(ErrorMessage = "Section is required.")]
         public string Section { get; set; }
 
-        public IEnumerable<string> Sections { get; set; }
+        public IEnumerable<SelectListItem> Sections { get; set; }
     }
 
     public class TopicListModel

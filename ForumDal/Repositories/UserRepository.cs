@@ -27,5 +27,12 @@ namespace ForumDal.Repositories
 
             context.SaveChanges();
         }
+
+        public override void Delete(int id)
+        {
+            //User user = context.Set<User>().FirstOrDefault(u => u.Id == id);
+            context.Set<Topic>().Where(t => t.AuthorId == id).Load();
+            base.Delete(id);
+        }
     }
 }

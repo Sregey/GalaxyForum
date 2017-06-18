@@ -38,14 +38,6 @@ namespace ForumPlMvc.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Admin")]
-        public ActionResult Users()
-        {
-            //IEnumerable<BllUser> users = userService.GetAllUsers();
-            //return View(users.Select(bllUser => bllUser.ToUserInfoModel()));
-            return RedirectToAction("About");
-        }
-
         [IdValidator]
         public FileStreamResult GetImage(int id)
         {

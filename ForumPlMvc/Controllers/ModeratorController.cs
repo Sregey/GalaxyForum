@@ -43,7 +43,8 @@ namespace ForumPlMvc.Controllers
             bllTopic.Status = new BllStatus { Id = (int)StatusEnum.Processed };
             topicService.UpdateTopic(bllTopic);
             CreateEditTopicModel topic = bllTopic.ToCreateEditTopicModel();
-            topic.Sections = topicService.GetAllSections().Select(s => s.Name);
+            topic.Sections = topicService.GetAllSections()
+                .Select(s => new SelectListItem { Text = s.Name, Value = s.Id.ToString() });
             return View(topic);
         }
 

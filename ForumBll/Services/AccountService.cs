@@ -24,14 +24,30 @@ namespace ForumBll.Services
         {
             newUser.RegisrationDate = DateTime.Now;
             newUser.Role = new BllRole() { Id = (int)RoleEnum.User };
+            newUser.HashedPassword = Hash(newUser.Password);
 
             userRepository.Add(newUser.ToDalUser());
             return userRepository.IsExists(u => (u.Login == newUser.Login));
         }
 
-        public bool IsLoginOrEmailExist(string login, string email)
+
+        public bool IsLoginExist(string login, int excludeUserId)
         {
-            return userRepository.IsExists(u => (u.Login == login) || (u.Email == email));
+            bool isExist = IsLoginExist(login);
+            DalUser user = null;
+            if (isExist)
+                user = userRepository.FirstOrDefault(u => u.Id == excludeUserId);
+            return isExist && ((user == null) || (user.Login != login));
+        }
+
+        public bool IsLoginExist(string login)
+        {
+            return userRepository.IsExists(u => (u.Login == login));
+        }
+
+        public bool IsEmailExist(string email)
+        {
+            return userRepository.IsExists(u => (u.Email == email));
         }
 
         public BllUser Login(string email, string password)

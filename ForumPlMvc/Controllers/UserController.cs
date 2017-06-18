@@ -84,7 +84,8 @@ namespace ForumPlMvc.Controllers
         public ActionResult CreateTopic()
         {
             var topic = new CreateEditTopicModel();
-            topic.Sections = topicService.GetAllSections().Select(s => s.Name);
+            topic.Sections = topicService.GetAllSections()
+                .Select(s => new SelectListItem { Text = s.Name, Value = s.Id.ToString() });
             return View(topic);
         }
 

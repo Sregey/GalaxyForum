@@ -48,6 +48,7 @@ namespace ForumDependencyResolver
             kernel.Bind<IAccountService>().To<AccountService>();
             kernel.Bind<IImageService>().To<ImageService>();
             kernel.Bind<ICommentService>().To<CommentService>();
+            kernel.Bind<IRoleService>().To<RoleService>();
 
             //Repositories
             kernel.Bind<IRepository<DalUser>>().To<UserRepository>();
@@ -56,6 +57,7 @@ namespace ForumDependencyResolver
             kernel.Bind<ITopicRepository>().To<TopicRepository>();
             kernel.Bind<IRepository<DalImage>>().To<Repository<DalImage, Image>>();
             kernel.Bind<IRepository<DalComment>>().To<Repository<DalComment, Comment>>();
+            kernel.Bind<IRepository<DalRole>>().To<Repository<DalRole, Role>>();
         }
     }
 }

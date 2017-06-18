@@ -7,9 +7,9 @@ using System.Security.Cryptography;
 
 namespace ForumOrm
 {
-    public class ForumDbInitializer : DropCreateDatabaseIfModelChanges<ForumDbContext>
+    public class ForumDbInitializer : //DropCreateDatabaseIfModelChanges<ForumDbContext>
         //DropCreateDatabaseAlways<ForumDbContext>
-        //CreateDatabaseIfNotExists<ForumDbContext>
+        CreateDatabaseIfNotExists<ForumDbContext>
     {
         protected override void Seed(ForumDbContext context)
         {
@@ -41,11 +41,12 @@ namespace ForumOrm
 
         private void InitializeSections(ForumDbContext context)
         {
-            context.Sections.Add(new Section { Id = 1, Name = "Cars" });
-            context.Sections.Add(new Section { Id = 2, Name = "Cinema" });
-            context.Sections.Add(new Section { Id = 3, Name = "Cooking" });
-            context.Sections.Add(new Section { Id = 4, Name = "Programming" });
-            context.Sections.Add(new Section { Id = 5, Name = "Tourism" });
+            context.Sections.Add(new Section { Id = 1, Name = "Other" });
+            context.Sections.Add(new Section { Id = 2, Name = "Cars" });
+            context.Sections.Add(new Section { Id = 3, Name = "Cinema" });
+            context.Sections.Add(new Section { Id = 4, Name = "Cooking" });
+            context.Sections.Add(new Section { Id = 5, Name = "Programming" });
+            context.Sections.Add(new Section { Id = 6, Name = "Tourism" });
         }
 
         private void InitializeUsers(ForumDbContext context)
@@ -138,7 +139,7 @@ namespace ForumOrm
                 Title = "How to cook scrambled eggs?",
                 Text = "Please help me. It's very important for me.",
                 Date = DateTime.Now,
-                SectionId = 3,
+                SectionId = 4,
                 AuthorId = 1,
                 StatusId = 3,
                 IsAnswered = true
@@ -149,7 +150,7 @@ namespace ForumOrm
                 Title = "Where is pedals in my car?",
                 Text = "I paid 10000$ for my car. But I cann't find pedals there!",
                 Date = DateTime.Now,
-                SectionId = 1,
+                SectionId = 2,
                 AuthorId = 6,
                 StatusId = 1
             });

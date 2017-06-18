@@ -12,10 +12,13 @@ namespace ForumBll.Services
     public class SectionService : ISectionService
     {
         private readonly IRepository<DalSection> sectionRepository;
+        private readonly ITopicRepository topicRepository;
 
-        public SectionService(IRepository<DalSection> repository)
+        public SectionService(IRepository<DalSection> sectionRepository,
+            ITopicRepository topicRepository)
         {
-            this.sectionRepository = repository;
+            this.sectionRepository = sectionRepository;
+            this.topicRepository = topicRepository;
         }
 
         public int Count
@@ -25,12 +28,23 @@ namespace ForumBll.Services
 
         public void AddSection(BllSection section)
         {
-            throw new NotImplementedException();
+            sectionRepository.Add(section.ToDalSection());
+        }
+
+        public void UpdateSection(BllSection section)
+        {
+            sectionRepository.Update(section.ToDalSection());
         }
 
         public void DeleteSection(int id)
         {
-            throw new NotImplementedException();
+            DalSection section = sectionRepository.FirstOrDefault(s => s.Id == id);
+            foreach (var t in section.Topics.ToList())
+            {
+                t.Section.Id = 1;
+                topicRepository.Update(t);
+            }
+            sectionRepository.Delete(id);
         }
 
         public IEnumerable<BllSection> GetAllSections()

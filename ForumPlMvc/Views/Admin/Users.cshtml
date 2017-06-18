@@ -1,0 +1,49 @@
+﻿@model IEnumerable<UserListModel>
+
+@{
+    ViewBag.Title = "Users";
+}
+
+<h2>Users</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AvatarId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Login)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RegisrationDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Role)
+        </th>
+    </tr>
+
+    <tbody id="ajax-result">
+        @Html.Partial("_Users", Model)
+    </tbody>
+
+</table>
+
+<div id="loading">
+    <p>Loading...</p>
+</div>
+
+<noscript>
+    @Html.Partial("_Pagination")
+</noscript>
+
+<div id="ajax">
+    @Html.Partial("_AjaxPagination", "_Users")
+</div>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/ajax")
+}

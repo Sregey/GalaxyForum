@@ -6,7 +6,11 @@ namespace ForumBll.Interface.Services
 {
     public interface IAccountService : IDisposable
     {
-        bool IsLoginOrEmailExist(string login, string email);
+        bool IsEmailExist(string email);
+
+        bool IsLoginExist(string login);
+
+        bool IsLoginExist(string login, int excludeUserId);
 
         bool RegisterUser(BllUser user);
 

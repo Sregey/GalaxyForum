@@ -178,6 +178,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ControllerExtention.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ModeratorController.cs" />
@@ -206,8 +207,6 @@
     <Compile Include="Providers\ForumRoleProvider.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -222,8 +221,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\ajax-tools.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -258,7 +255,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Sections.cshtml" />
     <Content Include="Views\Shared\Topics.cshtml" />
-    <Content Include="Views\Home\Users.cshtml" />
+    <Content Include="Views\Admin\Users.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Pagination.cshtml" />
@@ -279,6 +276,10 @@
     <Content Include="Views\Moderator\EditComment.cshtml" />
     <Content Include="Views\Shared\_Search.cshtml" />
     <Content Include="Views\Moderator\Comments.cshtml" />
+    <Content Include="Views\Admin\_Users.cshtml" />
+    <Content Include="Views\Admin\EditSection.cshtml" />
+    <Content Include="Views\Admin\AddSection.cshtml" />
+    <Content Include="Views\Admin\EditUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

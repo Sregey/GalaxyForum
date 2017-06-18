@@ -1,4 +1,4 @@
-﻿@model ForumPlMvc.Models.UserInfoModel
+﻿@model UserInfoModel
 
 @{
     ViewBag.Title = "User Info";
@@ -9,7 +9,13 @@
 
 <div class="row">
     <div class="col-lg-4 col-md-4 col-sm-4 offset">
-        <img src="~/Home/GetImage/@Model.AvatarId" width="200" height="200" alt="avatar" />
+        <img src="~/Home/GetImage/@Model.AvatarId" width="180" height="180" alt="avatar" />
+        @if (this.IsAdmin())
+        {
+            <br />
+            @Html.ActionLink("Edit", "EditUser", "Admin", new { id = Model.Id }, new { @class = "btn btn-default offset", style="margin-right:10px" })
+            @Html.ActionLink("Delete", "DeleteUser", "Admin", new { id = Model.Id }, new { @class = "btn btn-default offset" })
+        }
     </div>
 
     <div class="col-lg-8 col-md-8 col-sm-8 offset">

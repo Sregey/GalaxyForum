@@ -41,7 +41,7 @@ namespace ForumBll.Mappers
                 FatherName = bllUser.FatherName,
                 RegisrationDate = bllUser.RegisrationDate,
                 Profession = bllUser.Profession,
-                Avatar = bllUser.Avatar.ToDalImage(),
+                Avatar = bllUser.Avatar?.ToDalImage(),
                 ExtraInfo = bllUser.ExtraInfo,
                 Role = bllUser.Role.ToDalRole()
             };
@@ -61,7 +61,7 @@ namespace ForumBll.Mappers
                 Date = dalTopic.Date,
                 IsAnswered = dalTopic.IsAnswered,
                 Section = dalTopic.Section.ToBllSection(),
-                Author = dalTopic.Author.ToBllUser(),
+                Author = dalTopic.Author?.ToBllUser(),
                 Status = dalTopic.Status.ToBllStatus(),
                 Comments = dalTopic.Comments.Select(c => c.ToBllComment()),
             };

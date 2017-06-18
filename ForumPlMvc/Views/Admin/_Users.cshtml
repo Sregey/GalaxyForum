@@ -1,0 +1,22 @@
+﻿@model IEnumerable<UserListModel>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            <img class="camp_logo" src="~/Home/GetImage/@item.AvatarId" />
+        </td>
+        <td>
+            @Html.ActionLink(item.Login, "UserInfo", "User", new { id = item.Id }, new { @class = "login" })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RegisrationDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Role)
+        </td>
+    </tr>
+}

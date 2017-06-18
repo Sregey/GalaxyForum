@@ -12,6 +12,7 @@ using ForumPlMvc.Models;
 
 namespace ForumPlMvc.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly IAccountService accountService;
@@ -21,37 +22,36 @@ namespace ForumPlMvc.Controllers
             this.accountService = accountService;
         }
 
+        [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterModel newUser)
         {
             if (ModelState.IsValid)
             {
-                if (!accountService.IsLoginOrEmailExist(newUser.Login, newUser.Email))
+                if (accountService.RegisterUser(newUser.ToBllUser()))
                 {
-                    if (accountService.RegisterUser(newUser.ToBllUser()))
-                    {
-                        FormsAuthentication.SetAuthCookie(newUser.Login, true);
-                        return RedirectToAction("UserInfo", "User");
-                    }
+                    FormsAuthentication.SetAuthCookie(newUser.Login, true);
+                    return RedirectToAction("UserInfo", "User");
                 }
-                else
-                    ModelState.AddModelError("", "This login or email already exists.");
             }
             return View(newUser);
         }
 
+        [AllowAnonymous]
         public ActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel loginModel)
         {
@@ -67,6 +67,32 @@ namespace ForumPlMvc.Controllers
                     ModelState.AddModelError("", "You input yuor email or password wrong.");
             }
             return View(loginModel);
+        }
+
+        [AllowAnonymous]
+        public JsonResult CheckLogin(string login, int? id)
+        {
+            bool result = false;
+            if (!String.IsNullOrEmpty(login))
+            {
+                if (id.HasValue)
+                {
+                    result = !accountService.IsLoginExist(login, id.Value);
+                }
+                else
+                {
+                    result = !accountService.IsLoginExist(login);
+                }
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [AllowAnonymous]
+        public JsonResult CheckEmail(string email)
+        {
+            return Json(!accountService.IsEmailExist(email),
+                JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Logout()

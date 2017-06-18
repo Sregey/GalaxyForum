@@ -45,6 +45,7 @@
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\CommentService.cs" />
     <Compile Include="Services\ImageService.cs" />
+    <Compile Include="Services\RoleService.cs" />
     <Compile Include="Services\SectionService.cs" />
     <Compile Include="Services\TopicService.cs" />
     <Compile Include="Services\UserService.cs" />

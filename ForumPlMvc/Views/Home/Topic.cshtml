@@ -1,7 +1,4 @@
-﻿@using ForumPlMvc.Models
-@using ForumPlMvc.Healpers
-
-@model ForumPlMvc.Models.TopicDitailsModel
+﻿@model TopicDitailsModel
 
 @{
     ViewBag.Title = Model.Title;
@@ -15,10 +12,18 @@
         <table class="comments">
             <tr>
                 <td>
-                    <img class="camp_logo" src="~/Home/GetImage/@Model.Author.AvatarId" />
+                    @{var avatarId = (Model.Author != null) ? Model.Author.AvatarId : 1; }
+                    <img class="camp_logo" src="~/Home/GetImage/@avatarId" />
                     <br />
                     <br />
-                    @Html.ActionLink(Model.Author.Login, "UserInfo", "User", new { id = Model.Author.Id }, new { @class = "login" })
+                    @if (Model.Author != null)
+                    {
+                        @Html.ActionLink(Model.Author.Login, "UserInfo", "User", new { id = Model.Author.Id }, new { @class = "login" })
+                    }
+                    else
+                    {
+                        <span class="login">Unknown</span>
+                    }
                 </td>
                 <td class="text">
                     @Html.DisplayFor(model => model.Text)

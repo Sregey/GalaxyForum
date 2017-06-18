@@ -30,14 +30,10 @@ namespace ForumBll.Services
         public void DeleteUser(int id)
         {
             userRepository.Delete(id);
-            //uow.Commit();
         }
 
         public IEnumerable<BllUser> GetAllUsers()
         {
-            /*return userRepository
-                .GetByPredicate(dalU => dalU.Id % 2 == 0)
-                .Select(user => user.ToBllUser());*/
             return userRepository
                 .GetSequence(0, userRepository.Count)
                 .Select(user => user.ToBllUser());
@@ -46,7 +42,6 @@ namespace ForumBll.Services
         public void AddUser(BllUser user)
         {
             userRepository.Add(user.ToDalUser());
-            //uow.Commit();
         }
 
         public BllUser GetUser(string login)

@@ -14,6 +14,8 @@ namespace ForumBll.Interface.Services
 
         void AddSection(BllSection section);
 
+        void UpdateSection(BllSection section);
+
         void DeleteSection(int id);
     }
 }

@@ -2,6 +2,9 @@
 using System.IO;
 using System.Web;
 using ForumPlMvc.Models.Validations;
+using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace ForumPlMvc.Models
 {
@@ -16,6 +19,8 @@ namespace ForumPlMvc.Models
 
     public class UserSettingModel
     {
+        public int Id { get; set; }
+
         public string Name { get; set; }
 
         [Display(Name = "Last name")]
@@ -35,6 +40,21 @@ namespace ForumPlMvc.Models
         public HttpPostedFileBase Avatar { get; set; }
     }
 
+    public class UserAdminEditModel : UserSettingModel
+    {
+        [Required(ErrorMessage = "Login is required.")]
+        [StringLength(20, MinimumLength = 5, ErrorMessage = "Login length must be between 5 to 20 characters.")]
+        [Remote("CheckLogin", "Account", AdditionalFields = "Id", ErrorMessage = "Login already exists.")]
+        [RegularExpression(@"\w*",
+            ErrorMessage = "Loging must consists of Latin letters, digits and underscores. ")]
+        public string Login { get; set; }
+
+        [Required(ErrorMessage = "Role is required.")]
+        public string Role { get; set; }
+
+        public IEnumerable<SelectListItem> Roles { get; set; }
+    }
+
     public class ShortUserModel
     {
         public int Id { get; set; }
@@ -42,5 +62,22 @@ namespace ForumPlMvc.Models
         public string Login { get; set; }
 
         public int AvatarId { get; set; }
+    }
+
+    public class UserListModel
+    {
+        public int Id { get; set; }
+
+        public string Login { get; set; }
+
+        public string Email { get; set; }
+
+        [Display(Name = "Avatar")]
+        public int AvatarId { get; set; }
+
+        [Display(Name = "Regisration Date")]
+        public DateTime RegisrationDate { get; set; }
+
+        public string Role { get; set; }
     }
 }

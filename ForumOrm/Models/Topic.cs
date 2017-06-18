@@ -18,7 +18,7 @@ namespace ForumOrm.Models
 
         public int SectionId { get; set; }
 
-        public int AuthorId { get; set; }
+        public int? AuthorId { get; set; }
 
         public int StatusId { get; set; }
 

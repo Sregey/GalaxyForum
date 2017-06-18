@@ -8,7 +8,7 @@ namespace ForumOrm
         public ForumDbContext() : base("name=DbGalaxyForum")
         {
             Database.SetInitializer(new ForumDbInitializer());
-            Database.Initialize(true);
+            //Database.Initialize(true);
         }
 
         public virtual DbSet<User> Users { get; set; }
@@ -47,6 +47,10 @@ namespace ForumOrm
                 .IsRequired()
                 .HasColumnType("binary")
                 .HasMaxLength(32);
+
+            //modelBuilder.Entity<User>()
+            //    .HasMany(u => u.Topics)
+            //    .WithOptional(t => t.Author);
 
             modelBuilder.Entity<Role>()
                 .Property(u => u.Name)
@@ -91,10 +95,11 @@ namespace ForumOrm
                 .WithRequired(c => c.Topic)
                 .WillCascadeOnDelete(true);
 
-            modelBuilder.Entity<User>()
-                .HasMany(u => u.Topics)
-                .WithRequired(t => t.Author)
-                .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Topic>()
+            //    .HasOptional(t => t.Author)
+            //    .WithMany()
+            //    .HasForeignKey(t => t.AuthorId);
+
 
             modelBuilder.Entity<Image>()
                 .Property(i => i.Size)

@@ -73,7 +73,7 @@ namespace ForumDal.Mappers
                 Text = topic.Text,
                 Date = topic.Date,
                 Section = (DalSection)topic.Section.ToDalEntity(),
-                Author = (DalUser)topic.Author.ToDalEntity(),
+                Author = (DalUser)topic.Author?.ToDalEntity(),
                 Status = (DalStatus)topic.Status.ToDalEntity(),
                 IsAnswered = topic.IsAnswered,
                 Comments = topic.Comments.Select(c => (DalComment)c.ToDalEntity()),

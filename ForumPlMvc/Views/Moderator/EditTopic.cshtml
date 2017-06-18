@@ -1,8 +1,7 @@
-﻿@model ForumPlMvc.Models.CreateEditTopicModel
+﻿@model CreateEditTopicModel
 
 @{
     ViewBag.Title = "EditTopic";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Edit Topic</h2>
@@ -16,12 +15,12 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         @Html.HiddenFor(model => model.Id)
-        @Html.HiddenFor(model => model.AuthorId)
+        @*@Html.HiddenFor(model => model.AuthorId)*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Section, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Section, new SelectList(Model.Sections), new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.Section, new SelectList(Model.Sections, "Value", "Text", Model.Section), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
         </div>

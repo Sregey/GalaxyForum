@@ -74,7 +74,7 @@ namespace ForumDal.Mappers
                 Date = dalTopic.Date,
                 IsAnswered = dalTopic.IsAnswered,
                 SectionId = dalTopic.Section.Id,
-                AuthorId = dalTopic.Author.Id,
+                AuthorId = dalTopic.Author?.Id,
                 StatusId = dalTopic.Status.Id,
             };
         }
@@ -93,9 +93,10 @@ namespace ForumDal.Mappers
                 RegisrationDate = dalUser.RegisrationDate,
                 Profession = dalUser.Profession,
                 ExtraInfo = dalUser.ExtraInfo,
-                AvatarId = dalUser.Avatar.Id,
                 RoleId = dalUser.Role.Id,
             };
+            if (dalUser.Avatar != null)
+                ((User)OrmEntity).AvatarId = dalUser.Avatar.Id;
         }
     }
 }
