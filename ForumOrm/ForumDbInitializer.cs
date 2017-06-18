@@ -8,8 +8,8 @@ using System.Security.Cryptography;
 namespace ForumOrm
 {
     public class ForumDbInitializer : //DropCreateDatabaseIfModelChanges<ForumDbContext>
-        DropCreateDatabaseAlways<ForumDbContext>
-        //CreateDatabaseIfNotExists<ForumDbContext>
+        //DropCreateDatabaseAlways<ForumDbContext>
+        CreateDatabaseIfNotExists<ForumDbContext>
     {
         protected override void Seed(ForumDbContext context)
         {

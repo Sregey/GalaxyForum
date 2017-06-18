@@ -65,18 +65,18 @@ namespace ForumPlMvc.Controllers
                 .Select(bllTopic => bllTopic.ToTopicListModel()));
         }
 
-        [IdValidator]
-        public ActionResult TopicsInSection(int id, int? page, string subString)
-        {
-            ViewBag.AjaxId = id;
-            ViewBag.IsShowStatus = false;
+        //[IdValidator]
+        //public ActionResult TopicsInSection(int id, int? page, string subString)
+        //{
+        //    ViewBag.AjaxId = id;
+        //    ViewBag.IsShowStatus = false;
 
-            BllSection section = sectionService.GetSection(id);
-            section.Topics = section.Topics.Where(t => t.Status.Id == (int)StatusEnum.Accepted);
-            section.Topics = topicService.SearchInSection(id, "Car");
-            return View("Topics", this.GetItemsOnPage(section.Topics, page, TOPICS_PER_PAGE)
-                .Select(bllTopic => bllTopic.ToTopicListModel()));
-        }
+        //    BllSection section = sectionService.GetSection(id);
+        //    section.Topics = section.Topics.Where(t => t.Status.Id == (int)StatusEnum.Accepted);
+        //    section.Topics = topicService.SearchInSection(id, "Car");
+        //    return View("Topics", this.GetItemsOnPage(section.Topics, page, TOPICS_PER_PAGE)
+        //        .Select(bllTopic => bllTopic.ToTopicListModel()));
+        //}
 
         [IdValidator]
         public ActionResult Topic(int id, int? page)
@@ -104,17 +104,8 @@ namespace ForumPlMvc.Controllers
                 .Select(c => c.ToCommentModel()));
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
 

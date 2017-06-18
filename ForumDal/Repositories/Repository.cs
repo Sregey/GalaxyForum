@@ -28,7 +28,6 @@ namespace ForumDal.Repositories
 
         public virtual void Add(TDalEntity entity)
         {
-            TOrmEntity orm = (TOrmEntity)entity.ToOrmEntity();
             context.Set<TOrmEntity>().Add((TOrmEntity)entity.ToOrmEntity());
             context.SaveChanges();
         }
