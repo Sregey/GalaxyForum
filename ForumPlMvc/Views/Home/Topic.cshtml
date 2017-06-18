@@ -4,63 +4,65 @@
     ViewBag.Title = Model.Title;
 }
 
-<h2>@Html.DisplayFor(model => model.Title)</h2>
-<hr />
+@section body
+{
+    <h2>@Html.DisplayFor(model => model.Title)</h2>
+    <hr />
 
-<div>
-    <div class="col-md-10">
-        <table class="comments">
-            <tr>
-                <td>
-                    @{var avatarId = (Model.Author != null) ? Model.Author.AvatarId : 1; }
-                    <img class="camp_logo" src="~/Home/GetImage/@avatarId" />
-                    <br />
-                    <br />
-                    @if (Model.Author != null)
-                    {
-                        @Html.ActionLink(Model.Author.Login, "UserInfo", "User", new { id = Model.Author.Id }, new { @class = "login" })
-                    }
-                    else
-                    {
-                        <span class="login">Unknown</span>
-                    }
-                </td>
-                <td class="text">
-                    @Html.DisplayFor(model => model.Text)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => model.Date)
-                </td>
-            </tr>
-        </table>
+    <div>
+        <div class="col-md-10">
+            <table class="comments">
+                <tr>
+                    <td>
+                        @{var avatarId = (Model.Author != null) ? Model.Author.AvatarId : 1; }
+                        <img class="camp_logo" src="~/Home/GetImage/@avatarId" />
+                        <br />
+                        <br />
+                        @if (Model.Author != null)
+                        {
+                            @Html.ActionLink(Model.Author.Login, "UserInfo", "User", new { id = Model.Author.Id }, new { @class = "login" })
+                        }
+                        else
+                        {
+                            <span class="login">Unknown</span>
+                        }
+                    </td>
+                    <td class="text">
+                        @Html.DisplayFor(model => model.Text)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Date)
+                    </td>
+                </tr>
+            </table>
 
-        @if (this.IsAdminOrModerator())
-        {
-            @Html.ActionLink("Edit Topic", "EditTopic", "Moderator", new { id = Model.Id }, new { @class = "btn btn-default btn-sm offset" })
-        }
+            @if (this.IsAdminOrModerator())
+            {
+                @Html.ActionLink("Edit Topic", "EditTopic", "Moderator", new { id = Model.Id }, new { @class = "btn btn-default btn-sm offset" })
+            }
 
-        <table class="comments offset" id="ajax-result">
-            @Html.Partial("_Comments", @Model.Comments)
-        </table>
+            <table class="comments offset" id="ajax-result">
+                @Html.Partial("_Comments", @Model.Comments)
+            </table>
 
-        <div id="loading">
-            <p>Loading...</p>
-        </div>
+            <div id="loading">
+                <p>Loading...</p>
+            </div>
 
-        <noscript>
-            @Html.Partial("_Pagination")
-        </noscript>
+            <noscript>
+                @Html.Partial("_Pagination")
+            </noscript>
         
-        <div id="ajax">
-            @{ ViewBag.AjaxId = Model.Id; }
-            @Html.Partial("_AjaxPagination", "_Comments")
+            <div id="ajax">
+                @{ ViewBag.AjaxId = Model.Id; }
+                @Html.Partial("_AjaxPagination", "_Comments")
+            </div>
+
+            @Html.Partial("~/Views/User/_AddComment.cshtml", new AddEditCommentModel() { TopicId = Model.Id })
+
         </div>
-
-        @Html.Partial("~/Views/User/_AddComment.cshtml", new AddEditCommentModel() { TopicId = Model.Id })
-
     </div>
-
-</div>
+}
 
 @section scripts
 {

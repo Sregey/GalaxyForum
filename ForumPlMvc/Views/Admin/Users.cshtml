@@ -4,44 +4,47 @@
     ViewBag.Title = "Users";
 }
 
-<h2>Users</h2>
+@section body
+{
+    <h2>Users</h2>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.AvatarId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Login)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RegisrationDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Role)
-        </th>
-    </tr>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AvatarId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Login)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RegisrationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Role)
+            </th>
+        </tr>
 
-    <tbody id="ajax-result">
-        @Html.Partial("_Users", Model)
-    </tbody>
+        <tbody id="ajax-result">
+            @Html.Partial("_Users", Model)
+        </tbody>
 
-</table>
+    </table>
 
-<div id="loading">
-    <p>Loading...</p>
-</div>
+    <div id="loading">
+        <p>Loading...</p>
+    </div>
 
-<noscript>
-    @Html.Partial("_Pagination")
-</noscript>
+    <noscript>
+        @Html.Partial("_Pagination")
+    </noscript>
 
-<div id="ajax">
-    @Html.Partial("_AjaxPagination", "_Users")
-</div>
+    <div id="ajax">
+        @Html.Partial("_AjaxPagination", "_Users")
+    </div>
+}
 
 @section scripts
 {

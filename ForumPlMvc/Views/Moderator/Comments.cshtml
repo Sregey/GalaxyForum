@@ -4,36 +4,38 @@
     ViewBag.Title = "Comments";
 }
 
-<h2>Comments</h2>
-<hr />
+@section body
+{
+    <h2>Comments</h2>
+    <hr />
 
-<div>
-    <div class="col-md-10">
+    <div>
+        <div class="col-md-10">
 
-        @if (this.IsAdminOrModerator())
-        {
-        @Html.ActionLink("Get Raw Comment", "GetRawComment", "Moderator", null, new { @class = "btn btn-default btn-sm" })
-        }
+            @if (this.IsAdminOrModerator())
+            {
+            @Html.ActionLink("Get Raw Comment", "GetRawComment", "Moderator", null, new { @class = "btn btn-default btn-sm" })
+            }
 
-        <table class="comments offset" id="ajax-result">
-            @Html.Partial("_Comments", Model)
-        </table>
+            <table class="comments offset" id="ajax-result">
+                @Html.Partial("_Comments", Model)
+            </table>
 
-        <div id="loading">
-            <p>Loading...</p>
+            <div id="loading">
+                <p>Loading...</p>
+            </div>
+
+            <noscript>
+                @Html.Partial("_Pagination")
+            </noscript>
+
+            <div id="ajax">
+                @Html.Partial("_AjaxPagination", "_Comments")
+            </div>
+
         </div>
-
-        <noscript>
-            @Html.Partial("_Pagination")
-        </noscript>
-
-        <div id="ajax">
-            @Html.Partial("_AjaxPagination", "_Comments")
-        </div>
-
     </div>
-
-</div>
+}
 
 @section scripts
 {
