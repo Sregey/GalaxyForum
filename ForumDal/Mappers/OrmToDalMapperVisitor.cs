@@ -17,7 +17,7 @@ namespace ForumDal.Mappers
                 Text = comment.Text,
                 Date = comment.Date,
                 Topic = (DalTopic)comment.Topic.ToDalEntity(),
-                Sender = (DalUser)comment.Sender.ToDalEntity(),
+                Sender = (DalUser)comment.Sender?.ToDalEntity(),
                 Status = (DalStatus)comment.Status.ToDalEntity(),
                 IsAnswer = comment.IsAnswer,
             };

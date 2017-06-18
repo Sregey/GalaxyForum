@@ -49,6 +49,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configurations\CommentConfiguration.cs" />
+    <Compile Include="Configurations\SectionConfiguration.cs" />
+    <Compile Include="Configurations\StatusConfiguration.cs" />
+    <Compile Include="Configurations\RoleConfiguration.cs" />
+    <Compile Include="Configurations\ImageConfiguration.cs" />
+    <Compile Include="Configurations\TopicConfiguration.cs" />
+    <Compile Include="Configurations\UserConfiguration.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="ForumDbContext.cs" />

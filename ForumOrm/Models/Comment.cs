@@ -10,13 +10,11 @@ namespace ForumOrm.Models
 
         public int TopicId { get; set; }
 
-        public int SenderId { get; set; }
+        public int? SenderId { get; set; }
 
         public int StatusId { get; set; }
 
         public bool IsAnswer { get; set; }
-
-        //public bool IsActual { get; set; }
 
         public virtual Topic Topic { get; set; }
 

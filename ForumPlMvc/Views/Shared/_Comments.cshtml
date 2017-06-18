@@ -4,10 +4,18 @@
 {
     <tr>
         <td>
-            <img class="camp_logo" src="~/Home/GetImage/@item.Sender.AvatarId" />
+            @{var avatarId = (item.Sender != null) ? item.Sender.AvatarId : 1; }
+            <img class="camp_logo" src="~/Home/GetImage/@avatarId" />
         </td>
         <td class="text">
-            @Html.ActionLink(item.Sender.Login, "UserInfo", "User", new { id = item.Sender.Id }, new { @class = "login" })
+            @if (item.Sender != null)
+            {
+                @Html.ActionLink(item.Sender.Login, "UserInfo", "User", new { id = item.Sender.Id }, new { @class = "login" })
+            }
+            else
+            {
+                <span class="login">Unknown</span>
+            }
             <br />
 
             @if (item.IsAnswer)

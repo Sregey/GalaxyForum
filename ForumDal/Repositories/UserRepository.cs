@@ -30,8 +30,8 @@ namespace ForumDal.Repositories
 
         public override void Delete(int id)
         {
-            //User user = context.Set<User>().FirstOrDefault(u => u.Id == id);
             context.Set<Topic>().Where(t => t.AuthorId == id).Load();
+            context.Set<Comment>().Where(c => c.SenderId == id).Load();
             base.Delete(id);
         }
     }

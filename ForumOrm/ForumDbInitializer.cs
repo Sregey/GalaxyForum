@@ -8,8 +8,8 @@ using System.Security.Cryptography;
 namespace ForumOrm
 {
     public class ForumDbInitializer : //DropCreateDatabaseIfModelChanges<ForumDbContext>
-        //DropCreateDatabaseAlways<ForumDbContext>
-        CreateDatabaseIfNotExists<ForumDbContext>
+        DropCreateDatabaseAlways<ForumDbContext>
+        //CreateDatabaseIfNotExists<ForumDbContext>
     {
         protected override void Seed(ForumDbContext context)
         {
@@ -203,6 +203,15 @@ namespace ForumOrm
                 TopicId = 2,
                 SenderId = 6,
                 StatusId = 1
+            });
+            context.Comments.Add(new Comment()
+            {
+                Id = 6,
+                Text = "Thanks",
+                Date = DateTime.Now.AddMinutes(15),
+                TopicId = 1,
+                SenderId = 1,
+                StatusId = 3,
             });
         }
 

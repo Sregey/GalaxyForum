@@ -14,7 +14,7 @@ namespace ForumPlMvc.Infrastructure.Mappers
                 Date = bllComment.Date,
                 IsAnswer = bllComment.IsAnswer,
                 Status = bllComment.Status.Name,
-                Sender = bllComment.Sender.ToShortUserModel(),
+                Sender = bllComment.Sender?.ToShortUserModel(),
             };
         }
 

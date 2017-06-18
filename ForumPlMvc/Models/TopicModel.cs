@@ -9,8 +9,6 @@ namespace ForumPlMvc.Models
     {
         public int Id { get; set; }
 
-        //public int AuthorId { get; set; }
-
         [Required(ErrorMessage = "Title is required.")]
         [MinLength(5, ErrorMessage = "Minimum length is 5 characters.")]
         public string Title { get; set; }

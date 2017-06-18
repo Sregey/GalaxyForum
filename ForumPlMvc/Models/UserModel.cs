@@ -21,14 +21,18 @@ namespace ForumPlMvc.Models
     {
         public int Id { get; set; }
 
+        [MaxLength(50, ErrorMessage = "Max length is 50 characters.")]
         public string Name { get; set; }
 
+        [MaxLength(50, ErrorMessage = "Max length is 50 characters.")]
         [Display(Name = "Last name")]
         public string LastName { get; set; }
 
+        [MaxLength(50, ErrorMessage = "Max length is 50 characters.")]
         [Display(Name = "Father name")]
         public string FatherName { get; set; }
 
+        [MaxLength(50, ErrorMessage = "Max length is 50 characters.")]
         public string Profession { get; set; }
 
         [Display(Name = "Extra information")]

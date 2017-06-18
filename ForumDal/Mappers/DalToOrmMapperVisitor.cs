@@ -17,7 +17,7 @@ namespace ForumDal.Mappers
                 Date = dalComment.Date,
                 IsAnswer = dalComment.IsAnswer,
                 TopicId = dalComment.Topic.Id,
-                SenderId = dalComment.Sender.Id,
+                SenderId = dalComment.Sender?.Id,
                 StatusId = dalComment.Status.Id,
             };
         }

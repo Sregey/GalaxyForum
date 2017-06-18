@@ -95,7 +95,7 @@ namespace ForumBll.Mappers
                 Date = dalComment.Date,
                 IsAnswer = dalComment.IsAnswer,
                 Topic = dalComment.Topic.ToBllTopic(),
-                Sender = dalComment.Sender.ToBllUser(),
+                Sender = dalComment.Sender?.ToBllUser(),
                 Status = dalComment.Status.ToBllStatus()
             };
         }

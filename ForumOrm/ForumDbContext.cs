@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using ForumOrm.Models;
+using ForumOrm.Configurations;
 
 namespace ForumOrm
 {
@@ -27,96 +28,13 @@ namespace ForumOrm
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>()
-                .Property(u => u.Login)
-                .IsRequired()
-                .HasMaxLength(50);
-
-            modelBuilder.Entity<User>()
-                .Property(u => u.Email)
-                .IsRequired()
-                .HasMaxLength(50);
-
-            modelBuilder.Entity<User>()
-                .Property(u => u.RegisrationDate)
-                .HasColumnType("datetime2")
-                .HasPrecision(0);
-
-            modelBuilder.Entity<User>()
-                .Property(u => u.Password)
-                .IsRequired()
-                .HasColumnType("binary")
-                .HasMaxLength(32);
-
-            //modelBuilder.Entity<User>()
-            //    .HasMany(u => u.Topics)
-            //    .WithOptional(t => t.Author);
-
-            modelBuilder.Entity<Role>()
-                .Property(u => u.Name)
-                .IsRequired()
-                .HasMaxLength(50);
-
-            modelBuilder.Entity<Status>()
-                .Property(u => u.Name)
-                .IsRequired()
-                .HasMaxLength(50);
-
-            modelBuilder.Entity<Status>()
-                 .HasMany(s => s.Topics)
-                 .WithRequired(t => t.Status)
-                 .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Section>()
-                .Property(u => u.Name)
-                .IsRequired()
-                .HasMaxLength(50);
-
-            modelBuilder.Entity<Comment>()
-                .Property(u => u.Text)
-                .IsRequired();
-
-            modelBuilder.Entity<Topic>()
-                .Property(u => u.Title)
-                .IsRequired()
-                .HasMaxLength(200);
-
-            modelBuilder.Entity<Topic>()
-                .Property(u => u.Text)
-                .IsRequired();
-
-            modelBuilder.Entity<Topic>()
-                .Property(t => t.Date)
-                .HasColumnType("datetime2")
-                .HasPrecision(0);
-
-            modelBuilder.Entity<Topic>()
-                .HasMany(t => t.Comments)
-                .WithRequired(c => c.Topic)
-                .WillCascadeOnDelete(true);
-
-            //modelBuilder.Entity<Topic>()
-            //    .HasOptional(t => t.Author)
-            //    .WithMany()
-            //    .HasForeignKey(t => t.AuthorId);
-
-
-            modelBuilder.Entity<Image>()
-                .Property(i => i.Size)
-                .IsRequired();
-
-            modelBuilder.Entity<Image>()
-                .Property(i => i.Content)
-                .IsRequired();
-
-            modelBuilder.Entity<Image>()
-                .Property(i => i.Type)
-                .IsRequired();
-
-            /*modelBuilder.Entity<Role>()
-                .HasMany(e => e.Users)
-                .WithRequired(e => e.Role)
-                .WillCascadeOnDelete(false);*/
+            modelBuilder.Configurations.Add(new CommentConfiguration());
+            modelBuilder.Configurations.Add(new ImageConfiguration());
+            modelBuilder.Configurations.Add(new RoleConfiguration());
+            modelBuilder.Configurations.Add(new SectionConfiguration());
+            modelBuilder.Configurations.Add(new StatusConfiguration());
+            modelBuilder.Configurations.Add(new TopicConfiguration());
+            modelBuilder.Configurations.Add(new UserConfiguration());
         }
     }
 }
