@@ -6,30 +6,48 @@ using ForumBll.Interface.Services;
 using ForumBll.Mappers;
 using ForumDal.Interface.Models;
 using ForumDal.Interface.Repositories;
+using ForumBll.Logger;
 
 namespace ForumBll.Services
 {
     public class UserService : IUserService
     {
-        //private readonly IUnitOfWork uow;
+        private ILogger logger;
+
         private readonly IRepository<DalUser> userRepository;
 
-        public UserService(/*IUnitOfWork uow, */IRepository<DalUser> repository)
+        public UserService(IRepository<DalUser> repository, ILogger logger)
         {
-            //this.uow = uow;
             this.userRepository = repository;
+            this.logger = logger;
         }
 
         public BllUser GetUser(int id)
         {
-            return userRepository
-                .FirstOrDefault(u => u.Id == id)
-                .ToBllUser();
+            try
+            {
+                return userRepository
+                    .First(u => u.Id == id)
+                    .ToBllUser();
+            }
+            catch (InvalidOperationException e)
+            {
+                logger.Warn(e.Message);
+                throw;
+            }
         }
 
         public void DeleteUser(int id)
         {
-            userRepository.Delete(id);
+            try
+            {
+                userRepository.Delete(id);
+            }
+            catch (InvalidOperationException e)
+            {
+                logger.Warn(e.Message);
+                throw;
+            }
         }
 
         public IEnumerable<BllUser> GetAllUsers()
@@ -39,21 +57,32 @@ namespace ForumBll.Services
                 .Select(user => user.ToBllUser());
         }
 
-        public void AddUser(BllUser user)
-        {
-            userRepository.Add(user.ToDalUser());
-        }
-
         public BllUser GetUser(string login)
         {
-            return userRepository
-                .FirstOrDefault(u => u.Login == login)
-                .ToBllUser();
+            try
+            {
+                return userRepository
+                    .First(u => u.Login == login)
+                    .ToBllUser();
+            }
+            catch (InvalidOperationException e)
+            {
+                logger.Warn(e.Message);
+                throw;
+            }
         }
 
         public void UpdateUser(BllUser user)
         {
-            userRepository.Update(user.ToDalUser());
+            try
+            {
+                userRepository.Update(user.ToDalUser());
+            }
+            catch (InvalidOperationException e)
+            {
+                logger.Warn(e.Message);
+                throw;
+            }
         }
 
         public void Dispose()

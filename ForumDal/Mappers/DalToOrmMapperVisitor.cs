@@ -1,5 +1,6 @@
 ﻿using ForumDal.Interface.Models;
 using ForumOrm.Models;
+using System;
 using System.IO;
 
 namespace ForumDal.Mappers
@@ -10,6 +11,7 @@ namespace ForumDal.Mappers
 
         public void Visit(DalComment dalComment)
         {
+            CheckArgumentNull(dalComment);
             OrmEntity = new Comment
             {
                 Id = dalComment.Id,
@@ -24,6 +26,7 @@ namespace ForumDal.Mappers
 
         public void Visit(DalSection dalSection)
         {
+            CheckArgumentNull(dalSection);
             OrmEntity = new Section()
             {
                 Id = dalSection.Id,
@@ -33,6 +36,7 @@ namespace ForumDal.Mappers
 
         public void Visit(DalStatus dalStatus)
         {
+            CheckArgumentNull(dalStatus);
             OrmEntity = new Status()
             {
                 Id = dalStatus.Id,
@@ -42,6 +46,7 @@ namespace ForumDal.Mappers
 
         public void Visit(DalRole dalRole)
         {
+            CheckArgumentNull(dalRole);
             OrmEntity = new Role()
             {
                 Id = dalRole.Id,
@@ -51,6 +56,7 @@ namespace ForumDal.Mappers
 
         public void Visit(DalImage dalImage)
         {
+            CheckArgumentNull(dalImage);
             var content = new byte[dalImage.Size];
             dalImage.Content.Seek(0, SeekOrigin.Begin);
             dalImage.Content.Read(content, 0, dalImage.Size);
@@ -66,6 +72,7 @@ namespace ForumDal.Mappers
 
         public void Visit(DalTopic dalTopic)
         {
+            CheckArgumentNull(dalTopic);
             OrmEntity = new Topic
             {
                 Id = dalTopic.Id,
@@ -81,6 +88,7 @@ namespace ForumDal.Mappers
 
         public void Visit(DalUser dalUser)
         {
+            CheckArgumentNull(dalUser);
             OrmEntity = new User()
             {
                 Id = dalUser.Id,
@@ -97,6 +105,12 @@ namespace ForumDal.Mappers
             };
             if (dalUser.Avatar != null)
                 ((User)OrmEntity).AvatarId = dalUser.Avatar.Id;
+        }
+
+        private void CheckArgumentNull(object o)
+        {
+            if (o == null)
+                throw new ArgumentNullException();
         }
     }
 }

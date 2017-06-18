@@ -84,12 +84,22 @@ namespace ForumPlMvc.Controllers
 
         public ActionResult GetRawTopic()
         {
-            return RedirectToAction("EditTopic", new { id = topicService.GetRawTopic().Id });
+            BllTopic topic = topicService.GetRawTopic();
+            if (topic != null)
+                return RedirectToAction("EditTopic", new { id = topic.Id });
+            else
+                return View("Info", (object)"All topics are processed.");
         }
 
         public ActionResult GetRawComment()
         {
-            return RedirectToAction("EditComment", new { id = commentService.GetRawComment().Id });
+            BllComment comment = commentService.GetRawComment();
+            if (comment != null)
+                return RedirectToAction("EditComment", new { id = comment.Id });
+            else
+                return View("Info", (object)"All comments are processed.");
+
+            
         }
 
         public ActionResult Comments(int? page)

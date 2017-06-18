@@ -2,15 +2,17 @@
 using ForumDal.Interface.Models;
 using ForumOrm.Models;
 using System.IO;
+using System;
 
 namespace ForumDal.Mappers
 {
-    public class OrmToDalMapperVisitor : IEntityVisitor
+    class OrmToDalMapperVisitor : IEntityVisitor
     {
         public DalEntity DalEntity { get; private set; }
 
         public void Visit(Comment comment)
         {
+            CheckArgumentNull(comment);
             DalEntity = new DalComment
             {
                 Id = comment.Id,
@@ -25,6 +27,7 @@ namespace ForumDal.Mappers
 
         public void Visit(Role role)
         {
+            CheckArgumentNull(role);
             DalEntity = new DalRole()
             {
                 Id = role.Id,
@@ -34,6 +37,7 @@ namespace ForumDal.Mappers
 
         public void Visit(Image image)
         {
+            CheckArgumentNull(image);
             var content = new MemoryStream(image.Content);
             DalEntity = new DalImage()
             {
@@ -47,6 +51,7 @@ namespace ForumDal.Mappers
 
         public void Visit(Status status)
         {
+            CheckArgumentNull(status);
             DalEntity = new DalStatus()
             {
                 Id = status.Id,
@@ -56,6 +61,7 @@ namespace ForumDal.Mappers
 
         public void Visit(Section section)
         {
+            CheckArgumentNull(section);
             DalEntity = new DalSection()
             {
                 Id = section.Id,
@@ -66,6 +72,7 @@ namespace ForumDal.Mappers
 
         public void Visit(Topic topic)
         {
+            CheckArgumentNull(topic);
             DalEntity = new DalTopic
             {
                 Id = topic.Id,
@@ -82,6 +89,7 @@ namespace ForumDal.Mappers
 
         public void Visit(User user)
         {
+            CheckArgumentNull(user);
             DalEntity = new DalUser()
             {
                 Id = user.Id,
@@ -98,6 +106,12 @@ namespace ForumDal.Mappers
                 Role = (DalRole)user.Role.ToDalEntity(),
                 Topics = user.Topics.Select(t => (DalTopic)t.ToDalEntity())
             };
+        }
+
+        private void CheckArgumentNull(object o)
+        {
+            if (o == null)
+                throw new ArgumentNullException();
         }
     }
 }

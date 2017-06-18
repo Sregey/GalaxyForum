@@ -26,7 +26,7 @@ namespace ForumPlMvc.Models
         public int TopicId { get; set; }
 
         [Required(ErrorMessage = "Some text is required.")]
-        [MinLength(5, ErrorMessage = "Minimum length is 5 characters.")]
+        [MinLength(3, ErrorMessage = "Minimum length is 3 characters.")]
         [DataType(DataType.MultilineText)]
         public string Text { get; set; }
 

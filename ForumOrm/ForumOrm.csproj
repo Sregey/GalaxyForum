@@ -78,6 +78,7 @@
     <Content Include="Images\anonymous_user.png" />
     <Content Include="Images\logo.jpg" />
     <Content Include="Images\true.png" />
+    <Content Include="Images\white_logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

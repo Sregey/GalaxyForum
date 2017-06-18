@@ -12,8 +12,6 @@ namespace ForumBll.Interface.Services
 
         IEnumerable<BllUser> GetAllUsers();
 
-        void AddUser(BllUser user);
-
         void DeleteUser(int id);
 
         void UpdateUser(BllUser user);

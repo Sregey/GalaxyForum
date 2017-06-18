@@ -25,19 +25,19 @@ footer {
 	width: 100%;
 	/* Фиксированная высота футера */
 	height: 50px;
-	background-color: #f5f5f5;
+	background-color: #eee;
 
     text-align: center;
     vertical-align: middle;
     font-size: 15px;
 }
 
-    footer:before {
-        content: '';
-        display: inline-block;
-        height: 100%;
-        vertical-align: middle;
-    }
+footer:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
 
 .footer-center-content {
     display: inline-block;

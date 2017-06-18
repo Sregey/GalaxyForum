@@ -7,6 +7,8 @@ namespace ForumDal.Interface.Repositories
 {
     public interface ITopicRepository : IRepository<DalTopic>
     {
+        /// <exception cref = "ArgumentNullException" />
+        /// <exception cref = "InvalidOperationException" />
         IEnumerable<DalTopic> Search(Expression<Func<DalTopic, bool>> predicate, string subString);
     }
 }

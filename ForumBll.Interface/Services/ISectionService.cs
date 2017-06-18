@@ -6,8 +6,6 @@ namespace ForumBll.Interface.Services
 {
     public interface ISectionService : IDisposable
     {
-        int Count { get; }
-
         BllSection GetSection(int id);
 
         IEnumerable<BllSection> GetAllSections();

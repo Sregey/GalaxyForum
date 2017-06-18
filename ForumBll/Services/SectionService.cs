@@ -6,45 +6,70 @@ using ForumBll.Interface.Services;
 using ForumBll.Mappers;
 using ForumDal.Interface.Models;
 using ForumDal.Interface.Repositories;
+using ForumBll.Logger;
 
 namespace ForumBll.Services
 {
     public class SectionService : ISectionService
     {
+        private ILogger logger;
+
         private readonly IRepository<DalSection> sectionRepository;
         private readonly ITopicRepository topicRepository;
 
         public SectionService(IRepository<DalSection> sectionRepository,
-            ITopicRepository topicRepository)
+            ITopicRepository topicRepository,
+            ILogger logger)
         {
             this.sectionRepository = sectionRepository;
             this.topicRepository = topicRepository;
-        }
-
-        public int Count
-        {
-            get { return sectionRepository.Count; }
+            this.logger = logger;
         }
 
         public void AddSection(BllSection section)
         {
-            sectionRepository.Add(section.ToDalSection());
+            try
+            {
+                sectionRepository.Add(section.ToDalSection());
+            }
+            catch (InvalidOperationException e)
+            {
+                logger.Warn(e.Message);
+                throw;
+            }
         }
 
         public void UpdateSection(BllSection section)
         {
-            sectionRepository.Update(section.ToDalSection());
+            try
+            {
+                sectionRepository.Update(section.ToDalSection());
+            }
+            catch (InvalidOperationException e)
+            {
+                logger.Warn(e.Message);
+                throw;
+            }
         }
 
         public void DeleteSection(int id)
         {
-            DalSection section = sectionRepository.FirstOrDefault(s => s.Id == id);
+            DalSection section = sectionRepository.First(s => s.Id == id);
             foreach (var t in section.Topics.ToList())
             {
                 t.Section.Id = 1;
                 topicRepository.Update(t);
             }
-            sectionRepository.Delete(id);
+
+            try
+            {
+                sectionRepository.Delete(id);
+            }
+            catch (InvalidOperationException e)
+            {
+                logger.Warn(e.Message);
+                throw;
+            }
         }
 
         public IEnumerable<BllSection> GetAllSections()
@@ -56,9 +81,17 @@ namespace ForumBll.Services
 
         public BllSection GetSection(int id)
         {
-            return sectionRepository
-                .FirstOrDefault(s => s.Id == id)
-                .ToBllSection();
+            try
+            {
+                return sectionRepository
+                    .First(s => s.Id == id)
+                    .ToBllSection();
+            }
+            catch (InvalidOperationException e)
+            {
+                logger.Warn(e.Message);
+                throw;
+            }
         }
 
         public void Dispose()

@@ -8,16 +8,21 @@ using ForumDal.Interface.Models;
 using ForumDal.Interface.Repositories;
 using System.Security.Cryptography;
 using System.Text;
+using ForumBll.Logger;
 
 namespace ForumBll.Services
 {
     public class AccountService : IAccountService
     {
+        private ILogger logger;
+
         private readonly IRepository<DalUser> userRepository;
 
-        public AccountService(IRepository<DalUser> repository)
+        public AccountService(IRepository<DalUser> repository,
+            ILogger logger)
         {
             this.userRepository = repository;
+            this.logger = logger;
         }
 
         public bool RegisterUser(BllUser newUser)
@@ -26,8 +31,16 @@ namespace ForumBll.Services
             newUser.Role = new BllRole() { Id = (int)RoleEnum.User };
             newUser.HashedPassword = Hash(newUser.Password);
 
-            userRepository.Add(newUser.ToDalUser());
-            return userRepository.IsExists(u => (u.Login == newUser.Login));
+            try
+            {
+                userRepository.Add(newUser.ToDalUser());
+                return userRepository.IsExists(u => (u.Login == newUser.Login));
+            }
+            catch (InvalidOperationException e)
+            {
+                logger.Warn(e.Message);
+                throw;
+            }
         }
 
 
@@ -55,18 +68,26 @@ namespace ForumBll.Services
             byte[] hashedPassword = Hash(password);
             DalUser user = userRepository
                 .FirstOrDefault(u => (u.Email == email) && (u.Password == hashedPassword));
-            return (user == null) ? null : user.ToBllUser();
+            //return (user == null) ? null : user.ToBllUser();
+            return user?.ToBllUser();
         }
 
         public bool ChangePassword(string login, string oldPassword, string newPassword)
         {
-            DalUser user = userRepository
-                .FirstOrDefault(u => u.Login == login);
+            DalUser user = userRepository.First(u => u.Login == login);
             if (user.Password.SequenceEqual(Hash(oldPassword)))
             {
                 user.Password = Hash(newPassword);
-                userRepository.Update(user);
-                return true;
+                try
+                {
+                    userRepository.Update(user);
+                    return true;
+                }
+                catch (InvalidOperationException e)
+                {
+                    logger.Warn(e.Message);
+                    throw;
+                }
             }
             return false;
         }

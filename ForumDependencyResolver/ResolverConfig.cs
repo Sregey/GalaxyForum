@@ -1,6 +1,7 @@
 ﻿using System.Data.Entity;
 using ForumBll.Interface.Services;
 using ForumBll.Services;
+using ForumBll.Logger;
 using ForumDal.Interface.Repositories;
 using ForumDal.Interface.Models;
 using ForumDal.Repositories;
@@ -26,7 +27,7 @@ namespace ForumDependencyResolver
 
         private static IUserService ServiceForProvider(IContext c)
         {
-            return new UserService(new UserRepository(new ForumDbContext()));
+            return new UserService(new UserRepository(new ForumDbContext()), new NLoggerAdapter());
         }
 
         private static void Configure(IKernel kernel, bool isWeb)
@@ -58,6 +59,9 @@ namespace ForumDependencyResolver
             kernel.Bind<IRepository<DalImage>>().To<Repository<DalImage, Image>>();
             kernel.Bind<IRepository<DalComment>>().To<Repository<DalComment, Comment>>();
             kernel.Bind<IRepository<DalRole>>().To<Repository<DalRole, Role>>();
+
+            //Logger
+            kernel.Bind<ILogger>().To<NLoggerAdapter>().InSingletonScope();
         }
     }
 }

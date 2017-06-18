@@ -232,14 +232,14 @@ namespace ForumOrm
                 });
             }
 
-            using (FileStream fs = File.OpenRead(rootDirictory + "Images//logo.jpg"))
+            using (FileStream fs = File.OpenRead(rootDirictory + "Images//white_logo.png"))
             {
                 var content = new byte[fs.Length];
                 fs.Read(content, 0, (int)fs.Length);
                 context.Images.Add(new Image()
                 {
                     Id = 2,
-                    Type = "jpg",
+                    Type = "png",
                     Content = content,
                     Size = content.Length,
                 });

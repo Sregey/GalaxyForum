@@ -17,6 +17,9 @@ namespace ForumDal.Repositories
 
         public IEnumerable<DalTopic> Search(Expression<Func<DalTopic, bool>> predicate, string subString)
         {
+            if ((predicate == null) || (subString == null))
+                throw new ArgumentNullException();
+
             return GetBy(predicate)
                 .Where(t => t.Text.Contains(subString) || t.Title.Contains(subString))
                 .AsEnumerable()
