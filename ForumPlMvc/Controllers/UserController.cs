@@ -134,6 +134,7 @@ namespace ForumPlMvc.Controllers
             topicService.Dispose();
 
             base.Dispose(disposing);
+            GC.SuppressFinalize(this);
         }
     }
 }

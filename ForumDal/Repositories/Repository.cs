@@ -138,6 +138,7 @@ namespace ForumDal.Repositories
         public void Dispose()
         {
             context.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         protected IQueryable<TOrmEntity> GetBy(Expression<Func<TDalEntity, bool>> predicate)

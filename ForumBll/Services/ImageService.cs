@@ -41,6 +41,7 @@ namespace ForumBll.Services
         public void Dispose()
         {
             imageRepository.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

@@ -90,7 +90,7 @@ namespace ForumPlConsole
                     {
                         PrintError(InvalidOperationError);
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         PrintError(UnexpectedError);
                     }

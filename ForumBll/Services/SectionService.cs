@@ -97,6 +97,7 @@ namespace ForumBll.Services
         public void Dispose()
         {
             sectionRepository.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

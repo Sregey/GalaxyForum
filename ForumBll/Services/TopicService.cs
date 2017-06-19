@@ -115,6 +115,7 @@ namespace ForumBll.Services
         {
             topicRepository.Dispose();
             sectionRepository.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

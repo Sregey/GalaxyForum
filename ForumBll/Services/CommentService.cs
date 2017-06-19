@@ -109,6 +109,7 @@ namespace ForumBll.Services
         {
             commentRepository.Dispose();
             topicRepository.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

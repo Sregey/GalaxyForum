@@ -8,6 +8,7 @@ using ForumPlMvc.Models;
 using ForumPlMvc.Models.Filters;
 using ForumPlMvc.Infrastructure;
 using ForumPlMvc.Filters;
+using System;
 
 namespace ForumPlMvc.Controllers
 {
@@ -120,6 +121,7 @@ namespace ForumPlMvc.Controllers
             userService.Dispose();
 
             base.Dispose(disposing);
+            GC.SuppressFinalize(this);
         }
     }
 }

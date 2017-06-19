@@ -126,6 +126,7 @@ namespace ForumPlMvc.Controllers
         {
             accountService.Dispose();
             base.Dispose(disposing);
+            GC.SuppressFinalize(this);
         }
     }
 }

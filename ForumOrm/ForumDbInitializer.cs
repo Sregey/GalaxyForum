@@ -8,8 +8,8 @@ using System.Security.Cryptography;
 namespace ForumOrm
 {
     public class ForumDbInitializer : //DropCreateDatabaseIfModelChanges<ForumDbContext>
-        //DropCreateDatabaseAlways<ForumDbContext>
-        CreateDatabaseIfNotExists<ForumDbContext>
+        DropCreateDatabaseAlways<ForumDbContext>
+        //CreateDatabaseIfNotExists<ForumDbContext>
     {
         protected override void Seed(ForumDbContext context)
         {
@@ -152,7 +152,47 @@ namespace ForumOrm
                 Date = DateTime.Now,
                 SectionId = 2,
                 AuthorId = 6,
-                StatusId = 1
+                StatusId = 3
+            });
+            context.Topics.Add(new Topic()
+            {
+                Id = 3,
+                Title = "Recomend some horror for me",
+                Text = "What is your favorit horror film?",
+                Date = DateTime.Now,
+                SectionId = 3,
+                AuthorId = 4,
+                StatusId = 3
+            });
+            context.Topics.Add(new Topic()
+            {
+                Id = 4,
+                Title = "What language is better java or C#?",
+                Text = "I'd like to learn some language. What can you recomend to me?",
+                Date = DateTime.Now,
+                SectionId = 5,
+                AuthorId = 2,
+                StatusId = 3
+            });
+            context.Topics.Add(new Topic()
+            {
+                Id = 5,
+                Title = "Belarussian turism",
+                Text = "What is the best place to relax in Belarus?",
+                Date = DateTime.Now,
+                SectionId = 6,
+                AuthorId = 3,
+                StatusId = 3
+            });
+            context.Topics.Add(new Topic()
+            {
+                Id = 6,
+                Title = "How to install Skype",
+                Text = "How to install Skype on my printer?",
+                Date = DateTime.Now,
+                SectionId = 1,
+                AuthorId = 3,
+                StatusId = 3
             });
         }
 

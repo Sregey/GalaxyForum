@@ -122,6 +122,7 @@ namespace ForumPlMvc.Controllers
             imageService.Dispose();
 
             base.Dispose(disposing);
+            GC.SuppressFinalize(this);
         }
 
         private BllTopic GetTopic(int id, int? page)

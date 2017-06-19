@@ -27,6 +27,7 @@ namespace ForumBll.Services
         public void Dispose()
         {
             roleRepository.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

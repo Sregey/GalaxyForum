@@ -88,6 +88,7 @@ namespace ForumBll.Services
         public void Dispose()
         {
             userRepository.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }
