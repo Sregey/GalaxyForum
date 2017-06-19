@@ -38,7 +38,7 @@ namespace ForumDal.Repositories
             }
             catch (Exception e)
             {
-                throw new InvalidOperationException("Cann't add entity to repository.", e);
+                throw new InvalidOperationException($"Cann't add {typeof(TOrmEntity)} to repository.", e);
             }
         }
 
@@ -55,7 +55,7 @@ namespace ForumDal.Repositories
             }
             catch (Exception e)
             {
-                throw new InvalidOperationException("Cann't delete entity from repository.", e);
+                throw new InvalidOperationException($"Cann't delete {typeof(TOrmEntity)} with id={id} from repository.", e);
             }
         }
 
@@ -82,7 +82,7 @@ namespace ForumDal.Repositories
             }
             catch (Exception e)
             {
-                throw new InvalidOperationException("Cann't find entity in repository.", e);
+                throw new InvalidOperationException($"Cann't find {typeof(TOrmEntity)} with predicate in repository.", e);
             }
         }
 
@@ -119,7 +119,7 @@ namespace ForumDal.Repositories
             }
             catch (Exception e)
             {
-                throw new InvalidOperationException("Cann't update entity in repository.", e);
+                throw new InvalidOperationException($"Cann't update {typeof(TOrmEntity)} with id={entity.Id} in repository.", e);
             }
         }
 
